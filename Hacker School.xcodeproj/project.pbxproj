@@ -1,0 +1,509 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E7B53EFA1A6EB94B00931BEC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B53EF91A6EB94B00931BEC /* main.m */; };
+		E7B53EFD1A6EB94B00931BEC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B53EFC1A6EB94B00931BEC /* AppDelegate.m */; };
+		E7B53F001A6EB94B00931BEC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B53EFF1A6EB94B00931BEC /* ViewController.m */; };
+		E7B53F051A6EB94B00931BEC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7B53F041A6EB94B00931BEC /* Images.xcassets */; };
+		E7B53F081A6EB94C00931BEC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7B53F061A6EB94C00931BEC /* LaunchScreen.xib */; };
+		E7B53F141A6EB94C00931BEC /* Hacker_SchoolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B53F131A6EB94C00931BEC /* Hacker_SchoolTests.m */; };
+		E7B53F2B1A6EBA6900931BEC /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B53F261A6EBA5A00931BEC /* libOAuth2Client.a */; };
+		E7B53F2D1A6EBA6E00931BEC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B53F2C1A6EBA6E00931BEC /* Security.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E7B53F0E1A6EB94C00931BEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E7B53EEC1A6EB94B00931BEC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E7B53EF31A6EB94B00931BEC;
+			remoteInfo = "Hacker School";
+		};
+		E7B53F231A6EBA5A00931BEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E7B53F1D1A6EBA5A00931BEC /* OAuth2Client.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 942FFCD612315E0A00E6C65E;
+			remoteInfo = OAuth2Client.framework;
+		};
+		E7B53F251A6EBA5A00931BEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E7B53F1D1A6EBA5A00931BEC /* OAuth2Client.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = OAuth2Client;
+		};
+		E7B53F271A6EBA5A00931BEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E7B53F1D1A6EBA5A00931BEC /* OAuth2Client.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 94B6CE6619C1D0A200AA859B;
+			remoteInfo = OAuth2ClientTests;
+		};
+		E7B53F291A6EBA6300931BEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E7B53F1D1A6EBA5A00931BEC /* OAuth2Client.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = OAuth2Client;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E7B53EF41A6EB94B00931BEC /* Hacker School.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hacker School.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7B53EF81A6EB94B00931BEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7B53EF91A6EB94B00931BEC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E7B53EFB1A6EB94B00931BEC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E7B53EFC1A6EB94B00931BEC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E7B53EFE1A6EB94B00931BEC /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		E7B53EFF1A6EB94B00931BEC /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E7B53F041A6EB94B00931BEC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E7B53F071A6EB94C00931BEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		E7B53F0D1A6EB94C00931BEC /* Hacker SchoolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hacker SchoolTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7B53F121A6EB94C00931BEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7B53F131A6EB94C00931BEC /* Hacker_SchoolTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hacker_SchoolTests.m; sourceTree = "<group>"; };
+		E7B53F1D1A6EBA5A00931BEC /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = OAuth2Client/OAuth2Client.xcodeproj; sourceTree = "<group>"; };
+		E7B53F2C1A6EBA6E00931BEC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E7B53EF11A6EB94B00931BEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7B53F2D1A6EBA6E00931BEC /* Security.framework in Frameworks */,
+				E7B53F2B1A6EBA6900931BEC /* libOAuth2Client.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E7B53F0A1A6EB94C00931BEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E7B53EEB1A6EB94B00931BEC = {
+			isa = PBXGroup;
+			children = (
+				E7B53F2C1A6EBA6E00931BEC /* Security.framework */,
+				E7B53EF61A6EB94B00931BEC /* Hacker School */,
+				E7B53F101A6EB94C00931BEC /* Hacker SchoolTests */,
+				E7B53EF51A6EB94B00931BEC /* Products */,
+				E7B53F1D1A6EBA5A00931BEC /* OAuth2Client.xcodeproj */,
+			);
+			sourceTree = "<group>";
+		};
+		E7B53EF51A6EB94B00931BEC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E7B53EF41A6EB94B00931BEC /* Hacker School.app */,
+				E7B53F0D1A6EB94C00931BEC /* Hacker SchoolTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E7B53EF61A6EB94B00931BEC /* Hacker School */ = {
+			isa = PBXGroup;
+			children = (
+				E7B53EFB1A6EB94B00931BEC /* AppDelegate.h */,
+				E7B53EFC1A6EB94B00931BEC /* AppDelegate.m */,
+				E7B53EFE1A6EB94B00931BEC /* ViewController.h */,
+				E7B53EFF1A6EB94B00931BEC /* ViewController.m */,
+				E7B53F041A6EB94B00931BEC /* Images.xcassets */,
+				E7B53F061A6EB94C00931BEC /* LaunchScreen.xib */,
+				E7B53EF71A6EB94B00931BEC /* Supporting Files */,
+			);
+			path = "Hacker School";
+			sourceTree = "<group>";
+		};
+		E7B53EF71A6EB94B00931BEC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E7B53EF81A6EB94B00931BEC /* Info.plist */,
+				E7B53EF91A6EB94B00931BEC /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E7B53F101A6EB94C00931BEC /* Hacker SchoolTests */ = {
+			isa = PBXGroup;
+			children = (
+				E7B53F131A6EB94C00931BEC /* Hacker_SchoolTests.m */,
+				E7B53F111A6EB94C00931BEC /* Supporting Files */,
+			);
+			path = "Hacker SchoolTests";
+			sourceTree = "<group>";
+		};
+		E7B53F111A6EB94C00931BEC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E7B53F121A6EB94C00931BEC /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E7B53F1E1A6EBA5A00931BEC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E7B53F241A6EBA5A00931BEC /* OAuth2Client.framework */,
+				E7B53F261A6EBA5A00931BEC /* libOAuth2Client.a */,
+				E7B53F281A6EBA5A00931BEC /* OAuth2ClientTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E7B53EF31A6EB94B00931BEC /* Hacker School */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E7B53F171A6EB94C00931BEC /* Build configuration list for PBXNativeTarget "Hacker School" */;
+			buildPhases = (
+				E7B53EF01A6EB94B00931BEC /* Sources */,
+				E7B53EF11A6EB94B00931BEC /* Frameworks */,
+				E7B53EF21A6EB94B00931BEC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E7B53F2A1A6EBA6300931BEC /* PBXTargetDependency */,
+			);
+			name = "Hacker School";
+			productName = "Hacker School";
+			productReference = E7B53EF41A6EB94B00931BEC /* Hacker School.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E7B53F0C1A6EB94C00931BEC /* Hacker SchoolTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E7B53F1A1A6EB94C00931BEC /* Build configuration list for PBXNativeTarget "Hacker SchoolTests" */;
+			buildPhases = (
+				E7B53F091A6EB94C00931BEC /* Sources */,
+				E7B53F0A1A6EB94C00931BEC /* Frameworks */,
+				E7B53F0B1A6EB94C00931BEC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E7B53F0F1A6EB94C00931BEC /* PBXTargetDependency */,
+			);
+			name = "Hacker SchoolTests";
+			productName = "Hacker SchoolTests";
+			productReference = E7B53F0D1A6EB94C00931BEC /* Hacker SchoolTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E7B53EEC1A6EB94B00931BEC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Alan Wang";
+				TargetAttributes = {
+					E7B53EF31A6EB94B00931BEC = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					E7B53F0C1A6EB94C00931BEC = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = E7B53EF31A6EB94B00931BEC;
+					};
+				};
+			};
+			buildConfigurationList = E7B53EEF1A6EB94B00931BEC /* Build configuration list for PBXProject "Hacker School" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E7B53EEB1A6EB94B00931BEC;
+			productRefGroup = E7B53EF51A6EB94B00931BEC /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E7B53F1E1A6EBA5A00931BEC /* Products */;
+					ProjectRef = E7B53F1D1A6EBA5A00931BEC /* OAuth2Client.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				E7B53EF31A6EB94B00931BEC /* Hacker School */,
+				E7B53F0C1A6EB94C00931BEC /* Hacker SchoolTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E7B53F241A6EBA5A00931BEC /* OAuth2Client.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OAuth2Client.framework;
+			remoteRef = E7B53F231A6EBA5A00931BEC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E7B53F261A6EBA5A00931BEC /* libOAuth2Client.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libOAuth2Client.a;
+			remoteRef = E7B53F251A6EBA5A00931BEC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E7B53F281A6EBA5A00931BEC /* OAuth2ClientTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = OAuth2ClientTests.xctest;
+			remoteRef = E7B53F271A6EBA5A00931BEC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E7B53EF21A6EB94B00931BEC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7B53F081A6EB94C00931BEC /* LaunchScreen.xib in Resources */,
+				E7B53F051A6EB94B00931BEC /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E7B53F0B1A6EB94C00931BEC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E7B53EF01A6EB94B00931BEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7B53F001A6EB94B00931BEC /* ViewController.m in Sources */,
+				E7B53EFD1A6EB94B00931BEC /* AppDelegate.m in Sources */,
+				E7B53EFA1A6EB94B00931BEC /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E7B53F091A6EB94C00931BEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7B53F141A6EB94C00931BEC /* Hacker_SchoolTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E7B53F0F1A6EB94C00931BEC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E7B53EF31A6EB94B00931BEC /* Hacker School */;
+			targetProxy = E7B53F0E1A6EB94C00931BEC /* PBXContainerItemProxy */;
+		};
+		E7B53F2A1A6EBA6300931BEC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OAuth2Client;
+			targetProxy = E7B53F291A6EBA6300931BEC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E7B53F061A6EB94C00931BEC /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E7B53F071A6EB94C00931BEC /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E7B53F151A6EB94C00931BEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E7B53F161A6EB94C00931BEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E7B53F181A6EB94C00931BEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/OAuth2Client/**",
+				);
+				INFOPLIST_FILE = "Hacker School/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E7B53F191A6EB94C00931BEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/OAuth2Client/**",
+				);
+				INFOPLIST_FILE = "Hacker School/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		E7B53F1B1A6EB94C00931BEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Hacker SchoolTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hacker School.app/Hacker School";
+			};
+			name = Debug;
+		};
+		E7B53F1C1A6EB94C00931BEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Hacker SchoolTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hacker School.app/Hacker School";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E7B53EEF1A6EB94B00931BEC /* Build configuration list for PBXProject "Hacker School" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7B53F151A6EB94C00931BEC /* Debug */,
+				E7B53F161A6EB94C00931BEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E7B53F171A6EB94C00931BEC /* Build configuration list for PBXNativeTarget "Hacker School" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7B53F181A6EB94C00931BEC /* Debug */,
+				E7B53F191A6EB94C00931BEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E7B53F1A1A6EB94C00931BEC /* Build configuration list for PBXNativeTarget "Hacker SchoolTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7B53F1B1A6EB94C00931BEC /* Debug */,
+				E7B53F1C1A6EB94C00931BEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E7B53EEC1A6EB94B00931BEC /* Project object */;
+}
