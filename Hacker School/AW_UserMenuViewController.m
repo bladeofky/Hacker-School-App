@@ -11,9 +11,12 @@
 
 #import "NXOAuth2.h"
 
-@interface AW_UserMenuViewController ()
+#import "AW_Person.h"
+
+@interface AW_UserMenuViewController () <AW_PersonDelegate>
 
 @property (nonatomic, strong) NXOAuth2Account *userAccount;
+@property (nonatomic, strong) __block AW_Person *currentUser;
 
 @end
 
@@ -33,6 +36,15 @@
     }
     
     return _userAccount;
+}
+
+-(void)setCurrentUser:(AW_Person *)currentUser
+{
+    _currentUser = currentUser;
+    _currentUser.delegate = self;
+
+    // Refresh view
+    [self.view setNeedsDisplay];
 }
 
 #pragma mark - View Lifecycle
@@ -60,16 +72,21 @@
                    }
                        responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error) {
                            if (responseData) {
-                               NSString *dataAsString = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
-                               NSLog(@"Data received: %@", dataAsString);
+                               self.currentUser = [[AW_Person alloc]initWithHackerSchoolAPIData:responseData];
                            }
                            
                            if (error) {
                                NSLog(@"Error: %@", [error localizedDescription]);
                            }
                        }];
+        
     }
 }
 
+#pragma mark - AW_PersonDelegate
+-(void)person:(AW_Person *)person didDownloadImage:(UIImage *)image
+{
+    NSLog(@"%@",self.currentUser);
+}
 
 @end

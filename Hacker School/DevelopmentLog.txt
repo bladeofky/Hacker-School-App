@@ -2,8 +2,13 @@
 1-21-2015
 --------------
 
-Next steps: Integrate RestKit
+Next steps: Set up AW_UserMenuController.xib
 Eventually: Implement offline caching
+
+*********** GIT COMMIT: Added AW_Person class ***********
+
+- AW_UserMenuViewController now creates an AW_Person class and sets it to self.currentUser when retrieving API data.
+- Created AW_Person class and AW_PersonDelegate protocol
 
 *********** GIT COMMIT: Added Development Log ***********
 *********** GIT COMMIT: Added a Login view controller. Successfully retrieved data from Hacker School API ***********

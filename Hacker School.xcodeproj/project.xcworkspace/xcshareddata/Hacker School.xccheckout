@@ -22,7 +22,7 @@
 		<key>C3C7974FF0D0805D6D7ADDB023DE20F14BCCB9BD</key>
 		<string>../..</string>
 		<key>EB5674475998A0DD33CD59076628ED3B93CBE9CA</key>
-		<string>../..OAuth2Client/</string>
+		<string>../..OAuth2Client</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/bladeofky/Hacker-School-App.git</string>
@@ -46,7 +46,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>EB5674475998A0DD33CD59076628ED3B93CBE9CA</string>
 			<key>IDESourceControlWCCName</key>
-			<string>OAuth2Client</string>
+			<string>Hacker%20SchoolOAuth2Client</string>
 		</dict>
 	</array>
 </dict>
