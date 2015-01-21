@@ -21,6 +21,7 @@
 		E7B53F371A7006B900931BEC /* AW_PeopleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7B53F351A7006B900931BEC /* AW_PeopleViewController.xib */; };
 		E7B53F3B1A70161F00931BEC /* AW_UserMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B53F391A70161F00931BEC /* AW_UserMenuViewController.m */; };
 		E7B53F3C1A70161F00931BEC /* AW_UserMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7B53F3A1A70161F00931BEC /* AW_UserMenuViewController.xib */; };
+		E7B53F3E1A70192700931BEC /* DevelopmentLog.txt in Resources */ = {isa = PBXBuildFile; fileRef = E7B53F3D1A70192700931BEC /* DevelopmentLog.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		E7B53F381A70161F00931BEC /* AW_UserMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_UserMenuViewController.h; sourceTree = "<group>"; };
 		E7B53F391A70161F00931BEC /* AW_UserMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_UserMenuViewController.m; sourceTree = "<group>"; };
 		E7B53F3A1A70161F00931BEC /* AW_UserMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AW_UserMenuViewController.xib; sourceTree = "<group>"; };
+		E7B53F3D1A70192700931BEC /* DevelopmentLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DevelopmentLog.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 		E7B53EF61A6EB94B00931BEC /* Hacker School */ = {
 			isa = PBXGroup;
 			children = (
+				E7B53F3D1A70192700931BEC /* DevelopmentLog.txt */,
 				E7B53EFB1A6EB94B00931BEC /* AppDelegate.h */,
 				E7B53EFC1A6EB94B00931BEC /* AppDelegate.m */,
 				E7B53EFE1A6EB94B00931BEC /* ViewController.h */,
@@ -298,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7B53F321A70046100931BEC /* AW_LoginViewController.xib in Resources */,
+				E7B53F3E1A70192700931BEC /* DevelopmentLog.txt in Resources */,
 				E7B53F081A6EB94C00931BEC /* LaunchScreen.xib in Resources */,
 				E7B53F051A6EB94B00931BEC /* Images.xcassets in Resources */,
 				E7B53F3C1A70161F00931BEC /* AW_UserMenuViewController.xib in Resources */,

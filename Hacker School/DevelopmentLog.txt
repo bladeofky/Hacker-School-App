@@ -1,0 +1,20 @@
+--------------
+1-21-2015
+--------------
+
+Next steps: Integrate RestKit
+Eventually: Implement offline caching
+
+*********** GIT COMMIT: Added Development Log ***********
+*********** GIT COMMIT: Added a Login view controller. Successfully retrieved data from Hacker School API ***********
+
+- Succeeded in retrieving information on current logged in user
+- Setup AW_LoginViewC to present itself from AW_UserMenuViewController if there are no accounts in the OAuth2AccountStore
+- Added AW_UserMenuViewController
+    + This will eventually go into a slide out sidebar menu
+- Added AW_LoginViewController
+
+--------------
+Previous
+--------------
+Undocumented
