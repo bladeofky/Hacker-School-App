@@ -15,6 +15,12 @@
 		E7B53F141A6EB94C00931BEC /* Hacker_SchoolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B53F131A6EB94C00931BEC /* Hacker_SchoolTests.m */; };
 		E7B53F2B1A6EBA6900931BEC /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B53F261A6EBA5A00931BEC /* libOAuth2Client.a */; };
 		E7B53F2D1A6EBA6E00931BEC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B53F2C1A6EBA6E00931BEC /* Security.framework */; };
+		E7B53F311A70046100931BEC /* AW_LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B53F2F1A70046100931BEC /* AW_LoginViewController.m */; };
+		E7B53F321A70046100931BEC /* AW_LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7B53F301A70046100931BEC /* AW_LoginViewController.xib */; };
+		E7B53F361A7006B900931BEC /* AW_PeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B53F341A7006B900931BEC /* AW_PeopleViewController.m */; };
+		E7B53F371A7006B900931BEC /* AW_PeopleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7B53F351A7006B900931BEC /* AW_PeopleViewController.xib */; };
+		E7B53F3B1A70161F00931BEC /* AW_UserMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B53F391A70161F00931BEC /* AW_UserMenuViewController.m */; };
+		E7B53F3C1A70161F00931BEC /* AW_UserMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7B53F3A1A70161F00931BEC /* AW_UserMenuViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +76,15 @@
 		E7B53F131A6EB94C00931BEC /* Hacker_SchoolTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hacker_SchoolTests.m; sourceTree = "<group>"; };
 		E7B53F1D1A6EBA5A00931BEC /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = OAuth2Client/OAuth2Client.xcodeproj; sourceTree = "<group>"; };
 		E7B53F2C1A6EBA6E00931BEC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		E7B53F2E1A70046100931BEC /* AW_LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_LoginViewController.h; sourceTree = "<group>"; };
+		E7B53F2F1A70046100931BEC /* AW_LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_LoginViewController.m; sourceTree = "<group>"; };
+		E7B53F301A70046100931BEC /* AW_LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AW_LoginViewController.xib; sourceTree = "<group>"; };
+		E7B53F331A7006B900931BEC /* AW_PeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_PeopleViewController.h; sourceTree = "<group>"; };
+		E7B53F341A7006B900931BEC /* AW_PeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_PeopleViewController.m; sourceTree = "<group>"; };
+		E7B53F351A7006B900931BEC /* AW_PeopleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AW_PeopleViewController.xib; sourceTree = "<group>"; };
+		E7B53F381A70161F00931BEC /* AW_UserMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_UserMenuViewController.h; sourceTree = "<group>"; };
+		E7B53F391A70161F00931BEC /* AW_UserMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_UserMenuViewController.m; sourceTree = "<group>"; };
+		E7B53F3A1A70161F00931BEC /* AW_UserMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AW_UserMenuViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +134,15 @@
 				E7B53EFC1A6EB94B00931BEC /* AppDelegate.m */,
 				E7B53EFE1A6EB94B00931BEC /* ViewController.h */,
 				E7B53EFF1A6EB94B00931BEC /* ViewController.m */,
+				E7B53F381A70161F00931BEC /* AW_UserMenuViewController.h */,
+				E7B53F391A70161F00931BEC /* AW_UserMenuViewController.m */,
+				E7B53F3A1A70161F00931BEC /* AW_UserMenuViewController.xib */,
+				E7B53F331A7006B900931BEC /* AW_PeopleViewController.h */,
+				E7B53F341A7006B900931BEC /* AW_PeopleViewController.m */,
+				E7B53F351A7006B900931BEC /* AW_PeopleViewController.xib */,
+				E7B53F2E1A70046100931BEC /* AW_LoginViewController.h */,
+				E7B53F2F1A70046100931BEC /* AW_LoginViewController.m */,
+				E7B53F301A70046100931BEC /* AW_LoginViewController.xib */,
 				E7B53F041A6EB94B00931BEC /* Images.xcassets */,
 				E7B53F061A6EB94C00931BEC /* LaunchScreen.xib */,
 				E7B53EF71A6EB94B00931BEC /* Supporting Files */,
@@ -273,8 +297,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7B53F321A70046100931BEC /* AW_LoginViewController.xib in Resources */,
 				E7B53F081A6EB94C00931BEC /* LaunchScreen.xib in Resources */,
 				E7B53F051A6EB94B00931BEC /* Images.xcassets in Resources */,
+				E7B53F3C1A70161F00931BEC /* AW_UserMenuViewController.xib in Resources */,
+				E7B53F371A7006B900931BEC /* AW_PeopleViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,8 +319,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7B53F361A7006B900931BEC /* AW_PeopleViewController.m in Sources */,
 				E7B53F001A6EB94B00931BEC /* ViewController.m in Sources */,
 				E7B53EFD1A6EB94B00931BEC /* AppDelegate.m in Sources */,
+				E7B53F311A70046100931BEC /* AW_LoginViewController.m in Sources */,
+				E7B53F3B1A70161F00931BEC /* AW_UserMenuViewController.m in Sources */,
 				E7B53EFA1A6EB94B00931BEC /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

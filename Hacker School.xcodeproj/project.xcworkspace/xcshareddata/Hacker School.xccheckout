@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C2562DCC-343B-46E0-BEB1-5C08CC13EE7B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Hacker School</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C3C7974FF0D0805D6D7ADDB023DE20F14BCCB9BD</key>
+		<string>https://github.com/bladeofky/Hacker-School-App.git</string>
+		<key>EB5674475998A0DD33CD59076628ED3B93CBE9CA</key>
+		<string>git://github.com/nxtbgthng/OAuth2Client.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Hacker School.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C3C7974FF0D0805D6D7ADDB023DE20F14BCCB9BD</key>
+		<string>../..</string>
+		<key>EB5674475998A0DD33CD59076628ED3B93CBE9CA</key>
+		<string>../..OAuth2Client/</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/bladeofky/Hacker-School-App.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C3C7974FF0D0805D6D7ADDB023DE20F14BCCB9BD</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C3C7974FF0D0805D6D7ADDB023DE20F14BCCB9BD</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Hacker%20School</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>EB5674475998A0DD33CD59076628ED3B93CBE9CA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>OAuth2Client</string>
+		</dict>
+	</array>
+</dict>
+</plist>
