@@ -13,21 +13,17 @@
 @interface AW_PeopleViewController ()
 
 
-
-
 @end
 
 
 
 @implementation AW_PeopleViewController
 
-
-
 #pragma mark - View Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    self.view.backgroundColor = [UIColor redColor];
 }
 
 

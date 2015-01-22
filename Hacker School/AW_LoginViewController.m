@@ -21,8 +21,8 @@
     
     // Register self with notification center to dismiss self when returning from login through external browser
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(appDidBecomeActive)
-                                                 name:UIApplicationDidBecomeActiveNotification
+                                             selector:@selector(didAddNXOAuth2Account)
+                                                 name:NXOAuth2AccountStoreAccountsDidChangeNotification
                                                object:nil];
 }
 
@@ -31,7 +31,7 @@
 }
 
 #pragma mark - Notification Responders
-- (void)appDidBecomeActive
+- (void)didAddNXOAuth2Account
 {
     NSArray *accounts = [[NXOAuth2AccountStore sharedStore]accounts];
     

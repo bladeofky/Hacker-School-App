@@ -1,6 +1,17 @@
---------------
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+1-22-2015
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+*********** GIT COMMIT: Added AW_MainViewController class ***********
+
+- Changed AW_LoginViewController to react to NXOAuth2AccountStoreAccountsDidChange notification to dismiss AW_LoginViewController
+- Created AW_MainViewController and moved login responsibilities to there from AW_UserMenuViewController
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
 1-21-2015
---------------
+--------------------------------------------------------------------------------------------------------------------------------------------
 
 Next steps: Set up AW_UserMenuController.xib
 Eventually: Implement offline caching
@@ -19,7 +30,7 @@ Eventually: Implement offline caching
     + This will eventually go into a slide out sidebar menu
 - Added AW_LoginViewController
 
---------------
+--------------------------------------------------------------------------------------------------------------------------------------------
 Previous
---------------
+--------------------------------------------------------------------------------------------------------------------------------------------
 Undocumented

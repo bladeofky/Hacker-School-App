@@ -22,6 +22,7 @@
 		E7B53F3C1A70161F00931BEC /* AW_UserMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7B53F3A1A70161F00931BEC /* AW_UserMenuViewController.xib */; };
 		E7B53F3E1A70192700931BEC /* DevelopmentLog.txt in Resources */ = {isa = PBXBuildFile; fileRef = E7B53F3D1A70192700931BEC /* DevelopmentLog.txt */; };
 		E7B53F411A703EA900931BEC /* AW_Person.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B53F401A703EA900931BEC /* AW_Person.m */; };
+		E7FB04421A7185880062CD47 /* AW_MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB04411A7185880062CD47 /* AW_MainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,8 @@
 		E7B53F3D1A70192700931BEC /* DevelopmentLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DevelopmentLog.txt; sourceTree = "<group>"; };
 		E7B53F3F1A703EA900931BEC /* AW_Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_Person.h; sourceTree = "<group>"; };
 		E7B53F401A703EA900931BEC /* AW_Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_Person.m; sourceTree = "<group>"; };
+		E7FB04401A7185880062CD47 /* AW_MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_MainViewController.h; sourceTree = "<group>"; };
+		E7FB04411A7185880062CD47 /* AW_MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_MainViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +140,8 @@
 				E7B53EFC1A6EB94B00931BEC /* AppDelegate.m */,
 				E7B53F3F1A703EA900931BEC /* AW_Person.h */,
 				E7B53F401A703EA900931BEC /* AW_Person.m */,
+				E7FB04401A7185880062CD47 /* AW_MainViewController.h */,
+				E7FB04411A7185880062CD47 /* AW_MainViewController.m */,
 				E7B53F381A70161F00931BEC /* AW_UserMenuViewController.h */,
 				E7B53F391A70161F00931BEC /* AW_UserMenuViewController.m */,
 				E7B53F3A1A70161F00931BEC /* AW_UserMenuViewController.xib */,
@@ -329,6 +334,7 @@
 				E7B53F311A70046100931BEC /* AW_LoginViewController.m in Sources */,
 				E7B53F3B1A70161F00931BEC /* AW_UserMenuViewController.m in Sources */,
 				E7B53EFA1A6EB94B00931BEC /* main.m in Sources */,
+				E7FB04421A7185880062CD47 /* AW_MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

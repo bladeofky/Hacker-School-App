@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AW_PeopleViewController : UIViewController
+@interface AW_PeopleViewController : UIViewController <UITableViewDataSource>
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

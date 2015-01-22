@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "AW_UserMenuViewController.h"
+#import "AW_MainViewController.h"
 #import "NXOAuth2.h"
 
 @interface AppDelegate ()
@@ -56,8 +56,8 @@
     
     
     // ---- Set up root view controller ----
-    AW_UserMenuViewController *userVC = [[AW_UserMenuViewController alloc]init];
-    self.window.rootViewController = userVC;
+    AW_MainViewController *mainVC = [[AW_MainViewController alloc]init];
+    self.window.rootViewController = mainVC;
     
     [self.window makeKeyAndVisible];
     return YES;
