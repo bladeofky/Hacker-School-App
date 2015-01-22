@@ -44,6 +44,7 @@
 -(void)setCurrentUser:(AW_Person *)currentUser
 {
     _currentUser = currentUser;
+    NSLog(@"Current User: %@", _currentUser);
 }
 
 #pragma mark - View Lifecycle
@@ -51,9 +52,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    // --- Set up center view ---
-    self.peopleVC = [[AW_PeopleViewController alloc]init];
-    [self displayCenterController:self.peopleVC];
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -65,6 +64,8 @@
         [self presentViewController:loginVC animated:YES completion:nil];
     }
     else {
+        // *** ANYTHING THAT HAPPENS INSIDE THIS ELSE IS GUARANTEED TO HAVE A USER ACCOUNT ***
+        
         // --- Get current user data from API and set to self.currentUser ---
         [NXOAuth2Request performMethod:@"GET"
                             onResource:[NSURL URLWithString:@"https://www.hackerschool.com//api/v1/people/me"]
@@ -83,6 +84,9 @@
                            }
                        }];
         
+        // --- Set up center view ---
+        self.peopleVC = [[AW_PeopleViewController alloc]init];
+        [self displayCenterController:self.peopleVC];
     }
 }
 

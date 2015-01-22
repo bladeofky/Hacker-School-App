@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AW_PeopleViewController : UIViewController <UITableViewDataSource>
+@class NXOAuth2Account;
+
+@interface AW_PeopleViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

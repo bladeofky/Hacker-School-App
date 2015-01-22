@@ -10,7 +10,7 @@
  ----------------------------
  Hacker School API
  ----------------------------
- Using [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error]; where data is the
+ Using [NSJSONSerialization JSONObjectWithData:data options:0 error:&error]; where data is the
  response from the Hacker School API results in the following keys and value types:
  
  "id"                   :   NSNumber
@@ -42,35 +42,36 @@
     
     if (self) {
         NSError *error;
-        NSDictionary *userInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        NSDictionary *userInfo = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
         
         if (error) {
             NSLog(@"Error: %@", [error localizedDescription]);
+            return nil;
         }
-        else {
-            _idNumber = userInfo[@"id"];
-            _firstName = userInfo[@"first_name"];
-            _middleName = userInfo[@"middle_name"];
-            _lastName = userInfo[@"last_name"];
-            _email = userInfo[@"email"];
-            _twitterUserName = userInfo[@"twitter"];
-            _githubUserName = userInfo[@"github"];
-            _batchID = userInfo[@"batch_id"];
-            _phoneNumber = userInfo[@"phone_number"];
-            _job = userInfo[@"job"];
-            _skills = userInfo[@"skills"];
-            _image = [UIImage imageNamed:@"defaultPersonImage"];
-            
-            // Download the image asynchronously
-            NSURL *imageURL = [NSURL URLWithString:userInfo[@"image"]];
-            NSURLSessionTask *retrieveImageTask = [[NSURLSession sharedSession] dataTaskWithURL:imageURL
-                                                                              completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                                                  self.image = [UIImage imageWithData:data];
-                                                                                  [self.delegate person:self didDownloadImage:self.image];
-                                                                              }];
-            [retrieveImageTask resume];
-            
-        }
+
+        _idNumber = userInfo[@"id"];
+        _firstName = userInfo[@"first_name"];
+        _middleName = userInfo[@"middle_name"];
+        _lastName = userInfo[@"last_name"];
+        _email = userInfo[@"email"];
+        _twitterUserName = userInfo[@"twitter"];
+        _githubUserName = userInfo[@"github"];
+        _batchID = userInfo[@"batch_id"];
+        _phoneNumber = userInfo[@"phone_number"];
+        _job = userInfo[@"job"];
+        _skills = userInfo[@"skills"];
+        _image = [UIImage imageNamed:@"defaultPersonImage"];
+        
+        // Download the image asynchronously
+        NSURL *imageURL = [NSURL URLWithString:userInfo[@"image"]];
+        NSURLSessionTask *retrieveImageTask = [[NSURLSession sharedSession] dataTaskWithURL:imageURL
+                                                                          completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                                              self.image = [UIImage imageWithData:data];
+                                                                              [self.delegate person:self didDownloadImage:self.image];
+                                                                          }];
+        [retrieveImageTask resume];
+        
+        
     } //end if self
     
     return self;
