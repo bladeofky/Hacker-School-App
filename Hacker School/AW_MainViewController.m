@@ -20,6 +20,7 @@
 @property (nonatomic, strong) __block AW_Person *currentUser;
 
 @property (nonatomic, strong) AW_PeopleViewController *peopleVC;
+@property (nonatomic, strong) UIViewController *centerVC;
 
 @end
 
@@ -86,7 +87,8 @@
         
         // --- Set up center view ---
         self.peopleVC = [[AW_PeopleViewController alloc]init];
-        [self displayCenterController:self.peopleVC];
+        self.centerVC = [[UINavigationController alloc]initWithRootViewController:self.peopleVC];
+        [self displayCenterController:self.centerVC];
     }
 }
 

@@ -45,12 +45,24 @@
     
     if (self) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];    // This is the format returned from Hacker School API
+        dateFormatter.dateFormat = @"yyyy-MM-dd";    // This is the format returned from Hacker School API
         
         _idNumber = batchInfo[@"id"];
-        _name = batchInfo[@"name"];
         _startDate = [dateFormatter dateFromString:batchInfo[@"start_date"]];
         _endDate = [dateFormatter dateFromString:batchInfo[@"end_date"]];
+        
+        dateFormatter.dateFormat = @"yyyy";
+        _year = [dateFormatter stringFromDate:_startDate];
+        
+        // Parse name
+        NSString *apiNameString = batchInfo[@"name"];
+        _name = [apiNameString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@" %@", _year] withString:@""];
+        _name = [_name stringByReplacingOccurrencesOfString:@"," withString:@""];
+        _name = [_name stringByReplacingOccurrencesOfString:@"[" withString:@" "];
+        _name = [_name stringByReplacingOccurrencesOfString:@"]" withString:@""];
+        
+        NSArray *tokens = [_name componentsSeparatedByString:@" "];
+        _season = tokens[0];
     }
     
     return self;

@@ -12,9 +12,12 @@
 
 @property (nonatomic, strong) NSNumber *idNumber;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *year;
+@property (nonatomic, strong) NSString *season; // Possibly should make this enum
 @property (nonatomic, strong) NSDate *startDate;
 @property (nonatomic, strong) NSDate *endDate;
 @property (nonatomic, strong) NSArray *people;
+
 
 - (instancetype)initWithJSONObject:(NSDictionary *)batchInfo;   //designated
 - (instancetype)initWithAPIData:(NSData *)APIData;

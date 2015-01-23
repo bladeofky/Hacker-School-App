@@ -6,8 +6,11 @@
 //  Copyright (c) 2015 Alan Wang. All rights reserved.
 //
 
+#import "AW_BatchHeaderView.h"
+
 #import "AW_PeopleViewController.h"
 #import "AW_LoginViewController.h"
+
 #import "NXOAuth2.h"
 
 #import "AW_Batch.h"
@@ -61,8 +64,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor redColor];
-    
+    // --- Set up Nav Bar ---
+    self.navigationItem.title = @"People";
+    // TODO: Set up left button to pull out slide menu
+    // TODO: Set up right button to refresh
+   
+    // --- Initial download ---
     [self downloadListOfBatches];
 }
 
@@ -115,14 +122,14 @@
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
-//    return [self.batches count];
+//    return 1;
+    return [self.batches count];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.batches count];
-//    return 0;
+//    return [self.batches count];
+    return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -134,23 +141,21 @@
     return cell;
 }
 
-//#pragma mark - UITableViewDelegate
-//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 44;
-//}
-//
-//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-//    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-//    [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-//    [button setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-//    [button setTitle:self.batches[section] forState:UIControlStateNormal];
-//    
-//    [view addSubview:button];
-//    
-//    return view;
-//}
+#pragma mark - UITableViewDelegate
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 60;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    AW_Batch *batch = self.batches[section];
+    
+    AW_BatchHeaderView *view = [[AW_BatchHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
+    view.batchNameLabel.text = batch.name;
+    view.batchYearLabel.text = batch.year;
+    
+    return view;
+}
 
 @end

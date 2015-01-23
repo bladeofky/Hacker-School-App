@@ -1,3 +1,13 @@
+--------------------------------------------------------------------------------------------------------------------------------------------
+1-23-2015
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+*********** GIT COMMIT: Modified AW_Batch and AW_BatchHeaderView ***********
+
+- Created AW_BatchHeaderView to be the view displayed by the section headers in AW_PeopleViewController
+- Added additional fields to AW_Batch and cleaned up _name
+- Successfully retrieved batch info and displayed it as section headers in AW_PeopleViewController
+
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 1-22-2015
