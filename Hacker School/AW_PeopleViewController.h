@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AW_BatchHeaderView.h"
 
 @class NXOAuth2Account;
 
-@interface AW_PeopleViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface AW_PeopleViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, AW_BatchHeaderViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

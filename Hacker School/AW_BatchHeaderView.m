@@ -7,8 +7,16 @@
 //
 
 #import "AW_BatchHeaderView.h"
+#import "AW_Batch.h"
 
 @implementation AW_BatchHeaderView
+#pragma mark - Accessors
+- (void)setBatch:(AW_Batch *)batch
+{
+    _batch = batch;
+    _batchNameLabel.text = batch.name;
+    _batchYearLabel.text = batch.year;
+}
 
 #pragma mark - Initializers
 -(instancetype)initWithFrame:(CGRect)frame
@@ -55,9 +63,37 @@
         [self addConstraint:proportionConstraint];
         [self addConstraints:batchNameLabelHorizontalConstraints];
         [self addConstraints:verticalConstraints];
+        
+        // Add gesture recognizers
+        UIGestureRecognizer *singleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleSingleTap:)];
+        [self addGestureRecognizer:singleTapGesture];
     }
     
     return self;
+}
+
+#pragma mark - Comparisons
+-(BOOL)isEqual:(id)object
+{
+    BOOL output = NO;
+    
+    if ([object isKindOfClass:[self class]]) {
+        AW_Batch *batch = [(AW_BatchHeaderView *)object batch];
+        if ([self.batch isEqual:batch]) {
+            output = YES;
+        }
+    }
+    
+    return output;
+}
+
+#pragma mark - Event Handling
+- (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
+{
+    // Forward event to delegate
+    [self.delegate didTapBatchHeader:self];
+    NSLog(@"AW_BatchHeaderView did detect tap");
+    // TODO: Animate tap feedback
 }
 
 

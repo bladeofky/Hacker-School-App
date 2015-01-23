@@ -145,6 +145,7 @@
 				E7B53EFB1A6EB94B00931BEC /* AppDelegate.h */,
 				E7B53EFC1A6EB94B00931BEC /* AppDelegate.m */,
 				E7FB04481A719BF60062CD47 /* Model */,
+				E7FB044F1A72D1E60062CD47 /* Views */,
 				E7FB04491A719C0F0062CD47 /* View Controllers */,
 				E7B53F041A6EB94B00931BEC /* Images.xcassets */,
 				E7B53F061A6EB94C00931BEC /* LaunchScreen.xib */,
@@ -211,13 +212,20 @@
 				E7B53F331A7006B900931BEC /* AW_PeopleViewController.h */,
 				E7B53F341A7006B900931BEC /* AW_PeopleViewController.m */,
 				E7B53F351A7006B900931BEC /* AW_PeopleViewController.xib */,
-				E7FB044C1A71C0340062CD47 /* AW_BatchHeaderView.h */,
-				E7FB044D1A71C0340062CD47 /* AW_BatchHeaderView.m */,
 				E7B53F2E1A70046100931BEC /* AW_LoginViewController.h */,
 				E7B53F2F1A70046100931BEC /* AW_LoginViewController.m */,
 				E7B53F301A70046100931BEC /* AW_LoginViewController.xib */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		E7FB044F1A72D1E60062CD47 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E7FB044C1A71C0340062CD47 /* AW_BatchHeaderView.h */,
+				E7FB044D1A71C0340062CD47 /* AW_BatchHeaderView.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Alan Wang. All rights reserved.
 //
 
-#import "AW_BatchHeaderView.h"
-
 #import "AW_PeopleViewController.h"
 #import "AW_LoginViewController.h"
 
@@ -35,6 +33,7 @@
 @interface AW_PeopleViewController ()
 
 @property (nonatomic, strong) NSArray *batches;
+@property (nonatomic, strong) NSMutableArray *isSectionOpenArray;   // Tracks which sections are opened (index: section, value: BOOL)
 @property (nonatomic, strong) NXOAuth2Account *userAccount;
 
 @end
@@ -58,6 +57,15 @@
     }
     
     return _userAccount;
+}
+
+-(NSMutableArray *)isSectionOpenArray
+{
+    if (!_isSectionOpenArray) {
+        _isSectionOpenArray = [[NSMutableArray alloc]init];
+    }
+    
+    return _isSectionOpenArray;
 }
 
 #pragma mark - View Lifecycle
@@ -105,14 +113,15 @@
         return;
     }
     
-    NSMutableArray *temp = [[NSMutableArray alloc]init];
+    NSMutableArray *tempBatches = [[NSMutableArray alloc]init];
     
     for (NSDictionary *batchInfo in batchInfos) {
         AW_Batch *batch = [[AW_Batch alloc]initWithJSONObject:batchInfo];
-        [temp addObject:batch];
+        [tempBatches addObject:batch];
+        [self.isSectionOpenArray addObject:@NO];
     }
     
-    self.batches = [temp copy];
+    self.batches = [tempBatches copy];
     
     NSLog(@"Batches: %@", self.batches);
     
@@ -122,20 +131,27 @@
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//    return 1;
     return [self.batches count];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    return [self.batches count];
-    return 0;
+    NSInteger numRows;
+    
+    if ([self.isSectionOpenArray[section] isEqual:@YES]) {
+        numRows = 1;
+    }
+    else {
+        numRows = 0;
+    }
+    
+    return numRows;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc]init];
-    AW_Batch *batch = self.batches[indexPath.row];
+    AW_Batch *batch = self.batches[indexPath.section];
     cell.textLabel.text = batch.name;
     
     return cell;
@@ -152,10 +168,44 @@
     AW_Batch *batch = self.batches[section];
     
     AW_BatchHeaderView *view = [[AW_BatchHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
-    view.batchNameLabel.text = batch.name;
-    view.batchYearLabel.text = batch.year;
+    view.batch = batch;
+    view.delegate = self;
     
     return view;
+}
+
+#pragma mark - AW_BatchHeaderDelegate
+-(void)didTapBatchHeader:(AW_BatchHeaderView *)batchHeaderView
+{
+    NSUInteger sectionOfTappedHeader;
+    
+    // Find the section that the batchHeaderView belongs to
+    for (int section = 0; section < [self.tableView numberOfSections]; section++) {
+        UIView *viewForSectionHeader = [self tableView:self.tableView viewForHeaderInSection:section];
+        if ([viewForSectionHeader isEqual:batchHeaderView]) {
+            sectionOfTappedHeader = section;
+            break;
+        }
+    }
+    
+    if ([self.isSectionOpenArray[sectionOfTappedHeader] isEqual:@NO]) {
+        // Section is not currently open. Open section:
+        // Add a row to the selected section
+        [self.tableView beginUpdates];
+        self.isSectionOpenArray[sectionOfTappedHeader] = @YES;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:sectionOfTappedHeader];
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+        [self.tableView endUpdates];
+    }
+    else {
+        // Section is currently open. Close section:
+        [self.tableView beginUpdates];
+        self.isSectionOpenArray[sectionOfTappedHeader] = @NO;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:sectionOfTappedHeader];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+        [self.tableView endUpdates];
+    }
+   
 }
 
 @end

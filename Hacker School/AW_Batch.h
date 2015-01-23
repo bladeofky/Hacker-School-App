@@ -11,6 +11,7 @@
 @interface AW_Batch : NSObject
 
 @property (nonatomic, strong) NSNumber *idNumber;
+@property (nonatomic, strong) NSString *apiName;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *year;
 @property (nonatomic, strong) NSString *season; // Possibly should make this enum

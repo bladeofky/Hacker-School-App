@@ -2,6 +2,13 @@
 1-23-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Implemented row addition and deletion in AW_PeopleViewController ***********
+
+- Added comparison methods to AW_Batch and AW_BatchHeaderView
+- Implemented touch event handling for AW_BatchHeaderView
+- Created AW_BatchHeaderViewDelegate protocol
+- AW_PeopleViewController successfully adds and removes rows on AW_BatchHeaderView tap
+
 *********** GIT COMMIT: Modified AW_Batch and AW_BatchHeaderView ***********
 
 - Created AW_BatchHeaderView to be the view displayed by the section headers in AW_PeopleViewController

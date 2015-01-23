@@ -8,9 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+@class AW_BatchHeaderView, AW_Batch;
+
+@protocol AW_BatchHeaderViewDelegate <NSObject>
+
+@optional
+- (void)didTapBatchHeader:(AW_BatchHeaderView *)batchHeaderView;
+
+@end
+
 @interface AW_BatchHeaderView : UIView
 
 @property (strong, nonatomic) UILabel *batchNameLabel;
 @property (strong, nonatomic) UILabel *batchYearLabel;
+@property (weak, nonatomic) AW_Batch *batch;
+
+@property (weak, nonatomic) id<AW_BatchHeaderViewDelegate> delegate;
 
 @end

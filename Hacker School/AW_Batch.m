@@ -55,8 +55,8 @@
         _year = [dateFormatter stringFromDate:_startDate];
         
         // Parse name
-        NSString *apiNameString = batchInfo[@"name"];
-        _name = [apiNameString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@" %@", _year] withString:@""];
+        _apiName = batchInfo[@"name"];
+        _name = [_apiName stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@" %@", _year] withString:@""];
         _name = [_name stringByReplacingOccurrencesOfString:@"," withString:@""];
         _name = [_name stringByReplacingOccurrencesOfString:@"[" withString:@" "];
         _name = [_name stringByReplacingOccurrencesOfString:@"]" withString:@""];
@@ -75,5 +75,20 @@
     return nil;
 }
 
+#pragma mark - Comparisons
+// Equality based on if batch idNumber are equal
+-(BOOL)isEqual:(id)object
+{
+    BOOL output = NO;
+    
+    if ([object isKindOfClass:[self class]]) {
+        NSNumber *batchID = [(AW_Batch *)object idNumber];
+        if ([batchID isEqualToNumber:self.idNumber]) {
+            output = YES;
+        }
+    }
+    
+    return output;
+}
 
 @end
