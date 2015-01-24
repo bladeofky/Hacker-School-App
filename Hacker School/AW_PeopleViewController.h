@@ -11,7 +11,7 @@
 
 @class NXOAuth2Account;
 
-@interface AW_PeopleViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, AW_BatchHeaderViewDelegate>
+@interface AW_PeopleViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, AW_BatchHeaderViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

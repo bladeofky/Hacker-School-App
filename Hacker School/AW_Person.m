@@ -36,36 +36,29 @@
 @implementation AW_Person
 
 #pragma mark - Initializers
--(instancetype)initWithHackerSchoolAPIData:(NSData *)data
+-(instancetype)initWithJSONObject:(NSDictionary *)personInfo
 {
     self = [super init];
     
     if (self) {
-        NSError *error;
-        NSDictionary *userInfo = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-        
-        if (error) {
-            NSLog(@"Error: %@", [error localizedDescription]);
-            return nil;
-        }
-
-        _idNumber = userInfo[@"id"];
-        _firstName = userInfo[@"first_name"];
-        _middleName = userInfo[@"middle_name"];
-        _lastName = userInfo[@"last_name"];
-        _email = userInfo[@"email"];
-        _twitterUserName = userInfo[@"twitter"];
-        _githubUserName = userInfo[@"github"];
-        _batchID = userInfo[@"batch_id"];
-        _phoneNumber = userInfo[@"phone_number"];
-        _job = userInfo[@"job"];
-        _skills = userInfo[@"skills"];
+        _idNumber = personInfo[@"id"];
+        _firstName = personInfo[@"first_name"];
+        _middleName = personInfo[@"middle_name"];
+        _lastName = personInfo[@"last_name"];
+        _email = personInfo[@"email"];
+        _twitterUserName = personInfo[@"twitter"];
+        _githubUserName = personInfo[@"github"];
+        _batchID = personInfo[@"batch_id"];
+        _phoneNumber = personInfo[@"phone_number"];
+        _job = personInfo[@"job"];
+        _skills = personInfo[@"skills"];
         _image = [UIImage imageNamed:@"defaultPersonImage"];
         
         // Download the image asynchronously
-        NSURL *imageURL = [NSURL URLWithString:userInfo[@"image"]];
+        NSURL *imageURL = [NSURL URLWithString:personInfo[@"image"]];
         NSURLSessionTask *retrieveImageTask = [[NSURLSession sharedSession] dataTaskWithURL:imageURL
                                                                           completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                                              NSLog(@"Did finish downloading image data for: %@ %@", _firstName, _lastName);
                                                                               self.image = [UIImage imageWithData:data];
                                                                               [self.delegate person:self didDownloadImage:self.image];
                                                                           }];
@@ -75,6 +68,19 @@
     } //end if self
     
     return self;
+}
+
+-(instancetype)initWithHackerSchoolAPIData:(NSData *)data
+{
+    NSError *error;
+    NSDictionary *personInfo = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    
+    if (error) {
+        NSLog(@"Error: %@", [error localizedDescription]);
+        return nil;
+    }
+    
+    return [self initWithJSONObject:personInfo];
 }
 
 -(instancetype)init

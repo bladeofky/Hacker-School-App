@@ -8,15 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "AW_PersonDelegate.h"
 
 @class AW_Batch, AW_Person;
-
-@protocol AW_PersonDelegate <NSObject>
-
-@optional
-- (void)person:(AW_Person *)person didDownloadImage:(UIImage *)image;
-
-@end
 
 @interface AW_Person : NSObject
 
@@ -35,7 +29,8 @@
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, weak) id<AW_PersonDelegate> delegate;
 
-- (instancetype)initWithHackerSchoolAPIData:(NSData *)data; // Designated
+- (instancetype)initWithJSONObject:(NSDictionary *)personInfo; // Designated
+- (instancetype)initWithHackerSchoolAPIData:(NSData *)data;
 
 @end
 

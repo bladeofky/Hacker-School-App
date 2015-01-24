@@ -1,4 +1,18 @@
 --------------------------------------------------------------------------------------------------------------------------------------------
+1-24-2015
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Next steps: Refactor and clean up code a bit.
+            Implement detailed profile view when user taps on a collection view cell.
+
+
+*********** GIT COMMIT: Implemented loading and display of people in batch ***********
+
+- Added AW_BatchCollectionTableViewCell, AW_BatchIndexedCollectionView, AW_PersonCollectionViewCell
+- Successfully requesting people for batch when an AW_BatchHeaderView is tapped.
+- Successfully displaying people in a collection view from within the table view cell.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
 1-23-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 

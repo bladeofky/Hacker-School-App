@@ -12,6 +12,11 @@
 #import "NXOAuth2.h"
 
 #import "AW_Batch.h"
+#import "AW_Person.h"
+
+#import "AW_BatchCollectionTableViewCell.h"
+#import "AW_BatchIndexedCollectionView.h"
+#import "AW_PersonCollectionViewCell.h"
 
 /*
  The People tableView performs as follows:
@@ -33,6 +38,7 @@
 @interface AW_PeopleViewController ()
 
 @property (nonatomic, strong) NSArray *batches;
+@property (nonatomic, strong) NSMutableDictionary *loadedBatches;   // Stores people in the batch (key: section in tableview, value: NSArray of AW_Person objects)
 @property (nonatomic, strong) NSMutableArray *isSectionOpenArray;   // Tracks which sections are opened (index: section, value: BOOL)
 @property (nonatomic, strong) NXOAuth2Account *userAccount;
 
@@ -68,6 +74,15 @@
     return _isSectionOpenArray;
 }
 
+-(NSMutableDictionary *)loadedBatches
+{
+    if (!_loadedBatches) {
+        _loadedBatches = [[NSMutableDictionary alloc]init];
+    }
+    
+    return _loadedBatches;
+}
+
 #pragma mark - View Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -76,6 +91,9 @@
     self.navigationItem.title = @"People";
     // TODO: Set up left button to pull out slide menu
     // TODO: Set up right button to refresh
+    
+    // --- Set up table view ---
+    [self.tableView registerClass:[AW_BatchCollectionTableViewCell class] forCellReuseIdentifier:@"AW_BatchCollectionTableViewCell"];
    
     // --- Initial download ---
     [self downloadListOfBatches];
@@ -103,6 +121,7 @@
                    }];
 }
 
+// Processes the raw data returned from the Hacker School API to create AW_Batch objects
 - (void)processListOfBatches:(NSData *)responseData
 {
     NSError *error;
@@ -128,6 +147,41 @@
     [self.tableView reloadData];
 }
 
+// Processes the raw data returned from the Hacker School API to create an NSArray of AW_Person objects
+// Adds this NSArray to the self.loadedBatches dictionary with a key corresponding to the batch's section in the table view
+- (void)processPeopleInBatch:(NSData *)responseData forSection:(NSUInteger)section
+{
+    // Translate data into JSON Object
+    NSError *error;
+    NSArray *personInfos = [NSJSONSerialization JSONObjectWithData:responseData
+                                                           options:0
+                                                             error:&error];
+    if (error) {
+        NSLog(@"Error: %@", [error localizedDescription]);
+        return;
+    }
+    
+    // Get the tableview cell this batch belongs to
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
+    AW_BatchCollectionTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    // Generate array of AW_Person objects
+    NSMutableArray *tempPeopleArray = [[NSMutableArray alloc]init];
+    
+    for (NSDictionary *personInfo in personInfos) {
+        AW_Person *person = [[AW_Person alloc]initWithJSONObject:personInfo];
+        [tempPeopleArray addObject:person];
+    }
+    
+    NSLog(@"Section %lu batch contains: %@", (unsigned long)section, tempPeopleArray);
+    // Add array to dictionary
+    NSNumber *sectionWrapper = [NSNumber numberWithInteger:section];
+    self.loadedBatches[sectionWrapper] = [tempPeopleArray copy];
+    
+    [cell.collectionView reloadData];
+    [self.tableView reloadData];
+}
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -148,11 +202,16 @@
     return numRows;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+-(AW_BatchCollectionTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc]init];
     AW_Batch *batch = self.batches[indexPath.section];
-    cell.textLabel.text = batch.name;
+    
+    AW_BatchCollectionTableViewCell *cell = [[AW_BatchCollectionTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault
+                                                                                  reuseIdentifier:@"AW_BatchCollectionTableViewCell"
+                                                                                            batch:batch];
+    cell.collectionView.delegate = self;
+    cell.collectionView.dataSource = self;
+    cell.collectionView.index = indexPath.section;
     
     return cell;
 }
@@ -173,6 +232,57 @@
     
     return view;
 }
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Calculate height of collection view
+    NSNumber *batchSectionWrapper = [NSNumber numberWithInteger:indexPath.section];
+    NSArray *peopleInBatch = self.loadedBatches[batchSectionWrapper];
+    NSUInteger numberOfPeople = [peopleInBatch count];
+    NSUInteger numberOfRows = numberOfPeople - (numberOfPeople / 2);
+    
+    // Information from AW_BatchCollectionTableViewCell's flowlayout
+    // TODO: Couple this information somehow
+    NSUInteger topInset = 20;
+    NSUInteger bottomInset = 20;
+    NSUInteger spaceBetweenRows = 20;
+    NSUInteger heightOfCell = 160;
+    
+    NSUInteger totalHeight = topInset + ((numberOfRows - 1) * spaceBetweenRows) + (numberOfRows * heightOfCell) + bottomInset;
+    
+    return totalHeight;
+}
+
+#pragma mark - UICollectionViewDataSource
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+-(NSInteger)collectionView:(AW_BatchIndexedCollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    NSNumber *wrapper = [NSNumber numberWithInteger:collectionView.index];
+    NSArray *peopleInBatch = self.loadedBatches[wrapper];   // Will return nil if section is not found among dictionary's keys
+    
+    return [peopleInBatch count];
+}
+
+-(AW_PersonCollectionViewCell *)collectionView:(AW_BatchIndexedCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    AW_PersonCollectionViewCell *personCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AW_PersonCollectionViewCell.h" forIndexPath:indexPath];
+    
+    NSNumber *batchSectionWrapper = [NSNumber numberWithInteger:collectionView.index];
+    NSArray *peopleInBatch = self.loadedBatches[batchSectionWrapper];
+    AW_Person *person = peopleInBatch[indexPath.row];
+    person.delegate = personCell;
+    
+    personCell.person = person;
+    
+    return personCell;
+}
+
+#pragma mark - UICollectionViewDelegate
 
 #pragma mark - AW_BatchHeaderDelegate
 -(void)didTapBatchHeader:(AW_BatchHeaderView *)batchHeaderView
@@ -196,6 +306,27 @@
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:sectionOfTappedHeader];
         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
         [self.tableView endUpdates];
+        
+        // Begin fetching the people in this batch from the API if it has not already been loaded
+        NSNumber *sectionOfTappedHeaderWrapper = [NSNumber numberWithInteger:sectionOfTappedHeader];
+        if (!self.loadedBatches[sectionOfTappedHeaderWrapper]) {
+            AW_Batch *batch = self.batches[sectionOfTappedHeader];
+            
+            NSNumber *batchID = batch.idNumber;
+            NSURL *resourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.hackerschool.com//api/v1/batches/%@/people", batchID]];
+            
+            [NXOAuth2Request performMethod:@"GET"
+                                onResource:resourceURL
+                           usingParameters:nil
+                               withAccount:self.userAccount
+                       sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+                           // Update progress bar if we have one
+                           // Intentionally left empty
+                       } responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error) {
+                           // Return the data to our view controller
+                           [self processPeopleInBatch:responseData forSection:indexPath.section];
+                       }];
+        }
     }
     else {
         // Section is currently open. Close section:
