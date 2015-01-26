@@ -29,12 +29,12 @@
         
         // Instantiate subviews
         _batchNameLabel = [[UILabel alloc]init];
-        _batchNameLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:18.0];
+        _batchNameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:20.0];
         _batchNameLabel.textAlignment = NSTextAlignmentCenter;
         _batchNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
         
         _batchYearLabel = [[UILabel alloc]init];
-        _batchYearLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0];
+        _batchYearLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:13.0];
         _batchYearLabel.textAlignment = NSTextAlignmentCenter;
         _batchYearLabel.translatesAutoresizingMaskIntoConstraints = NO;
         

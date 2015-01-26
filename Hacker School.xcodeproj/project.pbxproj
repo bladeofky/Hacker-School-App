@@ -104,6 +104,7 @@
 		E7FB04561A733F830062CD47 /* AW_PersonDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AW_PersonDelegate.h; sourceTree = "<group>"; };
 		E7FB045A1A7341E30062CD47 /* AW_PersonCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_PersonCollectionViewCell.h; sourceTree = "<group>"; };
 		E7FB045B1A7341E30062CD47 /* AW_PersonCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_PersonCollectionViewCell.m; sourceTree = "<group>"; };
+		E7FB045D1A76C62F0062CD47 /* AW_BatchHeaderViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_BatchHeaderViewDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +231,7 @@
 		E7FB044F1A72D1E60062CD47 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E7FB045D1A76C62F0062CD47 /* AW_BatchHeaderViewDelegate.h */,
 				E7FB044C1A71C0340062CD47 /* AW_BatchHeaderView.h */,
 				E7FB044D1A71C0340062CD47 /* AW_BatchHeaderView.m */,
 				E7FB04501A72F2620062CD47 /* AW_BatchCollectionTableViewCell.h */,
@@ -514,6 +516,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -530,6 +533,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

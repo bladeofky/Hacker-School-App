@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "AW_PersonDelegate.h"
 
+extern const NSUInteger PERSON_CELL_WIDTH;
+extern const NSUInteger PERSON_CELL_HEIGHT;
+
 @class AW_Person, AW_BatchIndexedCollectionView;
 
 @interface AW_PersonCollectionViewCell : UICollectionViewCell <AW_PersonDelegate>

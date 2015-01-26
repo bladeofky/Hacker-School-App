@@ -7,15 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AW_BatchHeaderViewDelegate.h"
 
 @class AW_BatchHeaderView, AW_Batch;
-
-@protocol AW_BatchHeaderViewDelegate <NSObject>
-
-@optional
-- (void)didTapBatchHeader:(AW_BatchHeaderView *)batchHeaderView;
-
-@end
 
 @interface AW_BatchHeaderView : UIView
 

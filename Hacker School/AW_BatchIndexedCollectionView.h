@@ -15,4 +15,6 @@
 @property (nonatomic) NSUInteger index;
 @property (nonatomic, weak) AW_Batch *batch;
 
++(UICollectionViewFlowLayout *)flowLayout;
+
 @end

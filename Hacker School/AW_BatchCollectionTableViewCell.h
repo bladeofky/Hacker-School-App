@@ -16,6 +16,6 @@
 @property (nonatomic, weak) AW_Batch *batch;
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier batch:(AW_Batch *)batch; //designated
--(UICollectionViewFlowLayout *)flowLayout;
+
 
 @end

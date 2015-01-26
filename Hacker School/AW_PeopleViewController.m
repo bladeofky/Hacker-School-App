@@ -239,16 +239,25 @@
     NSNumber *batchSectionWrapper = [NSNumber numberWithInteger:indexPath.section];
     NSArray *peopleInBatch = self.loadedBatches[batchSectionWrapper];
     NSUInteger numberOfPeople = [peopleInBatch count];
-    NSUInteger numberOfRows = numberOfPeople - (numberOfPeople / 2);
     
     // Information from AW_BatchCollectionTableViewCell's flowlayout
-    // TODO: Couple this information somehow
-    NSUInteger topInset = 20;
-    NSUInteger bottomInset = 20;
-    NSUInteger spaceBetweenRows = 20;
-    NSUInteger heightOfCell = 160;
+    UIEdgeInsets edgeInsets = [AW_BatchIndexedCollectionView flowLayout].sectionInset;
+    NSUInteger widthOfTableView = self.tableView.bounds.size.width;
     
-    NSUInteger totalHeight = topInset + ((numberOfRows - 1) * spaceBetweenRows) + (numberOfRows * heightOfCell) + bottomInset;
+    NSUInteger numberOfPeoplePerRow = (widthOfTableView - ((NSUInteger)edgeInsets.left + (NSUInteger)edgeInsets.right)) / PERSON_CELL_WIDTH;
+    NSUInteger numberOfRows;
+    
+    if ((numberOfPeople % numberOfPeoplePerRow)) {
+        // If is a remainder, add another row
+        numberOfRows = numberOfPeople/numberOfPeoplePerRow + 1;
+    }
+    else {
+        numberOfRows = numberOfPeople/numberOfPeoplePerRow;
+    }
+    
+    NSUInteger spaceBetweenRows = [AW_BatchIndexedCollectionView flowLayout].minimumLineSpacing;
+    
+    NSUInteger totalHeight = (NSUInteger)edgeInsets.top + ((numberOfRows - 1) * spaceBetweenRows) + (numberOfRows * PERSON_CELL_HEIGHT) + (NSUInteger)edgeInsets.bottom;
     
     return totalHeight;
 }

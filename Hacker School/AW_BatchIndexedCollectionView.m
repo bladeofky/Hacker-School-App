@@ -7,10 +7,22 @@
 //
 
 #import "AW_BatchIndexedCollectionView.h"
+#import "AW_PersonCollectionViewCell.h"
 
 #import "AW_Person.h"
 
 @implementation AW_BatchIndexedCollectionView
 
+#pragma mark - Miscellaneous
++(UICollectionViewFlowLayout *)flowLayout
+{
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
+    layout.sectionInset = UIEdgeInsetsMake(20, 20, 20, 20);
+    layout.itemSize = CGSizeMake(PERSON_CELL_WIDTH, PERSON_CELL_HEIGHT);
+    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    layout.minimumLineSpacing = 20;
+    
+    return layout;
+}
 
 @end

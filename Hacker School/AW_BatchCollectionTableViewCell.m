@@ -12,6 +12,7 @@
 
 @implementation AW_BatchCollectionTableViewCell
 
+#pragma mark - Initializers
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier batch:(AW_Batch *)batch
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -20,13 +21,13 @@
         _batch = batch;
         
         // Set up collection view layout
-        UICollectionViewFlowLayout *layout = [self flowLayout];
+        UICollectionViewFlowLayout *layout = [AW_BatchIndexedCollectionView flowLayout];
         
         // Set up collection view
         _collectionView = [[AW_BatchIndexedCollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
         _collectionView.batch = batch;
         [_collectionView registerClass:[AW_PersonCollectionViewCell class] forCellWithReuseIdentifier:@"AW_PersonCollectionViewCell.h"];
-        _collectionView.backgroundColor = [UIColor whiteColor];
+        _collectionView.backgroundColor = [UIColor lightGrayColor];
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.scrollEnabled = NO;
         [self.contentView addSubview:self.collectionView];
@@ -40,6 +41,7 @@
     return [self initWithStyle:style reuseIdentifier:reuseIdentifier batch:nil];
 }
 
+#pragma mark - View lifecycle
 -(void)layoutSubviews
 {
     [super layoutSubviews];
@@ -47,15 +49,6 @@
     self.collectionView.frame = self.contentView.bounds;
 }
 
--(UICollectionViewFlowLayout *)flowLayout
-{
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.sectionInset = UIEdgeInsetsMake(20, 30, 20, 30);
-    layout.itemSize = CGSizeMake(130, 160);
-    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    layout.minimumLineSpacing = 20;
-    
-    return layout;
-}
+
 
 @end
