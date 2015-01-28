@@ -1,4 +1,18 @@
 --------------------------------------------------------------------------------------------------------------------------------------------
+1-27-2015
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+*********** GIT COMMIT: Added AW_PersonDetailViewController. Displays basic info and bio. ***********
+
+- Implemented autolayout constraints of AW_PersonDetailViewController's view
+- Added basic info and bio to the content of AW_PersonDetailViewController
+- Added "bio" field to AW_Person
+- Implemented selection handling for AW_BatchIndexedCollectionView
+- Attempted to implement some auto-scrolling in AW_PeopleViewController, but this led to bugs. Currently the added code is commented out.
+    - Autoscroll should do two things:  1) If opening a section at the bottom of the table, scroll the table up
+                                        2) If closing a section, where the top of the section is above the current offset, scroll to top of section after closing.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
 1-26-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 Next steps: Implement detailed profile view when user taps on a collection view cell.

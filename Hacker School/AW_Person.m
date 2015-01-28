@@ -29,6 +29,7 @@
  "skills"               :   NSArray of NSStrings
  "image"                :   NSString (stringof URL)
  "batch"                :   NSDictionary
+ "bio"                  :   NSString
  */
 
 #import "AW_Person.h"
@@ -53,6 +54,7 @@
         _job = personInfo[@"job"];
         _skills = personInfo[@"skills"];
         _image = [UIImage imageNamed:@"defaultPersonImage"];
+        _bio = personInfo[@"bio"];
         
         // Download the image asynchronously
         NSURL *imageURL = [NSURL URLWithString:personInfo[@"image"]];

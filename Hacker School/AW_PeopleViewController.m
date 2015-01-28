@@ -7,6 +7,7 @@
 //
 
 #import "AW_PeopleViewController.h"
+#import "AW_PersonDetailViewController.h"
 #import "AW_LoginViewController.h"
 
 #import "NXOAuth2.h"
@@ -180,6 +181,9 @@
     
     [cell.collectionView reloadData];
     [self.tableView reloadData];
+    
+//    AW_BatchHeaderView *sectionHeader = [self tableView:self.tableView viewForHeaderInSection:section];
+//    [self.tableView setContentOffset:sectionHeader.frame.origin animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -240,6 +244,10 @@
     NSArray *peopleInBatch = self.loadedBatches[batchSectionWrapper];
     NSUInteger numberOfPeople = [peopleInBatch count];
     
+    if (numberOfPeople == 0) {
+        return 0;
+    }
+    
     // Information from AW_BatchCollectionTableViewCell's flowlayout
     UIEdgeInsets edgeInsets = [AW_BatchIndexedCollectionView flowLayout].sectionInset;
     NSUInteger widthOfTableView = self.tableView.bounds.size.width;
@@ -292,6 +300,19 @@
 }
 
 #pragma mark - UICollectionViewDelegate
+-(void)collectionView:(AW_BatchIndexedCollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSNumber *batchSectionWrapper = [NSNumber numberWithInteger:collectionView.index];
+    NSArray *peopleInBatch = self.loadedBatches[batchSectionWrapper];
+    AW_Person *person = peopleInBatch[indexPath.row];
+    
+    NSLog(@"Did tap %@ %@", person.firstName, person.lastName);
+    
+    // Push detail view controller
+    AW_PersonDetailViewController *detailVC = [[AW_PersonDetailViewController alloc]init];
+    detailVC.person = person;
+    [self.navigationController pushViewController:detailVC animated:YES];
+}
 
 #pragma mark - AW_BatchHeaderDelegate
 -(void)didTapBatchHeader:(AW_BatchHeaderView *)batchHeaderView
@@ -307,14 +328,18 @@
         }
     }
     
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:sectionOfTappedHeader];
+    
     if ([self.isSectionOpenArray[sectionOfTappedHeader] isEqual:@NO]) {
         // Section is not currently open. Open section:
         // Add a row to the selected section
+//        [self.tableView setContentOffset:batchHeaderView.frame.origin animated:YES];
+        
         [self.tableView beginUpdates];
         self.isSectionOpenArray[sectionOfTappedHeader] = @YES;
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:sectionOfTappedHeader];
         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
         [self.tableView endUpdates];
+        
         
         // Begin fetching the people in this batch from the API if it has not already been loaded
         NSNumber *sectionOfTappedHeaderWrapper = [NSNumber numberWithInteger:sectionOfTappedHeader];
@@ -339,13 +364,19 @@
     }
     else {
         // Section is currently open. Close section:
+        CGPoint currentOffset = self.tableView.contentOffset;
+        NSIndexPath *indexPathAtCurrentOffset = [self.tableView indexPathForRowAtPoint:currentOffset];
+        
         [self.tableView beginUpdates];
         self.isSectionOpenArray[sectionOfTappedHeader] = @NO;
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:sectionOfTappedHeader];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
         [self.tableView endUpdates];
+        
+//        // If the cell at the top of the view is the cell we are closing, scroll to the top after removing row
+//        if ([indexPathAtCurrentOffset isEqual:indexPath]) {
+//            [self.tableView setContentOffset:batchHeaderView.frame.origin animated:YES];
+//        }
     }
-   
 }
 
 @end
