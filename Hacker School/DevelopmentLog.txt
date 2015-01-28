@@ -12,6 +12,11 @@ options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType }
 documentAttributes:nil
 error:nil];
 
+*********** GIT COMMIT: Added contact buttons to AW_PersonDetailController ***********
+
+- Buttons take you to external apps
+- Added contact buttons to AW_PeopleViewController
+
 *********** GIT COMMIT: Added linksView to AW_PersonDetailController ***********
 
 - Changed skillsView to use a text field. This will allow copying and highlighting.

@@ -16,6 +16,12 @@
 @property (nonatomic, weak) UIScrollView *scrollView;
 @property (nonatomic, weak) UIView *contentView;
 
+// We need the following 4 weak properties in order to know what button we pressed in our UIButtonDelegate
+@property (nonatomic, weak) UIButton *phoneButton;
+@property (nonatomic, weak) UIButton *emailButton;
+@property (nonatomic, weak) UIButton *githubButton;
+@property (nonatomic, weak) UIButton *twitterButton;
+
 @end
 
 @implementation AW_PersonDetailViewController
@@ -79,29 +85,48 @@
     [contentView addSubview:basicInfoView];
     
     NSArray *basicInfoViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[basicInfoView]|"
-                                                                                       options:0
-                                                                                       metrics:nil
-                                                                                         views:@{@"basicInfoView":basicInfoView}];
+                                                                                          options:0
+                                                                                          metrics:nil
+                                                                                            views:@{@"basicInfoView":basicInfoView}];
     NSArray *basicInfoViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[basicInfoView(==230)]"
-                                                                                     options:0
-                                                                                     metrics:nil
-                                                                                       views:@{@"basicInfoView":basicInfoView}];
+                                                                                        options:0
+                                                                                        metrics:nil
+                                                                                          views:@{@"basicInfoView":basicInfoView}];
     [contentView addConstraints:basicInfoViewHorizontalConstraints];
     [contentView addConstraints:basicInfoViewVerticalConstraints];
+    
+    // --- Add contact buttons ---
+    UIView *contactView = [self createContactView];
+    [contentView addSubview:contactView];
+    
+    NSLayoutConstraint *contactViewHorizontalConstraints = [NSLayoutConstraint constraintWithItem:contactView
+                                                                                        attribute:NSLayoutAttributeCenterX
+                                                                                        relatedBy:NSLayoutRelationEqual
+                                                                                           toItem:contactView.superview
+                                                                                        attribute:NSLayoutAttributeCenterX
+                                                                                       multiplier:1
+                                                                                         constant:0];
+    NSArray *contactViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[basicInfoView]-20-[contactView]"
+                                                                                      options:0
+                                                                                      metrics:nil
+                                                                                        views:@{@"basicInfoView":basicInfoView,
+                                                                                                @"contactView":contactView}];
+    [contentView addConstraint:contactViewHorizontalConstraints];
+    [contentView addConstraints:contactViewVerticalConstraints];
     
     // --- Add skillsView ---
     UIView *skillsView = [self createSkillsView];
     [contentView addSubview:skillsView];
     
     NSArray *skillsViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[skillsView]|"
-                                                                                    options:0
-                                                                                    metrics:nil
-                                                                                      views:@{@"skillsView":skillsView}];
-    NSArray *skillsViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[basicInfoView]-20-[skillsView]"
-                                                                                  options:0
-                                                                                  metrics:nil
-                                                                                    views:@{@"basicInfoView":basicInfoView,
-                                                                                            @"skillsView":skillsView}];
+                                                                                       options:0
+                                                                                       metrics:nil
+                                                                                         views:@{@"skillsView":skillsView}];
+    NSArray *skillsViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[contactView]-20-[skillsView]"
+                                                                                     options:0
+                                                                                     metrics:nil
+                                                                                       views:@{@"contactView":contactView,
+                                                                                               @"skillsView":skillsView}];
     [contentView addConstraints:skillsViewHorizontalConstraints];
     [contentView addConstraints:skillsViewVerticalConstraints];
     
@@ -111,14 +136,14 @@
     [contentView addSubview:projectsView];
     
     NSArray *projectsViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[projectsView]|"
+                                                                                         options:0
+                                                                                         metrics:nil
+                                                                                           views:@{@"projectsView":projectsView}];
+    NSArray *projectsViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[skillsView]-20-[projectsView]"
                                                                                        options:0
                                                                                        metrics:nil
-                                                                                         views:@{@"projectsView":projectsView}];
-    NSArray *projectsViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[skillsView]-20-[projectsView]"
-                                                                                     options:0
-                                                                                     metrics:nil
-                                                                                       views:@{@"skillsView":skillsView,
-                                                                                               @"projectsView":projectsView}];
+                                                                                         views:@{@"skillsView":skillsView,
+                                                                                                 @"projectsView":projectsView}];
     [contentView addConstraints:projectsViewHorizontalConstraints];
     [contentView addConstraints:projectsViewVerticalConstraints];
     
@@ -143,24 +168,44 @@
     [contentView addSubview:linksView];
     
     NSArray *linksViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[linksView]|"
+                                                                                      options:0
+                                                                                      metrics:nil
+                                                                                        views:@{@"linksView":linksView}];
+    NSArray *linksViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[bioView]-20-[linksView]-20-|"
                                                                                     options:0
                                                                                     metrics:nil
-                                                                                      views:@{@"linksView":linksView}];
-    NSArray *linksViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[bioView]-20-[linksView]-20-|"
-                                                                                  options:0
-                                                                                  metrics:nil
-                                                                                    views:@{@"bioView":bioView,
-                                                                                            @"linksView":linksView}];
+                                                                                      views:@{@"bioView":bioView,
+                                                                                              @"linksView":linksView}];
     
     [contentView addConstraints:linksViewHorizontalConstraints];
     [contentView addConstraints:linksViewVerticalConstraints];
     
-//    // Test
-//    UIView *testHeaderView = [self createSectionHeaderWithString:@"test"];
-//    testHeaderView.frame = CGRectMake(0, 100, 320, 30);
-//    self.view.backgroundColor = [UIColor whiteColor];
-//    [self.contentView addSubview:testHeaderView];
-
+    //    // Test
+    //    UIView *testHeaderView = [self createSectionHeaderWithString:@"test"];
+    //    testHeaderView.frame = CGRectMake(0, 100, 320, 30);
+    //    self.view.backgroundColor = [UIColor whiteColor];
+    //    [self.contentView addSubview:testHeaderView];
+    
+    //    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 100, 44, 44)];
+    //    UIImage *icon = [[UIImage imageNamed:@"PhoneIcon.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    //    [button setImage:icon forState:UIControlStateNormal];
+    //    [contentView addSubview:button];
+    //
+    //    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(0, 150, 44, 44)];
+    //    UIImage *icon2 = [[UIImage imageNamed:@"EmailIcon"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    //    [button2 setImage:icon2 forState:UIControlStateNormal];
+    //    button2.enabled = NO;
+    //    [contentView addSubview:button2];
+    //
+    //    UIButton *button3 = [[UIButton alloc]initWithFrame:CGRectMake(0, 200, 44, 44)];
+    //    UIImage *icon3 = [[UIImage imageNamed:@"GithubIcon"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    //    [button3 setImage:icon3 forState:UIControlStateNormal];
+    //    [contentView addSubview:button3];
+    //
+    //    UIButton *button4 = [[UIButton alloc]initWithFrame:CGRectMake(0, 250, 44, 44)];
+    //    UIImage *icon4 = [[UIImage imageNamed:@"TwitterIcon"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    //    [button4 setImage:icon4 forState:UIControlStateNormal];
+    //    [contentView addSubview:button4];
 }
 
 -(void)viewDidLayoutSubviews
@@ -254,6 +299,99 @@
     return basicInfoView;
 }
 
+- (UIView *)createContactView
+{
+    UIView *contactView = [[UIView alloc]init];
+    contactView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    // Create icon buttons
+    UIButton *phoneButton = [[UIButton alloc]init];
+    phoneButton.translatesAutoresizingMaskIntoConstraints = NO;
+    UIImage *phoneIcon = [[UIImage imageNamed:@"PhoneIcon.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [phoneButton setImage:phoneIcon forState:UIControlStateNormal];
+    phoneButton.imageEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8);
+    [phoneButton addTarget:self action:@selector(didPressContactButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.phoneButton = phoneButton;
+    [contactView addSubview:phoneButton];
+    
+    UIButton *emailButton = [[UIButton alloc]init];
+    emailButton.translatesAutoresizingMaskIntoConstraints = NO;
+    UIImage *emailIcon = [[UIImage imageNamed:@"EmailIcon.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [emailButton setImage:emailIcon forState:UIControlStateNormal];
+    [emailButton addTarget:self action:@selector(didPressContactButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.emailButton = emailButton;
+    [contactView addSubview:emailButton];
+    
+    UIButton *githubButton = [[UIButton alloc]init];
+    githubButton.translatesAutoresizingMaskIntoConstraints = NO;
+    UIImage *githubIcon = [[UIImage imageNamed:@"GithubIcon.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [githubButton setImage:githubIcon forState:UIControlStateNormal];
+    githubButton.imageEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6);
+    [githubButton addTarget:self action:@selector(didPressContactButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.githubButton = githubButton;
+    [contactView addSubview:githubButton];
+    
+    UIButton *twitterButton = [[UIButton alloc]init];
+    twitterButton.translatesAutoresizingMaskIntoConstraints = NO;
+    UIImage *twitterIcon = [[UIImage imageNamed:@"TwitterIcon.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [twitterButton setImage:twitterIcon forState:UIControlStateNormal];
+    [twitterButton addTarget:self action:@selector(didPressContactButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.twitterButton = twitterButton;
+    [contactView addSubview:twitterButton];
+    
+    // Disable inactive buttons
+    if ([self.person.phoneNumber isEqualToString:@""]) {
+        phoneButton.enabled = NO;
+        phoneButton.alpha = 0.5;
+    }
+    if ([self.person.email isEqualToString:@""]) {
+        emailButton.enabled = NO;
+        emailButton.alpha = 0.5;
+    }
+    if ([self.person.githubUserName isEqualToString:@""]) {
+        githubButton.enabled = NO;
+        githubButton.alpha = 0.5;
+    }
+    if ([self.person.twitterUserName isEqualToString:@""]) {
+        twitterButton.enabled = NO;
+        twitterButton.alpha = 0.5;
+    }
+    
+    // Add autolayout constraints
+    NSDictionary *views = @{@"phoneButton":phoneButton,
+                            @"emailButton":emailButton,
+                            @"githubButton":githubButton,
+                            @"twitterButton":twitterButton};
+    
+    NSArray *buttonsHorizontalConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[phoneButton(==44)]-20-[emailButton(==44)]-20-[githubButton(==44)]-20-[twitterButton(==44)]|"
+                                                                                   options:0
+                                                                                   metrics:nil
+                                                                                     views:views];
+    NSArray *phoneButtonVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[phoneButton(==44)]|"
+                                                                                      options:0
+                                                                                      metrics:nil
+                                                                                        views:views];
+    NSArray *emailButtonVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[emailButton(==44)]|"
+                                                                                      options:0
+                                                                                      metrics:nil
+                                                                                        views:views];
+    NSArray *githubButtonVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[githubButton(==44)]|"
+                                                                                       options:0
+                                                                                       metrics:nil
+                                                                                         views:views];
+    NSArray *twitterButtonVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[twitterButton(==44)]|"
+                                                                                        options:0
+                                                                                        metrics:nil
+                                                                                          views:views];
+    [contactView addConstraints:buttonsHorizontalConstraint];
+    [contactView addConstraints:phoneButtonVerticalConstraints];
+    [contactView addConstraints:emailButtonVerticalConstraints];
+    [contactView addConstraints:githubButtonVerticalConstraints];
+    [contactView addConstraints:twitterButtonVerticalConstraints];
+    
+    return contactView;
+}
+
 - (UIView *)createSkillsView
 {
     UIView *skillsView = [[UIView alloc]init];
@@ -316,9 +454,9 @@
                                                                                        metrics:nil
                                                                                          views:@{@"headerView":headerView}];
     NSArray *headerViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[headerView(==30)]"
-                                                                                       options:0
-                                                                                       metrics:nil
-                                                                                         views:@{@"headerView":headerView}];
+                                                                                     options:0
+                                                                                     metrics:nil
+                                                                                       views:@{@"headerView":headerView}];
     [projectsView addConstraints:headerViewHorizontalConstraints];
     [projectsView addConstraints:headerViewVerticalConstraints];
     
@@ -330,14 +468,14 @@
         [projectsView addSubview:firstProjectView];
         
         NSArray *firstProjectViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[firstProjectView]|"
-                                                                                 options:0
-                                                                                 metrics:nil
-                                                                                   views:@{@"firstProjectView":firstProjectView}];
+                                                                                                 options:0
+                                                                                                 metrics:nil
+                                                                                                   views:@{@"firstProjectView":firstProjectView}];
         NSArray *firstProjectViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[headerView]-[firstProjectView]"
-                                                                               options:0
-                                                                               metrics:nil
-                                                                                 views:@{@"headerView":headerView,
-                                                                                         @"firstProjectView":firstProjectView}];
+                                                                                               options:0
+                                                                                               metrics:nil
+                                                                                                 views:@{@"headerView":headerView,
+                                                                                                         @"firstProjectView":firstProjectView}];
         [projectsView addConstraints:firstProjectViewHorizontalConstraints];
         [projectsView addConstraints:firstProjectViewVerticalConstraints];
         
@@ -345,7 +483,7 @@
         
         if ([self.person.projects count] > 1) {
             // There are more projects. Add them iteratively.
-    
+            
             for (int index = 1; index < [self.person.projects count]; index++) {
                 AW_Project *nextProject = self.person.projects[index];
                 UIView *nextProjectView = [self createProjectViewWithProject:nextProject];
@@ -406,11 +544,11 @@
     htmlBio = [htmlBio stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
     htmlBio = [NSString stringWithFormat:@"<span style=\"font-family: HelveticaNeue; font-size: 17; color: black;\">%@</span>", htmlBio];
     NSAttributedString *attributedBio = [[NSAttributedString alloc]initWithData:[htmlBio dataUsingEncoding:NSUnicodeStringEncoding]
-                                                                                       options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType }
-                                                                            documentAttributes:nil
-                                                                                         error:nil];
+                                                                        options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType }
+                                                             documentAttributes:nil
+                                                                          error:nil];
     bodyText.attributedText = attributedBio;
-
+    
     [bioView addSubview:bodyText];
     
     // Create constraints
@@ -493,7 +631,7 @@
                                                                              metrics:nil
                                                                                views:@{@"previousView":previousView}];
     [linksView addConstraints:finalBottomConstraint];
-
+    
     return linksView;
 }
 
@@ -592,5 +730,31 @@
     return headerView;
 }
 
+#pragma mark - Event handling
+- (void)didPressContactButton:(UIButton *)sender
+{
+    // Determine which URL to use
+    NSURL *urlToFollow;
+    
+    if (sender == self.phoneButton) {
+        urlToFollow = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", self.person.phoneNumber]];
+    }
+    else if (sender == self.emailButton) {
+        urlToFollow = [NSURL URLWithString:[NSString stringWithFormat:@"mailto://%@", self.person.email]];
+    }
+    else if (sender == self.githubButton) {
+        urlToFollow = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.github.com/%@", self.person.githubUserName]];
+    }
+    else if (sender == self.twitterButton) {
+        urlToFollow = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.twitter.com/%@", self.person.twitterUserName]];
+    }
+    else {
+        NSLog(@"Unrecognized button pressed");
+        return;
+    }
+    
+    // Invoke action
+    [[UIApplication sharedApplication]openURL:urlToFollow];
+}
 
 @end
