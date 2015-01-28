@@ -9,6 +9,7 @@
 #import "AW_PersonDetailViewController.h"
 #import "AW_Person.h"
 #import "AW_Project.h"
+#import "AW_Link.h"
 
 @interface AW_PersonDetailViewController () <UITextViewDelegate>
 
@@ -129,7 +130,7 @@
                                                                                     options:0
                                                                                     metrics:nil
                                                                                       views:@{@"bioView":bioView}];
-    NSArray *bioViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[projectsView]-20-[bioView]|"
+    NSArray *bioViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[projectsView]-20-[bioView]"
                                                                                   options:0
                                                                                   metrics:nil
                                                                                     views:@{@"projectsView":projectsView,
@@ -137,7 +138,22 @@
     [contentView addConstraints:bioViewHorizontalConstraints];
     [contentView addConstraints:bioViewVerticalConstraints];
     
+    // --- Add links view ---
+    UIView *linksView = [self createLinksView];
+    [contentView addSubview:linksView];
     
+    NSArray *linksViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[linksView]|"
+                                                                                    options:0
+                                                                                    metrics:nil
+                                                                                      views:@{@"linksView":linksView}];
+    NSArray *linksViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[bioView]-20-[linksView]-20-|"
+                                                                                  options:0
+                                                                                  metrics:nil
+                                                                                    views:@{@"bioView":bioView,
+                                                                                            @"linksView":linksView}];
+    
+    [contentView addConstraints:linksViewHorizontalConstraints];
+    [contentView addConstraints:linksViewVerticalConstraints];
     
 //    // Test
 //    UIView *testHeaderView = [self createSectionHeaderWithString:@"test"];
@@ -248,11 +264,12 @@
     headerView.translatesAutoresizingMaskIntoConstraints = NO;
     [skillsView addSubview:headerView];
     
-    UILabel *bodyText = [[UILabel alloc]init];
+    UITextView *bodyText = [[UITextView alloc]init];
     bodyText.translatesAutoresizingMaskIntoConstraints = NO;
     bodyText.text = self.person.bio;
-    bodyText.adjustsFontSizeToFitWidth = NO;
-    bodyText.numberOfLines = 0;
+    bodyText.scrollEnabled = NO;
+    bodyText.editable = NO;
+    bodyText.font = [UIFont fontWithName:@"HelveticaNeue" size:17];
     [skillsView addSubview:bodyText];
     
     // Generate text
@@ -388,7 +405,7 @@
     NSString *htmlBio = self.person.bio;
     htmlBio = [htmlBio stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
     htmlBio = [NSString stringWithFormat:@"<span style=\"font-family: HelveticaNeue; font-size: 17; color: black;\">%@</span>", htmlBio];
-    NSAttributedString *attributedBio = [[NSAttributedString alloc]initWithData:[htmlBio dataUsingEncoding:NSUTF8StringEncoding]
+    NSAttributedString *attributedBio = [[NSAttributedString alloc]initWithData:[htmlBio dataUsingEncoding:NSUnicodeStringEncoding]
                                                                                        options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType }
                                                                             documentAttributes:nil
                                                                                          error:nil];
@@ -419,6 +436,67 @@
     return bioView;
 }
 
+- (UIView *)createLinksView
+{
+    UIView *linksView = [[UIView alloc]init];
+    linksView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    // Create header view
+    UIView *headerView = [self createSectionHeaderWithString:@"Other Links"];
+    [linksView addSubview:headerView];
+    
+    NSArray *headerViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[headerView]|"
+                                                                                       options:0
+                                                                                       metrics:nil
+                                                                                         views:@{@"headerView":headerView}];
+    NSArray *headerViewTopConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[headerView]"
+                                                                               options:0
+                                                                               metrics:nil
+                                                                                 views:@{@"headerView":headerView}];
+    [linksView addConstraints:headerViewHorizontalConstraints];
+    [linksView addConstraints:headerViewTopConstraint];
+    
+    UIView *previousView = headerView;
+    
+    // Add links
+    for (AW_Link *link in self.person.links) {
+        UITextView *linkTextView = [[UITextView alloc]init];
+        linkTextView.translatesAutoresizingMaskIntoConstraints = NO;
+        linkTextView.scrollEnabled = NO;
+        linkTextView.editable = NO;
+        [linksView addSubview:linkTextView];
+        
+        NSDictionary *attributes = @{NSLinkAttributeName:link.url,
+                                     NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Bold" size:17]};
+        NSAttributedString *title = [[NSAttributedString alloc]initWithString:link.title attributes:attributes];
+        linkTextView.attributedText = title;
+        
+        // Add constraints
+        NSArray *linkTextViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[linkTextView]"
+                                                                                             options:0
+                                                                                             metrics:nil
+                                                                                               views:@{@"linkTextView":linkTextView}];
+        NSArray *linkTextViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[previousView]-[linkTextView]"
+                                                                                           options:0
+                                                                                           metrics:nil
+                                                                                             views:@{@"previousView":previousView,
+                                                                                                     @"linkTextView":linkTextView}];
+        [linksView addConstraints:linkTextViewHorizontalConstraints];
+        [linksView addConstraints:linkTextViewVerticalConstraints];
+        
+        previousView = linkTextView;
+    }
+    
+    // Add final constraint
+    NSArray *finalBottomConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[previousView]|"
+                                                                             options:0
+                                                                             metrics:nil
+                                                                               views:@{@"previousView":previousView}];
+    [linksView addConstraints:finalBottomConstraint];
+
+    return linksView;
+}
+
 #pragma mark - Helper methods
 - (UIView *)createProjectViewWithProject:(AW_Project *)project
 {
@@ -445,7 +523,7 @@
     NSString *htmlProjectDescription = project.projectDescription;
     htmlProjectDescription = [htmlProjectDescription stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
     htmlProjectDescription = [NSString stringWithFormat:@"<span style=\"font-family: HelveticaNeue; font-size: 17; color: black;\">%@</span>", htmlProjectDescription];
-    NSAttributedString *attributedProjectDescription = [[NSAttributedString alloc]initWithData:[htmlProjectDescription dataUsingEncoding:NSUTF8StringEncoding]
+    NSAttributedString *attributedProjectDescription = [[NSAttributedString alloc]initWithData:[htmlProjectDescription dataUsingEncoding:NSUnicodeStringEncoding]
                                                                                        options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType }
                                                                             documentAttributes:nil
                                                                                          error:nil];

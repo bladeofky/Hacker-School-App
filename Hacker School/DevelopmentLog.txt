@@ -2,6 +2,24 @@
 1-28-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+Known issues:
+    + Profile pictures do not appear immediately on the AW_PeopleViewController, even though they are loaded.
+    + After tapping a person, there is a delay before the detail VC shows. This is due to main thread parsing an HTML string and converting
+it to an NSAttributed string. This happens in the projectView and bioView. See example below:
+
+NSAttributedString *attributedProjectDescription = [[NSAttributedString alloc]initWithData:[htmlProjectDescription dataUsingEncoding:NSUnicodeStringEncoding]
+options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType }
+documentAttributes:nil
+error:nil];
+
+*********** GIT COMMIT: Added linksView to AW_PersonDetailController ***********
+
+- Changed skillsView to use a text field. This will allow copying and highlighting.
+- Changed string encoding from NSUTF8StringEncoding to NSUnicodeStringEncoding (for the case of special character like east asian languages)
+- Added linksView to AW_PersonDetailView
+- Added links to AW_Person
+- Added AW_Link class
+
 *********** GIT COMMIT: Polished text formatting of AW_PeopleViewController ***********
 
 - Changed tintColor to green.

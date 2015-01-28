@@ -29,6 +29,7 @@
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) NSString *bio;
 @property (nonatomic, strong) NSArray *projects;
+@property (nonatomic, strong) NSArray *links;
 @property (nonatomic, weak) id<AW_PersonDelegate> delegate;
 
 - (instancetype)initWithJSONObject:(NSDictionary *)personInfo; // Designated

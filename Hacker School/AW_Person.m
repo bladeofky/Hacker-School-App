@@ -35,6 +35,7 @@
 
 #import "AW_Person.h"
 #import "AW_Project.h"
+#import "AW_Link.h"
 
 @implementation AW_Person
 
@@ -65,6 +66,16 @@
             [tempProjectsArray addObject:project];
         }
         _projects = [tempProjectsArray copy];
+        
+        // Process links
+        NSMutableArray *tempLinksArray = [[NSMutableArray alloc]init];
+        for (NSDictionary *linkInfo in personInfo[@"links"]) {
+            AW_Link *link = [[AW_Link alloc]init];
+            link.title = linkInfo[@"title"];
+            link.url = [NSURL URLWithString:linkInfo[@"url"]];
+            [tempLinksArray addObject:link];
+        }
+        _links = [tempLinksArray copy];
         
         // Download the image asynchronously
         NSURL *imageURL = [NSURL URLWithString:personInfo[@"image"]];

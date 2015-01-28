@@ -29,6 +29,7 @@
 		E7FB045C1A7341E30062CD47 /* AW_PersonCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB045B1A7341E30062CD47 /* AW_PersonCollectionViewCell.m */; };
 		E7FB04601A78170D0062CD47 /* AW_PersonDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB045F1A78170D0062CD47 /* AW_PersonDetailViewController.m */; };
 		E7FB04631A7934CD0062CD47 /* AW_Project.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB04621A7934CD0062CD47 /* AW_Project.m */; };
+		E7FB04671A797D8D0062CD47 /* AW_Link.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB04661A797D8D0062CD47 /* AW_Link.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,8 @@
 		E7FB045F1A78170D0062CD47 /* AW_PersonDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_PersonDetailViewController.m; sourceTree = "<group>"; };
 		E7FB04611A7934CD0062CD47 /* AW_Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_Project.h; sourceTree = "<group>"; };
 		E7FB04621A7934CD0062CD47 /* AW_Project.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_Project.m; sourceTree = "<group>"; };
+		E7FB04651A797D8D0062CD47 /* AW_Link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_Link.h; sourceTree = "<group>"; };
+		E7FB04661A797D8D0062CD47 /* AW_Link.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_Link.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +217,8 @@
 				E7FB04561A733F830062CD47 /* AW_PersonDelegate.h */,
 				E7FB04611A7934CD0062CD47 /* AW_Project.h */,
 				E7FB04621A7934CD0062CD47 /* AW_Project.m */,
+				E7FB04651A797D8D0062CD47 /* AW_Link.h */,
+				E7FB04661A797D8D0062CD47 /* AW_Link.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -404,6 +409,7 @@
 				E7B53F311A70046100931BEC /* AW_LoginViewController.m in Sources */,
 				E7FB045C1A7341E30062CD47 /* AW_PersonCollectionViewCell.m in Sources */,
 				E7FB044E1A71C0340062CD47 /* AW_BatchHeaderView.m in Sources */,
+				E7FB04671A797D8D0062CD47 /* AW_Link.m in Sources */,
 				E7B53F3B1A70161F00931BEC /* AW_UserMenuViewController.m in Sources */,
 				E7B53EFA1A6EB94B00931BEC /* main.m in Sources */,
 				E7FB04471A719B870062CD47 /* AW_Batch.m in Sources */,
