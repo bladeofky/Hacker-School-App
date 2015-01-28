@@ -28,6 +28,7 @@
 		E7FB04551A72F4FE0062CD47 /* AW_BatchIndexedCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB04541A72F4FE0062CD47 /* AW_BatchIndexedCollectionView.m */; };
 		E7FB045C1A7341E30062CD47 /* AW_PersonCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB045B1A7341E30062CD47 /* AW_PersonCollectionViewCell.m */; };
 		E7FB04601A78170D0062CD47 /* AW_PersonDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB045F1A78170D0062CD47 /* AW_PersonDetailViewController.m */; };
+		E7FB04631A7934CD0062CD47 /* AW_Project.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB04621A7934CD0062CD47 /* AW_Project.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +109,8 @@
 		E7FB045D1A76C62F0062CD47 /* AW_BatchHeaderViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_BatchHeaderViewDelegate.h; sourceTree = "<group>"; };
 		E7FB045E1A78170D0062CD47 /* AW_PersonDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_PersonDetailViewController.h; sourceTree = "<group>"; };
 		E7FB045F1A78170D0062CD47 /* AW_PersonDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_PersonDetailViewController.m; sourceTree = "<group>"; };
+		E7FB04611A7934CD0062CD47 /* AW_Project.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_Project.h; sourceTree = "<group>"; };
+		E7FB04621A7934CD0062CD47 /* AW_Project.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_Project.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +212,8 @@
 				E7B53F3F1A703EA900931BEC /* AW_Person.h */,
 				E7B53F401A703EA900931BEC /* AW_Person.m */,
 				E7FB04561A733F830062CD47 /* AW_PersonDelegate.h */,
+				E7FB04611A7934CD0062CD47 /* AW_Project.h */,
+				E7FB04621A7934CD0062CD47 /* AW_Project.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -221,11 +226,7 @@
 				E7B53F381A70161F00931BEC /* AW_UserMenuViewController.h */,
 				E7B53F391A70161F00931BEC /* AW_UserMenuViewController.m */,
 				E7B53F3A1A70161F00931BEC /* AW_UserMenuViewController.xib */,
-				E7B53F331A7006B900931BEC /* AW_PeopleViewController.h */,
-				E7B53F341A7006B900931BEC /* AW_PeopleViewController.m */,
-				E7B53F351A7006B900931BEC /* AW_PeopleViewController.xib */,
-				E7FB045E1A78170D0062CD47 /* AW_PersonDetailViewController.h */,
-				E7FB045F1A78170D0062CD47 /* AW_PersonDetailViewController.m */,
+				E7FB04641A79373E0062CD47 /* People */,
 				E7B53F2E1A70046100931BEC /* AW_LoginViewController.h */,
 				E7B53F2F1A70046100931BEC /* AW_LoginViewController.m */,
 				E7B53F301A70046100931BEC /* AW_LoginViewController.xib */,
@@ -247,6 +248,18 @@
 				E7FB045B1A7341E30062CD47 /* AW_PersonCollectionViewCell.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		E7FB04641A79373E0062CD47 /* People */ = {
+			isa = PBXGroup;
+			children = (
+				E7B53F331A7006B900931BEC /* AW_PeopleViewController.h */,
+				E7B53F341A7006B900931BEC /* AW_PeopleViewController.m */,
+				E7B53F351A7006B900931BEC /* AW_PeopleViewController.xib */,
+				E7FB045E1A78170D0062CD47 /* AW_PersonDetailViewController.h */,
+				E7FB045F1A78170D0062CD47 /* AW_PersonDetailViewController.m */,
+			);
+			name = People;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -383,6 +396,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7B53F411A703EA900931BEC /* AW_Person.m in Sources */,
+				E7FB04631A7934CD0062CD47 /* AW_Project.m in Sources */,
 				E7B53F361A7006B900931BEC /* AW_PeopleViewController.m in Sources */,
 				E7FB04521A72F2620062CD47 /* AW_BatchCollectionTableViewCell.m in Sources */,
 				E7FB04601A78170D0062CD47 /* AW_PersonDetailViewController.m in Sources */,

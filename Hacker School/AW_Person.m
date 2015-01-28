@@ -30,9 +30,11 @@
  "image"                :   NSString (stringof URL)
  "batch"                :   NSDictionary
  "bio"                  :   NSString
+ "projects"             :   NSArray of NSDictionaries
  */
 
 #import "AW_Person.h"
+#import "AW_Project.h"
 
 @implementation AW_Person
 
@@ -55,6 +57,14 @@
         _skills = personInfo[@"skills"];
         _image = [UIImage imageNamed:@"defaultPersonImage"];
         _bio = personInfo[@"bio"];
+        
+        // Process project
+        NSMutableArray *tempProjectsArray = [[NSMutableArray alloc]init];
+        for (NSDictionary *projectInfo in personInfo[@"projects"]) {
+            AW_Project *project = [[AW_Project alloc]initFromJsonObject:projectInfo];
+            [tempProjectsArray addObject:project];
+        }
+        _projects = [tempProjectsArray copy];
         
         // Download the image asynchronously
         NSURL *imageURL = [NSURL URLWithString:personInfo[@"image"]];

@@ -17,7 +17,7 @@
 @property (nonatomic, strong) NSString *season; // Possibly should make this enum
 @property (nonatomic, strong) NSDate *startDate;
 @property (nonatomic, strong) NSDate *endDate;
-@property (nonatomic, strong) NSArray *people;
+@property (nonatomic, strong) NSArray *people;  // Currently unused
 
 
 - (instancetype)initWithJSONObject:(NSDictionary *)batchInfo;   //designated
