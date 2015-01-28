@@ -2,6 +2,10 @@
 1-28-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Added projects to AW_PersonDetailViewController ***********
+
+- Added projects view to AW_PersonDetailViewController
+
 *********** GIT COMMIT: Added AW_Project class ***********
 
 - Added AW_Project class. Modified AW_Person to include projects.

@@ -8,6 +8,7 @@
 
 #import "AW_PersonDetailViewController.h"
 #import "AW_Person.h"
+#import "AW_Project.h"
 
 @interface AW_PersonDetailViewController ()
 
@@ -17,6 +18,10 @@
 @end
 
 @implementation AW_PersonDetailViewController
+
+#pragma mark - Accessors
+
+#pragma mark - Intializers
 
 -(void)viewDidLoad
 {
@@ -99,6 +104,23 @@
     [contentView addConstraints:skillsViewHorizontalConstraints];
     [contentView addConstraints:skillsViewVerticalConstraints];
     
+    
+    // --- Add projectsView ---
+    UIView *projectsView = [self createProjectsView];
+    [contentView addSubview:projectsView];
+    
+    NSArray *projectsViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[projectsView]|"
+                                                                                       options:0
+                                                                                       metrics:nil
+                                                                                         views:@{@"projectsView":projectsView}];
+    NSArray *projectsViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[skillsView]-20-[projectsView]"
+                                                                                     options:0
+                                                                                     metrics:nil
+                                                                                       views:@{@"skillsView":skillsView,
+                                                                                               @"projectsView":projectsView}];
+    [contentView addConstraints:projectsViewHorizontalConstraints];
+    [contentView addConstraints:projectsViewVerticalConstraints];
+    
     // --- Add bioview ---
     UIView *bioView = [self createBioView];
     [contentView addSubview:bioView];
@@ -107,21 +129,21 @@
                                                                                     options:0
                                                                                     metrics:nil
                                                                                       views:@{@"bioView":bioView}];
-    NSArray *bioViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[skillsView]-20-[bioView]|"
+    NSArray *bioViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[projectsView]-20-[bioView]|"
                                                                                   options:0
                                                                                   metrics:nil
-                                                                                    views:@{@"skillsView":skillsView,
+                                                                                    views:@{@"projectsView":projectsView,
                                                                                             @"bioView":bioView}];
     [contentView addConstraints:bioViewHorizontalConstraints];
     [contentView addConstraints:bioViewVerticalConstraints];
     
     
     
-    // Test
-    UIView *testHeaderView = [self createSectionHeaderWithString:@"test"];
-    testHeaderView.frame = CGRectMake(0, 100, 320, 30);
-    self.view.backgroundColor = [UIColor whiteColor];
-    [self.contentView addSubview:testHeaderView];
+//    // Test
+//    UIView *testHeaderView = [self createSectionHeaderWithString:@"test"];
+//    testHeaderView.frame = CGRectMake(0, 100, 320, 30);
+//    self.view.backgroundColor = [UIColor whiteColor];
+//    [self.contentView addSubview:testHeaderView];
 
 }
 
@@ -216,46 +238,6 @@
     return basicInfoView;
 }
 
-- (UIView *)createBioView
-{
-    UIView *bioView = [[UIView alloc]init];
-    bioView.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    // Create views
-    UIView *headerView = [self createSectionHeaderWithString:@"Bio"];
-    headerView.translatesAutoresizingMaskIntoConstraints = NO;
-    [bioView addSubview:headerView];
-    
-    UILabel *bodyText = [[UILabel alloc]init];
-    bodyText.translatesAutoresizingMaskIntoConstraints = NO;
-    bodyText.text = self.person.bio;
-    bodyText.adjustsFontSizeToFitWidth = NO;
-    bodyText.numberOfLines = 0;
-    [bioView addSubview:bodyText];
-    
-    // Create constraints
-    NSArray *headerViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[headerView]|"
-                                                                                       options:0
-                                                                                       metrics:nil
-                                                                                         views:@{@"headerView":headerView}];
-    NSArray *bodyTextHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[bodyText]-20-|"
-                                                                                     options:0
-                                                                                     metrics:nil
-                                                                                       views:@{@"bodyText":bodyText}];
-    NSArray *verticalConstsraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[headerView(==30)]-[bodyText]|"
-                                                                            options:0
-                                                                            metrics:nil
-                                                                              views:@{@"headerView":headerView,
-                                                                                      @"bodyText":bodyText}];
-    
-    // Add constraints
-    [bioView addConstraints:headerViewHorizontalConstraints];
-    [bioView addConstraints:bodyTextHorizontalConstraints];
-    [bioView addConstraints:verticalConstsraints];
-    
-    return bioView;
-}
-
 - (UIView *)createSkillsView
 {
     UIView *skillsView = [[UIView alloc]init];
@@ -303,6 +285,165 @@
     return skillsView;
 }
 
+- (UIView *)createProjectsView
+{
+    UIView *projectsView = [[UIView alloc]init];
+    projectsView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    // --- Set up header view ---
+    UIView *headerView = [self createSectionHeaderWithString:@"Projects"];
+    [projectsView addSubview:headerView];
+    
+    NSArray *headerViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[headerView]|"
+                                                                                       options:0
+                                                                                       metrics:nil
+                                                                                         views:@{@"headerView":headerView}];
+    NSArray *headerViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[headerView(==30)]"
+                                                                                       options:0
+                                                                                       metrics:nil
+                                                                                         views:@{@"headerView":headerView}];
+    [projectsView addConstraints:headerViewHorizontalConstraints];
+    [projectsView addConstraints:headerViewVerticalConstraints];
+    
+    // --- Set up project views ---
+    if ([self.person.projects count] != 0) {
+        // There are projects
+        // Add the first project
+        UIView *firstProjectView = [self createProjectViewWithProject:self.person.projects[0]];
+        [projectsView addSubview:firstProjectView];
+        
+        NSArray *firstProjectViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[firstProjectView]|"
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:@{@"firstProjectView":firstProjectView}];
+        NSArray *firstProjectViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[headerView]-[firstProjectView]"
+                                                                               options:0
+                                                                               metrics:nil
+                                                                                 views:@{@"headerView":headerView,
+                                                                                         @"firstProjectView":firstProjectView}];
+        [projectsView addConstraints:firstProjectViewHorizontalConstraints];
+        [projectsView addConstraints:firstProjectViewVerticalConstraints];
+        
+        UIView *previousProjectView = firstProjectView;
+        
+        if ([self.person.projects count] > 1) {
+            // There are more projects. Add them iteratively.
+    
+            for (int index = 1; index < [self.person.projects count]; index++) {
+                AW_Project *nextProject = self.person.projects[index];
+                UIView *nextProjectView = [self createProjectViewWithProject:nextProject];
+                [projectsView addSubview:nextProjectView];
+                
+                NSArray *nextProjectHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[nextProjectView]|"
+                                                                                                    options:0
+                                                                                                    metrics:nil
+                                                                                                      views:@{@"nextProjectView":nextProjectView}];
+                NSArray *nextProjectVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[previousProjectView]-16-[nextProjectView]"
+                                                                                                  options:0
+                                                                                                  metrics:nil
+                                                                                                    views:@{@"previousProjectView":previousProjectView,
+                                                                                                            @"nextProjectView":nextProjectView}];
+                [projectsView addConstraints:nextProjectHorizontalConstraints];
+                [projectsView addConstraints:nextProjectVerticalConstraints];
+                
+                previousProjectView = nextProjectView; // Update reference
+                
+            } //  end for projects
+        } // end if there are more than 1 projects
+        
+        // Add the final constraint
+        NSArray *finalProjectBottomConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[previousProjectView]|"
+                                                                                         options:0
+                                                                                         metrics:nil
+                                                                                           views:@{@"previousProjectView":previousProjectView}];
+        [projectsView addConstraints:finalProjectBottomConstraints];
+    } // end if there are projects
+    
+    return projectsView;
+}
+
+- (UIView *)createBioView
+{
+    UIView *bioView = [[UIView alloc]init];
+    bioView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    // Create views
+    UIView *headerView = [self createSectionHeaderWithString:@"Bio"];
+    headerView.translatesAutoresizingMaskIntoConstraints = NO;
+    [bioView addSubview:headerView];
+    
+    UILabel *bodyText = [[UILabel alloc]init];
+    bodyText.translatesAutoresizingMaskIntoConstraints = NO;
+    bodyText.text = self.person.bio;
+    bodyText.adjustsFontSizeToFitWidth = NO;
+    bodyText.numberOfLines = 0;
+    [bioView addSubview:bodyText];
+    
+    // Create constraints
+    NSArray *headerViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[headerView]|"
+                                                                                       options:0
+                                                                                       metrics:nil
+                                                                                         views:@{@"headerView":headerView}];
+    NSArray *bodyTextHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[bodyText]-20-|"
+                                                                                     options:0
+                                                                                     metrics:nil
+                                                                                       views:@{@"bodyText":bodyText}];
+    NSArray *verticalConstsraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[headerView(==30)]-[bodyText]|"
+                                                                            options:0
+                                                                            metrics:nil
+                                                                              views:@{@"headerView":headerView,
+                                                                                      @"bodyText":bodyText}];
+    
+    // Add constraints
+    [bioView addConstraints:headerViewHorizontalConstraints];
+    [bioView addConstraints:bodyTextHorizontalConstraints];
+    [bioView addConstraints:verticalConstsraints];
+    
+    return bioView;
+}
+
+#pragma mark - Helper methods
+- (UIView *)createProjectViewWithProject:(AW_Project *)project
+{
+    UIView *projectView = [[UIView alloc]init];
+    projectView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    // Create title label
+    UILabel *titleLabel = [[UILabel alloc]init];
+    titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    titleLabel.text = project.title;
+    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:17];
+    [projectView addSubview:titleLabel];
+    
+    // Create body text
+    UILabel *bodyText = [[UILabel alloc]init];
+    bodyText.translatesAutoresizingMaskIntoConstraints = NO;
+    bodyText.text = project.projectDescription;
+    bodyText.numberOfLines = 0;
+    bodyText.adjustsFontSizeToFitWidth = NO;
+    [projectView addSubview:bodyText];
+    
+    // Create autolayout constraints
+    NSArray *titleLabelHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[titleLabel]-20-|"
+                                                                                       options:0
+                                                                                       metrics:nil
+                                                                                         views:@{@"titleLabel":titleLabel}];
+    NSArray *bodyTextHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-40-[bodyText]-20-|"
+                                                                                     options:0
+                                                                                     metrics:nil
+                                                                                       views:@{@"bodyText":bodyText}];
+    NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[titleLabel]-4-[bodyText]|"
+                                                                           options:0
+                                                                           metrics:nil
+                                                                             views:@{@"titleLabel":titleLabel,
+                                                                                     @"bodyText":bodyText}];
+    [projectView addConstraints:titleLabelHorizontalConstraints];
+    [projectView addConstraints:bodyTextHorizontalConstraints];
+    [projectView addConstraints:verticalConstraints];
+    
+    return projectView;
+}
+
 - (UIView *)createSectionHeaderWithString:(NSString *)title
 {
     UIView *headerView = [[UIView alloc]init];
@@ -312,7 +453,7 @@
     // Instantiate objects
     UILabel *titleLabel = [[UILabel alloc]init];
     titleLabel.text = titleCaps;
-    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:17];
+    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:19];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [headerView addSubview:titleLabel];
     
@@ -343,5 +484,6 @@
     
     return headerView;
 }
+
 
 @end

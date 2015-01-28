@@ -17,7 +17,7 @@
     if (self) {
         _title = projectInfo[@"title"];
         _urlString = projectInfo[@"url"];
-        _descriptionText = projectInfo[@"description"];
+        _projectDescription = projectInfo[@"description"];
     }
     
     return self;
