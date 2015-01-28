@@ -2,6 +2,12 @@
 1-28-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Polished text formatting of AW_PeopleViewController ***********
+
+- Changed tintColor to green.
+- Used attributedStrings to enable autoformating of HTML tags. This has introduced some hang time when selecting a person.
+- Changed UILabels to UITextViews in order to enable hyperlinking in AW_PersonDetailViewController
+
 *********** GIT COMMIT: Added projects to AW_PersonDetailViewController ***********
 
 - Added projects view to AW_PersonDetailViewController

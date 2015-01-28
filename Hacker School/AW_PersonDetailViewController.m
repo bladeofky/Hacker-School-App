@@ -10,7 +10,7 @@
 #import "AW_Person.h"
 #import "AW_Project.h"
 
-@interface AW_PersonDetailViewController ()
+@interface AW_PersonDetailViewController () <UITextViewDelegate>
 
 @property (nonatomic, weak) UIScrollView *scrollView;
 @property (nonatomic, weak) UIView *contentView;
@@ -351,13 +351,22 @@
             } //  end for projects
         } // end if there are more than 1 projects
         
-        // Add the final constraint
+        // Add the final constraint to bottom of superview
         NSArray *finalProjectBottomConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[previousProjectView]|"
                                                                                          options:0
                                                                                          metrics:nil
                                                                                            views:@{@"previousProjectView":previousProjectView}];
         [projectsView addConstraints:finalProjectBottomConstraints];
     } // end if there are projects
+    
+    else {
+        // Constrain bottom of header view to bottom of superview (since there are no projects)
+        NSArray *headerViewBottomConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[headerView]|"
+                                                                                      options:0
+                                                                                      metrics:nil
+                                                                                        views:@{@"headerView":headerView}];
+        [projectsView addConstraints:headerViewBottomConstraint];
+    } // end else if there are no projects
     
     return projectsView;
 }
@@ -372,11 +381,19 @@
     headerView.translatesAutoresizingMaskIntoConstraints = NO;
     [bioView addSubview:headerView];
     
-    UILabel *bodyText = [[UILabel alloc]init];
+    UITextView *bodyText = [[UITextView alloc]init];
+    bodyText.scrollEnabled = NO;
+    bodyText.editable = NO;
     bodyText.translatesAutoresizingMaskIntoConstraints = NO;
-    bodyText.text = self.person.bio;
-    bodyText.adjustsFontSizeToFitWidth = NO;
-    bodyText.numberOfLines = 0;
+    NSString *htmlBio = self.person.bio;
+    htmlBio = [htmlBio stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+    htmlBio = [NSString stringWithFormat:@"<span style=\"font-family: HelveticaNeue; font-size: 17; color: black;\">%@</span>", htmlBio];
+    NSAttributedString *attributedBio = [[NSAttributedString alloc]initWithData:[htmlBio dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                       options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType }
+                                                                            documentAttributes:nil
+                                                                                         error:nil];
+    bodyText.attributedText = attributedBio;
+
     [bioView addSubview:bodyText];
     
     // Create constraints
@@ -409,18 +426,30 @@
     projectView.translatesAutoresizingMaskIntoConstraints = NO;
     
     // Create title label
-    UILabel *titleLabel = [[UILabel alloc]init];
+    UITextView *titleLabel = [[UITextView alloc]init];
+    titleLabel.editable = NO;
+    titleLabel.scrollEnabled = NO;
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    titleLabel.text = project.title;
+    NSMutableAttributedString *titleAttributedString = [[NSMutableAttributedString alloc]initWithString:project.title];
+    [titleAttributedString addAttribute:NSLinkAttributeName value:[NSURL URLWithString:project.urlString] range:NSMakeRange(0, titleAttributedString.length)];
+    titleLabel.attributedText = titleAttributedString;
     titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:17];
     [projectView addSubview:titleLabel];
     
     // Create body text
-    UILabel *bodyText = [[UILabel alloc]init];
+    UITextView *bodyText = [[UITextView alloc]init];
+    bodyText.delegate = self;
     bodyText.translatesAutoresizingMaskIntoConstraints = NO;
-    bodyText.text = project.projectDescription;
-    bodyText.numberOfLines = 0;
-    bodyText.adjustsFontSizeToFitWidth = NO;
+    bodyText.scrollEnabled = NO;
+    bodyText.editable = NO;
+    NSString *htmlProjectDescription = project.projectDescription;
+    htmlProjectDescription = [htmlProjectDescription stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+    htmlProjectDescription = [NSString stringWithFormat:@"<span style=\"font-family: HelveticaNeue; font-size: 17; color: black;\">%@</span>", htmlProjectDescription];
+    NSAttributedString *attributedProjectDescription = [[NSAttributedString alloc]initWithData:[htmlProjectDescription dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                       options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType }
+                                                                            documentAttributes:nil
+                                                                                         error:nil];
+    bodyText.attributedText = attributedProjectDescription;
     [projectView addSubview:bodyText];
     
     // Create autolayout constraints
@@ -432,7 +461,7 @@
                                                                                      options:0
                                                                                      metrics:nil
                                                                                        views:@{@"bodyText":bodyText}];
-    NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[titleLabel]-4-[bodyText]|"
+    NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[titleLabel(==30)]-0-[bodyText]|"
                                                                            options:0
                                                                            metrics:nil
                                                                              views:@{@"titleLabel":titleLabel,

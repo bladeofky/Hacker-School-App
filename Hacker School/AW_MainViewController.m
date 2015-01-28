@@ -53,6 +53,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    // Change default tintColor (for buttons and stuff) to green for Hacker School
+    self.view.tintColor = [UIColor colorWithRed:0 green:0.9 blue:0 alpha:1.0];
     
 }
 
