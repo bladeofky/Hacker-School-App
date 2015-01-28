@@ -22,7 +22,7 @@
 {
     [super viewDidLoad];
     
-    // Set up scroll view
+    // ---- Set up scroll view ---
     UIScrollView *scrollView = [[UIScrollView alloc]init];
     self.scrollView = scrollView;
     scrollView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -39,7 +39,7 @@
     [self.view addConstraints:scrollViewHorizontalConstraints];
     [self.view addConstraints:scrollViewVerticalConstraints];
     
-    // Set up content view
+    // --- Set up content view ---
     UIView *contentView = [[UIView alloc]init];
     self.contentView = contentView;
     contentView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -68,7 +68,7 @@
     [scrollView addConstraint:contentViewWidthConstraint];
     [scrollView addConstraint:contentViewTopConstraint];
     
-    // Add basic info
+    // --- Add basic info ---
     UIView *basicInfoView = [self createBasicInfoView];
     [contentView addSubview:basicInfoView];
     
@@ -83,7 +83,23 @@
     [contentView addConstraints:basicInfoViewHorizontalConstraints];
     [contentView addConstraints:basicInfoViewVerticalConstraints];
     
-    // Add bioview
+    // --- Add skillsView ---
+    UIView *skillsView = [self createSkillsView];
+    [contentView addSubview:skillsView];
+    
+    NSArray *skillsViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[skillsView]|"
+                                                                                    options:0
+                                                                                    metrics:nil
+                                                                                      views:@{@"skillsView":skillsView}];
+    NSArray *skillsViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[basicInfoView]-20-[skillsView]"
+                                                                                  options:0
+                                                                                  metrics:nil
+                                                                                    views:@{@"basicInfoView":basicInfoView,
+                                                                                            @"skillsView":skillsView}];
+    [contentView addConstraints:skillsViewHorizontalConstraints];
+    [contentView addConstraints:skillsViewVerticalConstraints];
+    
+    // --- Add bioview ---
     UIView *bioView = [self createBioView];
     [contentView addSubview:bioView];
     
@@ -91,13 +107,15 @@
                                                                                     options:0
                                                                                     metrics:nil
                                                                                       views:@{@"bioView":bioView}];
-    NSArray *bioViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[basicInfoView]-20-[bioView]|"
+    NSArray *bioViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[skillsView]-20-[bioView]|"
                                                                                   options:0
                                                                                   metrics:nil
-                                                                                    views:@{@"basicInfoView":basicInfoView,
+                                                                                    views:@{@"skillsView":skillsView,
                                                                                             @"bioView":bioView}];
     [contentView addConstraints:bioViewHorizontalConstraints];
     [contentView addConstraints:bioViewVerticalConstraints];
+    
+    
     
     // Test
     UIView *testHeaderView = [self createSectionHeaderWithString:@"test"];
@@ -110,6 +128,8 @@
 -(void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
+    
+    // After autolayout has laid out views, set scroll view content size
     self.scrollView.contentSize = self.contentView.bounds.size;
 }
 
@@ -234,6 +254,53 @@
     [bioView addConstraints:verticalConstsraints];
     
     return bioView;
+}
+
+- (UIView *)createSkillsView
+{
+    UIView *skillsView = [[UIView alloc]init];
+    skillsView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    // Create views
+    UIView *headerView = [self createSectionHeaderWithString:@"Skills"];
+    headerView.translatesAutoresizingMaskIntoConstraints = NO;
+    [skillsView addSubview:headerView];
+    
+    UILabel *bodyText = [[UILabel alloc]init];
+    bodyText.translatesAutoresizingMaskIntoConstraints = NO;
+    bodyText.text = self.person.bio;
+    bodyText.adjustsFontSizeToFitWidth = NO;
+    bodyText.numberOfLines = 0;
+    [skillsView addSubview:bodyText];
+    
+    // Generate text
+    NSMutableString *bodyTextString = [[NSMutableString alloc]init];
+    for (NSString *skillString in self.person.skills) {
+        [bodyTextString appendString:[NSString stringWithFormat:@"\u2022 %@\n", skillString]];
+    }
+    bodyText.text = [bodyTextString stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    
+    // Create constraints
+    NSArray *headerViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[headerView]|"
+                                                                                       options:0
+                                                                                       metrics:nil
+                                                                                         views:@{@"headerView":headerView}];
+    NSArray *bodyTextHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[bodyText]-20-|"
+                                                                                     options:0
+                                                                                     metrics:nil
+                                                                                       views:@{@"bodyText":bodyText}];
+    NSArray *verticalConstsraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[headerView(==30)]-[bodyText]|"
+                                                                            options:0
+                                                                            metrics:nil
+                                                                              views:@{@"headerView":headerView,
+                                                                                      @"bodyText":bodyText}];
+    
+    // Add constraints
+    [skillsView addConstraints:headerViewHorizontalConstraints];
+    [skillsView addConstraints:bodyTextHorizontalConstraints];
+    [skillsView addConstraints:verticalConstsraints];
+    
+    return skillsView;
 }
 
 - (UIView *)createSectionHeaderWithString:(NSString *)title

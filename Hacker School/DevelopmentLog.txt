@@ -2,6 +2,10 @@
 1-27-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Added skills to AW_PersonDetailViewController ***********
+
+- Added skills to AW_PersonDetailViewController
+
 *********** GIT COMMIT: Added AW_PersonDetailViewController. Displays basic info and bio. ***********
 
 - Implemented autolayout constraints of AW_PersonDetailViewController's view
