@@ -30,6 +30,8 @@
 @property (nonatomic, strong) NSString *bio;
 @property (nonatomic, strong) NSArray *projects;
 @property (nonatomic, strong) NSArray *links;
+@property (nonatomic) BOOL isHackerSchooler;
+@property (nonatomic) BOOL isFaculty;
 @property (nonatomic, weak) AW_Batch *batch;
 @property (nonatomic, weak) id<AW_PersonDelegate> delegate;
 

@@ -35,6 +35,15 @@
 {
     [super viewDidLoad];
     
+    // --- Set up Navigation bar ---
+    if (self.person.isFaculty) {
+        self.navigationItem.title = @"Faculty";
+    }
+    else if (self.person.isHackerSchooler) {
+        self.navigationItem.title = @"Student";
+    }
+    
+    
     // ---- Set up scroll view ---
     UIScrollView *scrollView = [[UIScrollView alloc]init];
     self.scrollView = scrollView;

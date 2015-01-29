@@ -13,10 +13,11 @@
 
 @interface AW_BatchHeaderView : UIView
 
-@property (strong, nonatomic) UILabel *batchNameLabel;
-@property (strong, nonatomic) UILabel *batchYearLabel;
-@property (weak, nonatomic) AW_Batch *batch;
+@property (nonatomic) BOOL isOpen;
+@property (nonatomic, strong) UILabel *batchNameLabel;
+@property (nonatomic, strong) UILabel *batchYearLabel;
+@property (nonatomic, weak) AW_Batch *batch;
 
-@property (weak, nonatomic) id<AW_BatchHeaderViewDelegate> delegate;
+@property (nonatomic, weak) id<AW_BatchHeaderViewDelegate> delegate;
 
 @end

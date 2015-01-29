@@ -58,6 +58,8 @@
         _skills = personInfo[@"skills"];
         _image = [UIImage imageNamed:@"defaultPersonImage"];
         _bio = personInfo[@"bio"];
+        _isFaculty = [personInfo[@"is_faculty"]boolValue];
+        _isHackerSchooler = [personInfo[@"is_hacker_schooler"]boolValue];
         
         // Process project
         NSMutableArray *tempProjectsArray = [[NSMutableArray alloc]init];

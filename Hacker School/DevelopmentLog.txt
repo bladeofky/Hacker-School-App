@@ -2,6 +2,14 @@
 1-29-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Refactored AW_PeopleViewController and added title to AW_PersonDetailViewController ***********
+
+- Added Student/Faculty navigation title to AW_PersonDetailViewController
+- Added isHackerSchooler and isFaculty to AW_Person
+- Removed loadedBatches and isSectionOpen arrays from AW_PeopleViewController
+- Added array of AW_BatchHeaderView objects in AW_PeopleViewController
+- Added isOpen property to AW_BatchHeaderView
+
 *********** GIT COMMIT: Refactored to store AW_Person objects in AW_Batch ***********
 
 - AW_PersonDetailController now displays batch instead of email under name

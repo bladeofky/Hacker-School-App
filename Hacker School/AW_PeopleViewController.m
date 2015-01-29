@@ -39,8 +39,7 @@
 @interface AW_PeopleViewController ()
 
 @property (nonatomic, strong) NSArray *batches;
-@property (nonatomic, strong) NSMutableDictionary *loadedBatches;   // Stores people in the batch (key: section in tableview, value: NSArray of AW_Person objects)
-@property (nonatomic, strong) NSMutableArray *isSectionOpenArray;   // Tracks which sections are opened (index: section, value: BOOL)
+@property (nonatomic, strong) NSArray *batchHeaderViews;
 @property (nonatomic, strong) NXOAuth2Account *userAccount;
 
 @end
@@ -64,24 +63,6 @@
     }
     
     return _userAccount;
-}
-
--(NSMutableArray *)isSectionOpenArray
-{
-    if (!_isSectionOpenArray) {
-        _isSectionOpenArray = [[NSMutableArray alloc]init];
-    }
-    
-    return _isSectionOpenArray;
-}
-
--(NSMutableDictionary *)loadedBatches
-{
-    if (!_loadedBatches) {
-        _loadedBatches = [[NSMutableDictionary alloc]init];
-    }
-    
-    return _loadedBatches;
 }
 
 #pragma mark - View Lifecycle
@@ -134,57 +115,27 @@
     }
     
     NSMutableArray *tempBatches = [[NSMutableArray alloc]init];
+    NSMutableArray *tempBatchHeaders = [[NSMutableArray alloc]init];
     
     for (NSDictionary *batchInfo in batchInfos) {
+        // Create batch
         AW_Batch *batch = [[AW_Batch alloc]initWithJSONObject:batchInfo];
         batch.delegate = self;
         [tempBatches addObject:batch];
-        [self.isSectionOpenArray addObject:@NO];
+        
+        // Create batch header view for table
+        AW_BatchHeaderView *batchHeaderView = [[AW_BatchHeaderView alloc]init];
+        batchHeaderView.batch = batch;
+        batchHeaderView.delegate = self;
+        [tempBatchHeaders addObject:batchHeaderView];
     }
     
     self.batches = [tempBatches copy];
+    self.batchHeaderViews = [tempBatchHeaders copy];
     
     NSLog(@"Batches: %@", self.batches);
     
     [self.tableView reloadData];
-}
-
-// Processes the raw data returned from the Hacker School API to create an NSArray of AW_Person objects
-// Adds this NSArray to the self.loadedBatches dictionary with a key corresponding to the batch's section in the table view
-- (void)processPeopleInBatch:(NSData *)responseData forSection:(NSUInteger)section
-{
-    // Translate data into JSON Object
-    NSError *error;
-    NSArray *personInfos = [NSJSONSerialization JSONObjectWithData:responseData
-                                                           options:0
-                                                             error:&error];
-    if (error) {
-        NSLog(@"Error: %@", [error localizedDescription]);
-        return;
-    }
-    
-    // Get the tableview cell this batch belongs to
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
-    AW_BatchCollectionTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    
-    // Generate array of AW_Person objects
-    NSMutableArray *tempPeopleArray = [[NSMutableArray alloc]init];
-    
-    for (NSDictionary *personInfo in personInfos) {
-        AW_Person *person = [[AW_Person alloc]initWithJSONObject:personInfo];
-        [tempPeopleArray addObject:person];
-    }
-    
-    NSLog(@"Section %lu batch contains: %@", (unsigned long)section, tempPeopleArray);
-    // Add array to dictionary
-    NSNumber *sectionWrapper = [NSNumber numberWithInteger:section];
-    self.loadedBatches[sectionWrapper] = [tempPeopleArray copy];
-    
-    [cell.collectionView reloadData];
-    [self.tableView reloadData];
-    
-//    AW_BatchHeaderView *sectionHeader = [self tableView:self.tableView viewForHeaderInSection:section];
-//    [self.tableView setContentOffset:sectionHeader.frame.origin animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -196,8 +147,9 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger numRows;
+    AW_BatchHeaderView *batchHeaderView = self.batchHeaderViews[section];
     
-    if ([self.isSectionOpenArray[section] isEqual:@YES]) {
+    if (batchHeaderView.isOpen) {
         numRows = 1;
     }
     else {
@@ -229,13 +181,7 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    AW_Batch *batch = self.batches[section];
-    
-    AW_BatchHeaderView *view = [[AW_BatchHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
-    view.batch = batch;
-    view.delegate = self;
-    
-    return view;
+    return self.batchHeaderViews[section];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -328,26 +274,18 @@
 #pragma mark - AW_BatchHeaderDelegate
 -(void)didTapBatchHeader:(AW_BatchHeaderView *)batchHeaderView
 {
-    NSUInteger sectionOfTappedHeader;
-    
     // Find the section that the batchHeaderView belongs to
-    for (int section = 0; section < [self.tableView numberOfSections]; section++) {
-        UIView *viewForSectionHeader = [self tableView:self.tableView viewForHeaderInSection:section];
-        if ([viewForSectionHeader isEqual:batchHeaderView]) {
-            sectionOfTappedHeader = section;
-            break;
-        }
-    }
+    NSUInteger sectionOfTappedHeader = [self.batchHeaderViews indexOfObject:batchHeaderView];
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:sectionOfTappedHeader];
     
-    if ([self.isSectionOpenArray[sectionOfTappedHeader] isEqual:@NO]) {
+    if (!batchHeaderView.isOpen) {
         // Section is not currently open. Open section:
         // Add a row to the selected section
 //        [self.tableView setContentOffset:batchHeaderView.frame.origin animated:YES];
         
         [self.tableView beginUpdates];
-        self.isSectionOpenArray[sectionOfTappedHeader] = @YES;
+        batchHeaderView.isOpen = YES;
         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
         [self.tableView endUpdates];
         
@@ -363,7 +301,7 @@
 //        NSIndexPath *indexPathAtCurrentOffset = [self.tableView indexPathForRowAtPoint:currentOffset];
         
         [self.tableView beginUpdates];
-        self.isSectionOpenArray[sectionOfTappedHeader] = @NO;
+        batchHeaderView.isOpen = NO;
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
         [self.tableView endUpdates];
         
