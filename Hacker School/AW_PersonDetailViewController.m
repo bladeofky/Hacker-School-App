@@ -38,6 +38,7 @@
     UIScrollView *scrollView = [[UIScrollView alloc]init];
     self.scrollView = scrollView;
     scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    scrollView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:scrollView];
     
     NSArray *scrollViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|"
@@ -80,6 +81,8 @@
     [scrollView addConstraint:contentViewWidthConstraint];
     [scrollView addConstraint:contentViewTopConstraint];
     
+    UIView *previousView;
+    
     // --- Add basic info ---
     UIView *basicInfoView = [self createBasicInfoView];
     [contentView addSubview:basicInfoView];
@@ -114,98 +117,96 @@
     [contentView addConstraint:contactViewHorizontalConstraints];
     [contentView addConstraints:contactViewVerticalConstraints];
     
-    // --- Add skillsView ---
-    UIView *skillsView = [self createSkillsView];
-    [contentView addSubview:skillsView];
+    previousView = contactView;
     
-    NSArray *skillsViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[skillsView]|"
-                                                                                       options:0
-                                                                                       metrics:nil
-                                                                                         views:@{@"skillsView":skillsView}];
-    NSArray *skillsViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[contactView]-20-[skillsView]"
-                                                                                     options:0
-                                                                                     metrics:nil
-                                                                                       views:@{@"contactView":contactView,
-                                                                                               @"skillsView":skillsView}];
-    [contentView addConstraints:skillsViewHorizontalConstraints];
-    [contentView addConstraints:skillsViewVerticalConstraints];
-    
-    
-    // --- Add projectsView ---
-    UIView *projectsView = [self createProjectsView];
-    [contentView addSubview:projectsView];
-    
-    NSArray *projectsViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[projectsView]|"
+    // --- Add skillsView if not empty ---
+    if (![self.person.skills isEqual:@[]]) {
+        UIView *skillsView = [self createSkillsView];
+        [contentView addSubview:skillsView];
+        
+        NSArray *skillsViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[skillsView]|"
+                                                                                           options:0
+                                                                                           metrics:nil
+                                                                                             views:@{@"skillsView":skillsView}];
+        NSArray *skillsViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[previousView]-20-[skillsView]"
                                                                                          options:0
                                                                                          metrics:nil
-                                                                                           views:@{@"projectsView":projectsView}];
-    NSArray *projectsViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[skillsView]-20-[projectsView]"
-                                                                                       options:0
-                                                                                       metrics:nil
-                                                                                         views:@{@"skillsView":skillsView,
-                                                                                                 @"projectsView":projectsView}];
-    [contentView addConstraints:projectsViewHorizontalConstraints];
-    [contentView addConstraints:projectsViewVerticalConstraints];
+                                                                                           views:@{@"previousView":previousView,
+                                                                                                   @"skillsView":skillsView}];
+        [contentView addConstraints:skillsViewHorizontalConstraints];
+        [contentView addConstraints:skillsViewVerticalConstraints];
+        
+        previousView = skillsView;
+    }
+
+    // --- Add projectsView if not empty ---
+    if (![self.person.projects isEqual:@[]]) {
+        UIView *projectsView = [self createProjectsView];
+        [contentView addSubview:projectsView];
+        
+        NSArray *projectsViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[projectsView]|"
+                                                                                             options:0
+                                                                                             metrics:nil
+                                                                                               views:@{@"projectsView":projectsView}];
+        NSArray *projectsViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[previousView]-20-[projectsView]"
+                                                                                           options:0
+                                                                                           metrics:nil
+                                                                                             views:@{@"previousView":previousView,
+                                                                                                     @"projectsView":projectsView}];
+        [contentView addConstraints:projectsViewHorizontalConstraints];
+        [contentView addConstraints:projectsViewVerticalConstraints];
+        
+        previousView = projectsView;
+    }
     
-    // --- Add bioview ---
-    UIView *bioView = [self createBioView];
-    [contentView addSubview:bioView];
-    
-    NSArray *bioViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bioView]|"
-                                                                                    options:0
-                                                                                    metrics:nil
-                                                                                      views:@{@"bioView":bioView}];
-    NSArray *bioViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[projectsView]-20-[bioView]"
-                                                                                  options:0
-                                                                                  metrics:nil
-                                                                                    views:@{@"projectsView":projectsView,
-                                                                                            @"bioView":bioView}];
-    [contentView addConstraints:bioViewHorizontalConstraints];
-    [contentView addConstraints:bioViewVerticalConstraints];
-    
-    // --- Add links view ---
-    UIView *linksView = [self createLinksView];
-    [contentView addSubview:linksView];
-    
-    NSArray *linksViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[linksView]|"
+    // --- Add bioview if not empty ---
+    if (![self.person.bio isEqualToString:@""]) {
+        UIView *bioView = [self createBioView];
+        [contentView addSubview:bioView];
+        
+        NSArray *bioViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bioView]|"
+                                                                                        options:0
+                                                                                        metrics:nil
+                                                                                          views:@{@"bioView":bioView}];
+        NSArray *bioViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[previousView]-20-[bioView]"
                                                                                       options:0
                                                                                       metrics:nil
-                                                                                        views:@{@"linksView":linksView}];
-    NSArray *linksViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[bioView]-20-[linksView]-20-|"
-                                                                                    options:0
-                                                                                    metrics:nil
-                                                                                      views:@{@"bioView":bioView,
-                                                                                              @"linksView":linksView}];
+                                                                                        views:@{@"previousView":previousView,
+                                                                                                @"bioView":bioView}];
+        [contentView addConstraints:bioViewHorizontalConstraints];
+        [contentView addConstraints:bioViewVerticalConstraints];
+        
+        previousView = bioView;
+    }
     
-    [contentView addConstraints:linksViewHorizontalConstraints];
-    [contentView addConstraints:linksViewVerticalConstraints];
+    // --- Add links view ---
+    if (![self.person.links isEqual:@[]]) {
+        UIView *linksView = [self createLinksView];
+        [contentView addSubview:linksView];
+        
+        NSArray *linksViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[linksView]|"
+                                                                                          options:0
+                                                                                          metrics:nil
+                                                                                            views:@{@"linksView":linksView}];
+        NSArray *linksViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[previousView]-20-[linksView]"
+                                                                                        options:0
+                                                                                        metrics:nil
+                                                                                          views:@{@"previousView":previousView,
+                                                                                                  @"linksView":linksView}];
+        
+        [contentView addConstraints:linksViewHorizontalConstraints];
+        [contentView addConstraints:linksViewVerticalConstraints];
+        
+        previousView = linksView;
+    }
     
-    //    // Test
-    //    UIView *testHeaderView = [self createSectionHeaderWithString:@"test"];
-    //    testHeaderView.frame = CGRectMake(0, 100, 320, 30);
-    //    self.view.backgroundColor = [UIColor whiteColor];
-    //    [self.contentView addSubview:testHeaderView];
+    // Add bottom constraint
+    NSArray *bottomConstraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[previousView]-(20)-|"
+                                                                        options:0
+                                                                        metrics:nil
+                                                                          views:@{@"previousView":previousView}];
+    [contentView addConstraints:bottomConstraint];
     
-    //    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 100, 44, 44)];
-    //    UIImage *icon = [[UIImage imageNamed:@"PhoneIcon.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    //    [button setImage:icon forState:UIControlStateNormal];
-    //    [contentView addSubview:button];
-    //
-    //    UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(0, 150, 44, 44)];
-    //    UIImage *icon2 = [[UIImage imageNamed:@"EmailIcon"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    //    [button2 setImage:icon2 forState:UIControlStateNormal];
-    //    button2.enabled = NO;
-    //    [contentView addSubview:button2];
-    //
-    //    UIButton *button3 = [[UIButton alloc]initWithFrame:CGRectMake(0, 200, 44, 44)];
-    //    UIImage *icon3 = [[UIImage imageNamed:@"GithubIcon"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    //    [button3 setImage:icon3 forState:UIControlStateNormal];
-    //    [contentView addSubview:button3];
-    //
-    //    UIButton *button4 = [[UIButton alloc]initWithFrame:CGRectMake(0, 250, 44, 44)];
-    //    UIImage *icon4 = [[UIImage imageNamed:@"TwitterIcon"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    //    [button4 setImage:icon4 forState:UIControlStateNormal];
-    //    [contentView addSubview:button4];
 }
 
 -(void)viewDidLayoutSubviews
@@ -214,6 +215,14 @@
     
     // After autolayout has laid out views, set scroll view content size
     self.scrollView.contentSize = self.contentView.bounds.size;
+}
+
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    // This is required to reset the scroll view's content size upon screen rotation
+    [self viewWillLayoutSubviews];
+    [self.view layoutSubviews];
+    [self viewDidLayoutSubviews];
 }
 
 #pragma mark - Create sections
@@ -646,6 +655,8 @@
     titleLabel.editable = NO;
     titleLabel.scrollEnabled = NO;
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [titleLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+    [titleLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     NSMutableAttributedString *titleAttributedString = [[NSMutableAttributedString alloc]initWithString:project.title];
     [titleAttributedString addAttribute:NSLinkAttributeName value:[NSURL URLWithString:project.urlString] range:NSMakeRange(0, titleAttributedString.length)];
     titleLabel.attributedText = titleAttributedString;
@@ -669,7 +680,7 @@
     [projectView addSubview:bodyText];
     
     // Create autolayout constraints
-    NSArray *titleLabelHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[titleLabel]-20-|"
+    NSArray *titleLabelHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[titleLabel]-(>=20)-|"
                                                                                        options:0
                                                                                        metrics:nil
                                                                                          views:@{@"titleLabel":titleLabel}];

@@ -1,4 +1,14 @@
 --------------------------------------------------------------------------------------------------------------------------------------------
+1-29-2015
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+*********** GIT COMMIT: Minor improvements to AW_PersonDetailViewController ***********
+
+- Fixed scrolling after rotating screen in AW_PersonDetailViewController
+- Implemented selective creation of views in AW_PersonDetailViewController
+- Adjusted size of project title tapable area to prevent accidental taps in AW_PersonDetailViewController
+
+--------------------------------------------------------------------------------------------------------------------------------------------
 1-28-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
