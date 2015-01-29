@@ -137,6 +137,7 @@
     
     for (NSDictionary *batchInfo in batchInfos) {
         AW_Batch *batch = [[AW_Batch alloc]initWithJSONObject:batchInfo];
+        batch.delegate = self;
         [tempBatches addObject:batch];
         [self.isSectionOpenArray addObject:@NO];
     }
@@ -240,8 +241,8 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Calculate height of collection view
-    NSNumber *batchSectionWrapper = [NSNumber numberWithInteger:indexPath.section];
-    NSArray *peopleInBatch = self.loadedBatches[batchSectionWrapper];
+    AW_Batch *batch = self.batches[indexPath.section];
+    NSArray *peopleInBatch = batch.people;
     NSUInteger numberOfPeople = [peopleInBatch count];
     
     if (numberOfPeople == 0) {
@@ -279,8 +280,8 @@
 
 -(NSInteger)collectionView:(AW_BatchIndexedCollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSNumber *wrapper = [NSNumber numberWithInteger:collectionView.index];
-    NSArray *peopleInBatch = self.loadedBatches[wrapper];   // Will return nil if section is not found among dictionary's keys
+    AW_Batch *batch = self.batches[collectionView.index];
+    NSArray *peopleInBatch = batch.people;
     
     return [peopleInBatch count];
 }
@@ -289,10 +290,9 @@
 {
     AW_PersonCollectionViewCell *personCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AW_PersonCollectionViewCell.h" forIndexPath:indexPath];
     
-    NSNumber *batchSectionWrapper = [NSNumber numberWithInteger:collectionView.index];
-    NSArray *peopleInBatch = self.loadedBatches[batchSectionWrapper];
+    AW_Batch *batch = self.batches[collectionView.index];
+    NSArray *peopleInBatch = batch.people;
     AW_Person *person = peopleInBatch[indexPath.row];
-    person.delegate = personCell;
     
     personCell.person = person;
     
@@ -302,8 +302,8 @@
 #pragma mark - UICollectionViewDelegate
 -(void)collectionView:(AW_BatchIndexedCollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSNumber *batchSectionWrapper = [NSNumber numberWithInteger:collectionView.index];
-    NSArray *peopleInBatch = self.loadedBatches[batchSectionWrapper];
+    AW_Batch *batch = self.batches[collectionView.index];
+    NSArray *peopleInBatch = batch.people;
     AW_Person *person = peopleInBatch[indexPath.row];
     
     NSLog(@"Did tap %@ %@", person.firstName, person.lastName);
@@ -312,6 +312,17 @@
     AW_PersonDetailViewController *detailVC = [[AW_PersonDetailViewController alloc]init];
     detailVC.person = person;
     [self.navigationController pushViewController:detailVC animated:YES];
+}
+
+#pragma mark - AW_BatchDelegate
+-(void)batch:(AW_Batch *)batch didDownloadPeople:(NSArray *)people
+{
+    [self.tableView reloadData];
+}
+
+-(void)batch:(AW_Batch *)batch didDownloadImage:(UIImage *)image forPerson:(AW_Person *)person
+{
+//    [self.tableView reloadData];
 }
 
 #pragma mark - AW_BatchHeaderDelegate
@@ -342,30 +353,14 @@
         
         
         // Begin fetching the people in this batch from the API if it has not already been loaded
-        NSNumber *sectionOfTappedHeaderWrapper = [NSNumber numberWithInteger:sectionOfTappedHeader];
-        if (!self.loadedBatches[sectionOfTappedHeaderWrapper]) {
-            AW_Batch *batch = self.batches[sectionOfTappedHeader];
-            
-            NSNumber *batchID = batch.idNumber;
-            NSURL *resourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.hackerschool.com//api/v1/batches/%@/people", batchID]];
-            
-            [NXOAuth2Request performMethod:@"GET"
-                                onResource:resourceURL
-                           usingParameters:nil
-                               withAccount:self.userAccount
-                       sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
-                           // Update progress bar if we have one
-                           // Intentionally left empty
-                       } responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error) {
-                           // Return the data to our view controller
-                           [self processPeopleInBatch:responseData forSection:indexPath.section];
-                       }];
+        AW_Batch *batch = self.batches[sectionOfTappedHeader];
+        if (!batch.people) {
+            [batch downloadPeople];
         }
     }
     else {
         // Section is currently open. Close section:
-        CGPoint currentOffset = self.tableView.contentOffset;
-        NSIndexPath *indexPathAtCurrentOffset = [self.tableView indexPathForRowAtPoint:currentOffset];
+//        NSIndexPath *indexPathAtCurrentOffset = [self.tableView indexPathForRowAtPoint:currentOffset];
         
         [self.tableView beginUpdates];
         self.isSectionOpenArray[sectionOfTappedHeader] = @NO;

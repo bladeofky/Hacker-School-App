@@ -6,11 +6,11 @@
 //  Copyright (c) 2015 Alan Wang. All rights reserved.
 //
 
-@class AW_Person;
+@class AW_Person, UIImage;
 
 @protocol AW_PersonDelegate <NSObject>
 
-@optional
+@required
 - (void)person:(AW_Person *)person didDownloadImage:(UIImage *)image;
 
 @end

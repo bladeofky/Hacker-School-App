@@ -20,6 +20,9 @@
  */
 
 #import "AW_Batch.h"
+#import "AW_Person.h"
+#import "AW_UserAccount.h"
+#import "NXOAuth2.h"
 
 @implementation AW_Batch
 
@@ -73,6 +76,51 @@
     [NSException raise:@"Cannot create empty batch" format:@"Use initWithAPIData:"];
     
     return nil;
+}
+
+#pragma mark - Hacker School API Access
+-(void)downloadPeople
+{
+    NSURL *resourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.hackerschool.com//api/v1/batches/%@/people", self.idNumber]];
+    
+    [NXOAuth2Request performMethod:@"GET"
+                        onResource:resourceURL
+                   usingParameters:nil
+                       withAccount:[AW_UserAccount currentUser]
+               sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+                   // Update progress bar if we have one
+                   // Intentionally left empty
+               } responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error) {
+                   
+                   if (error) {
+                       NSLog(@"Error: %@", [error localizedDescription]);
+                       return;
+                   }
+                   
+                   // Translate data into JSON Object
+                   NSArray *personInfos = [NSJSONSerialization JSONObjectWithData:responseData
+                                                                          options:0
+                                                                            error:&error];
+                   // Generate array of AW_Person objects
+                   NSMutableArray *tempPeopleArray = [[NSMutableArray alloc]init];
+                   
+                   for (NSDictionary *personInfo in personInfos) {
+                       AW_Person *person = [[AW_Person alloc]initWithJSONObject:personInfo];
+                       person.delegate = self;
+                       person.batch = self;
+                       [tempPeopleArray addObject:person];
+                   }
+
+                   self.people = [tempPeopleArray copy];
+                   
+                   [self.delegate batch:self didDownloadPeople:self.people];
+               }];
+}
+
+#pragma mark - AW_PersonDelegate
+-(void)person:(AW_Person *)person didDownloadImage:(id)image
+{
+    [self.delegate batch:self didDownloadImage:image forPerson:person];
 }
 
 #pragma mark - Comparisons

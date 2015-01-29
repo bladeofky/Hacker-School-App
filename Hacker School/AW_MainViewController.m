@@ -12,11 +12,11 @@
 
 #import "NXOAuth2.h"
 
+#import "AW_UserAccount.h"
 #import "AW_Person.h"
 
 @interface AW_MainViewController ()
 
-@property (nonatomic, strong) NXOAuth2Account *userAccount;
 @property (nonatomic, strong) __block AW_Person *currentUser;
 
 @property (nonatomic, strong) AW_PeopleViewController *peopleVC;
@@ -26,22 +26,6 @@
 
 @implementation AW_MainViewController
 #pragma mark - Accessors
--(NXOAuth2Account *)userAccount
-{
-    if (!_userAccount) {
-        NSArray *accounts = [[NXOAuth2AccountStore sharedStore] accounts];
-        
-        if ([accounts count] > 0) {
-            _userAccount = accounts[0];
-        }
-        else {
-            _userAccount = nil;
-        }
-    }
-    
-    return _userAccount;
-}
-
 -(void)setCurrentUser:(AW_Person *)currentUser
 {
     _currentUser = currentUser;
@@ -62,7 +46,7 @@
 {
     // --- Present Login Screen If No Current User ---
     // TODO: Possibly move this into the - (void)applicationDidBecomeActive:(UIApplication *)application method of the App Delegate
-    if (!self.userAccount) {
+    if (![AW_UserAccount currentUser]) {
         AW_LoginViewController *loginVC = [[AW_LoginViewController alloc]init];
         [self presentViewController:loginVC animated:YES completion:nil];
     }
@@ -73,7 +57,7 @@
         [NXOAuth2Request performMethod:@"GET"
                             onResource:[NSURL URLWithString:@"https://www.hackerschool.com//api/v1/people/me"]
                        usingParameters:nil
-                           withAccount:self.userAccount
+                           withAccount:[AW_UserAccount currentUser]
                    sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
                        // i.e. update progress indicator
                    }

@@ -7,6 +7,7 @@
 //
 
 #import "AW_PersonDetailViewController.h"
+#import "AW_Batch.h"
 #import "AW_Person.h"
 #import "AW_Project.h"
 #import "AW_Link.h"
@@ -247,14 +248,14 @@
     nameLabel.minimumScaleFactor = 0.75;
     [basicInfoView addSubview:nameLabel];
     
-    UILabel *emailLabel = [[UILabel alloc]init];
-    emailLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    emailLabel.text = self.person.email;
-    emailLabel.textAlignment = NSTextAlignmentCenter;
-    emailLabel.font = [UIFont fontWithName:@"HelventicaNeue" size:17.0];
-    emailLabel.adjustsFontSizeToFitWidth = YES;
-    emailLabel.minimumScaleFactor = 0.75;
-    [basicInfoView addSubview:emailLabel];
+    UILabel *batchLabel = [[UILabel alloc]init];
+    batchLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    batchLabel.text = self.person.batch.apiName;
+    batchLabel.textAlignment = NSTextAlignmentCenter;
+    batchLabel.font = [UIFont fontWithName:@"HelventicaNeue" size:17.0];
+    batchLabel.adjustsFontSizeToFitWidth = YES;
+    batchLabel.minimumScaleFactor = 0.75;
+    [basicInfoView addSubview:batchLabel];
     
     // Add constraints
     NSLayoutConstraint *imageViewCenterXConstraint = [NSLayoutConstraint constraintWithItem:imageView
@@ -271,10 +272,10 @@
                                                                                   attribute:NSLayoutAttributeCenterX
                                                                                  multiplier:1
                                                                                    constant:0];
-    NSLayoutConstraint *emailLabelCenterXConstsraint = [NSLayoutConstraint constraintWithItem:emailLabel
+    NSLayoutConstraint *emailLabelCenterXConstsraint = [NSLayoutConstraint constraintWithItem:batchLabel
                                                                                     attribute:NSLayoutAttributeCenterX
                                                                                     relatedBy:NSLayoutRelationEqual
-                                                                                       toItem:emailLabel.superview
+                                                                                       toItem:batchLabel.superview
                                                                                     attribute:NSLayoutAttributeCenterX
                                                                                    multiplier:1
                                                                                      constant:0];
@@ -286,16 +287,16 @@
                                                                                       options:0
                                                                                       metrics:nil
                                                                                         views:@{@"nameLabel":nameLabel}];
-    NSArray *emailLabelHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-20-[emailLabel]"
+    NSArray *emailLabelHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-20-[batchLabel]"
                                                                                        options:0
                                                                                        metrics:nil
-                                                                                         views:@{@"emailLabel":emailLabel}];
-    NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView(==150)]-[nameLabel]-[emailLabel(==20)]|"
+                                                                                         views:@{@"batchLabel":batchLabel}];
+    NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView(==150)]-[nameLabel]-[batchLabel(==20)]|"
                                                                            options:0
                                                                            metrics:nil
                                                                              views:@{@"imageView":imageView,
                                                                                      @"nameLabel":nameLabel,
-                                                                                     @"emailLabel":emailLabel}];
+                                                                                     @"batchLabel":batchLabel}];
     
     [basicInfoView addConstraint:imageViewCenterXConstraint];
     [basicInfoView addConstraint:nameLabelCenterXConstraint];

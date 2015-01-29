@@ -2,6 +2,13 @@
 1-29-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Refactored to store AW_Person objects in AW_Batch ***********
+
+- AW_PersonDetailController now displays batch instead of email under name
+- Gave a batch property to AW_Person
+- Moved loading of people to AW_Batch. Started using the AW_Batch people property.
+- Created AW_BatchDelegate
+
 *********** GIT COMMIT: Minor improvements to AW_PersonDetailViewController ***********
 
 - Fixed scrolling after rotating screen in AW_PersonDetailViewController
