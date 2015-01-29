@@ -2,6 +2,10 @@
 1-29-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Moved collection view's data source ***********
+
+- Moved AW_BatchIndexedCollectionView's data source to AW_BatchCollectionTableViewCell from AW_PeopleViewController
+
 *********** GIT COMMIT: Refactored AW_PeopleViewController and added title to AW_PersonDetailViewController ***********
 
 - Added Student/Faculty navigation title to AW_PersonDetailViewController

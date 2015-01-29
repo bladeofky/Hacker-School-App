@@ -167,7 +167,6 @@
                                                                                   reuseIdentifier:@"AW_BatchCollectionTableViewCell"
                                                                                             batch:batch];
     cell.collectionView.delegate = self;
-    cell.collectionView.dataSource = self;
     cell.collectionView.index = indexPath.section;
     
     return cell;
@@ -217,33 +216,6 @@
     return totalHeight;
 }
 
-#pragma mark - UICollectionViewDataSource
-
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-
--(NSInteger)collectionView:(AW_BatchIndexedCollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    AW_Batch *batch = self.batches[collectionView.index];
-    NSArray *peopleInBatch = batch.people;
-    
-    return [peopleInBatch count];
-}
-
--(AW_PersonCollectionViewCell *)collectionView:(AW_BatchIndexedCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    AW_PersonCollectionViewCell *personCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AW_PersonCollectionViewCell.h" forIndexPath:indexPath];
-    
-    AW_Batch *batch = self.batches[collectionView.index];
-    NSArray *peopleInBatch = batch.people;
-    AW_Person *person = peopleInBatch[indexPath.row];
-    
-    personCell.person = person;
-    
-    return personCell;
-}
 
 #pragma mark - UICollectionViewDelegate
 -(void)collectionView:(AW_BatchIndexedCollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath

@@ -10,7 +10,7 @@
 
 @class AW_BatchIndexedCollectionView, AW_Batch;
 
-@interface AW_BatchCollectionTableViewCell : UITableViewCell
+@interface AW_BatchCollectionTableViewCell : UITableViewCell <UICollectionViewDataSource>
 
 @property (nonatomic, strong) AW_BatchIndexedCollectionView *collectionView;
 @property (nonatomic, weak) AW_Batch *batch;
