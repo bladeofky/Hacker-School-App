@@ -235,12 +235,28 @@
 #pragma mark - AW_BatchDelegate
 -(void)batch:(AW_Batch *)batch didDownloadPeople:(NSArray *)people
 {
-    [self.tableView reloadData];
+    NSUInteger section = [self.batches indexOfObject:batch];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
+    
+    // Existing row before loading people has height of zero. Reloading tableView will make the collectionView appear suddenly.
+    // Remove and re-add the row to create the drawer effect.
+    [self.tableView beginUpdates];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+    [self.tableView endUpdates];
 }
 
 -(void)batch:(AW_Batch *)batch didDownloadImage:(UIImage *)image forPerson:(AW_Person *)person
 {
-//    [self.tableView reloadData];
+//    NSUInteger rowForCollectionView = [batch.people indexOfObject:person];
+//    NSUInteger sectionForTableView = [self.batches indexOfObject:batch];
+//    NSIndexPath *indexPathForTableViewCell = [NSIndexPath indexPathForRow:0 inSection:sectionForTableView];
+//    AW_BatchCollectionTableViewCell *tableViewCell = [self.tableView cellForRowAtIndexPath:indexPathForTableViewCell];
+//    
+//    NSIndexPath *indexPathForPersonCell = [NSIndexPath indexPathForRow:rowForCollectionView inSection:0];
+//    [tableViewCell.collectionView reloadItemsAtIndexPaths:@[indexPathForPersonCell]];
+    
 }
 
 #pragma mark - AW_BatchHeaderDelegate

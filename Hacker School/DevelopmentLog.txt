@@ -2,6 +2,10 @@
 1-29-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Fixed drawer opening bug in AW_PeopleViewController ***********
+
+- Fixed bug where drawer appears suddenly upon initial load instead of dropping in from top in AW_PeopleViewController
+
 *********** GIT COMMIT: Moved collection view's data source ***********
 
 - Moved AW_BatchIndexedCollectionView's data source to AW_BatchCollectionTableViewCell from AW_PeopleViewController
