@@ -28,6 +28,7 @@
 @property (nonatomic, strong) NSArray *skills;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) NSString *bio;
+@property (nonatomic, strong) NSAttributedString *bioFormmated;
 @property (nonatomic, strong) NSArray *projects;
 @property (nonatomic, strong) NSArray *links;
 @property (nonatomic) BOOL isHackerSchooler;
@@ -37,6 +38,8 @@
 
 - (instancetype)initWithJSONObject:(NSDictionary *)personInfo; // Designated
 - (instancetype)initWithHackerSchoolAPIData:(NSData *)data;
+
+-(NSAttributedString *)formatBio;
 
 @end
 

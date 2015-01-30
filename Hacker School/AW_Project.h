@@ -13,7 +13,10 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *urlString;
 @property (nonatomic, strong) NSString *projectDescription;
+@property (nonatomic, strong) NSAttributedString *projectDescriptionFormatted;
 
 - (instancetype)initFromJsonObject:(NSDictionary *)projectInfo; //designated
+
+-(NSAttributedString *)formatProjectDescription;
 
 @end

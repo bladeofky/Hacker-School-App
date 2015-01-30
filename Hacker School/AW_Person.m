@@ -115,4 +115,28 @@
     return nil;
 }
 
+#pragma mark - 
+
+// I use this method rather than perform the converstion in a getter because this will allow me to put up a temporary loading screen
+// if bioFormatted is nil while converting.
+-(NSAttributedString *)formatBio
+{
+    // Convert raw projectDescription string (with HTML tags) to attributed string
+    NSString *htmlBio = self.bio;
+    htmlBio = [htmlBio stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+    htmlBio = [NSString stringWithFormat:@"<span style=\"font-family: HelveticaNeue; font-size: 17; color: black;\">%@</span>", htmlBio];
+    
+    // Supposedly this can only be done on the main thread. Something about Webkit requiring run cycles
+    NSAttributedString *attributedBio = [[NSAttributedString alloc]initWithData:[htmlBio dataUsingEncoding:NSUnicodeStringEncoding]
+                                                                        options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType }
+                                                             documentAttributes:nil
+                                                                          error:nil];
+    
+    NSLog(@"Bio formatted");
+    
+    self.bioFormmated = attributedBio;
+    
+    return self.bioFormmated;
+}
+
 @end

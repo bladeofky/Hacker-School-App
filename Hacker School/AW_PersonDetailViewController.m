@@ -559,14 +559,13 @@
     bodyText.scrollEnabled = NO;
     bodyText.editable = NO;
     bodyText.translatesAutoresizingMaskIntoConstraints = NO;
-    NSString *htmlBio = self.person.bio;
-    htmlBio = [htmlBio stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
-    htmlBio = [NSString stringWithFormat:@"<span style=\"font-family: HelveticaNeue; font-size: 17; color: black;\">%@</span>", htmlBio];
-    NSAttributedString *attributedBio = [[NSAttributedString alloc]initWithData:[htmlBio dataUsingEncoding:NSUnicodeStringEncoding]
-                                                                        options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType }
-                                                             documentAttributes:nil
-                                                                          error:nil];
-    bodyText.attributedText = attributedBio;
+
+    if (!self.person.bioFormmated) {
+        // TODO: Put up a loading screen
+        [self.person formatBio];    // Can only be done on the main thread
+        // TODO: Remove the loading screen
+    }
+    bodyText.attributedText = self.person.bioFormmated;
     
     [bioView addSubview:bodyText];
     
@@ -679,14 +678,12 @@
     bodyText.translatesAutoresizingMaskIntoConstraints = NO;
     bodyText.scrollEnabled = NO;
     bodyText.editable = NO;
-    NSString *htmlProjectDescription = project.projectDescription;
-    htmlProjectDescription = [htmlProjectDescription stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
-    htmlProjectDescription = [NSString stringWithFormat:@"<span style=\"font-family: HelveticaNeue; font-size: 17; color: black;\">%@</span>", htmlProjectDescription];
-    NSAttributedString *attributedProjectDescription = [[NSAttributedString alloc]initWithData:[htmlProjectDescription dataUsingEncoding:NSUnicodeStringEncoding]
-                                                                                       options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType }
-                                                                            documentAttributes:nil
-                                                                                         error:nil];
-    bodyText.attributedText = attributedProjectDescription;
+
+    if (!project.projectDescriptionFormatted) {
+        // TODO: Put up loading screen
+        [project formatProjectDescription];
+    }
+    bodyText.attributedText = project.projectDescriptionFormatted;
     [projectView addSubview:bodyText];
     
     // Create autolayout constraints

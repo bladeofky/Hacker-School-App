@@ -2,6 +2,10 @@
 1-29-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: HTML formatted bio and project description stored with AW_Person and AW_Project ***********
+
+- Added formatted project descriptions and bio to AW_Project and AW_Person, allowing me to store the formatted NSAttributedString.
+
 *********** GIT COMMIT: Fixed drawer opening bug in AW_PeopleViewController ***********
 
 - Fixed bug where drawer appears suddenly upon initial load instead of dropping in from top in AW_PeopleViewController
