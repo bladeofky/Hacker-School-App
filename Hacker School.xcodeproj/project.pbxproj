@@ -33,6 +33,7 @@
 		E7FB046E1A7997330062CD47 /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7FB046D1A7997330062CD47 /* image.xcassets */; };
 		E7FB046F1A7997480062CD47 /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7FB046D1A7997330062CD47 /* image.xcassets */; };
 		E7FB04721A7AB4A60062CD47 /* AW_UserAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB04711A7AB4A60062CD47 /* AW_UserAccount.m */; };
+		E7FB04771A7D72920062CD47 /* UIColor+batchColors.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB04761A7D72920062CD47 /* UIColor+batchColors.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +122,8 @@
 		E7FB04701A7AB4A60062CD47 /* AW_UserAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_UserAccount.h; sourceTree = "<group>"; };
 		E7FB04711A7AB4A60062CD47 /* AW_UserAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_UserAccount.m; sourceTree = "<group>"; };
 		E7FB04731A7AB9870062CD47 /* AW_BatchDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AW_BatchDelegate.h; sourceTree = "<group>"; };
+		E7FB04751A7D72920062CD47 /* UIColor+batchColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+batchColors.h"; sourceTree = "<group>"; };
+		E7FB04761A7D72920062CD47 /* UIColor+batchColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+batchColors.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +172,8 @@
 				E7B53F3D1A70192700931BEC /* DevelopmentLog.txt */,
 				E7B53EFB1A6EB94B00931BEC /* AppDelegate.h */,
 				E7B53EFC1A6EB94B00931BEC /* AppDelegate.m */,
+				E7FB04751A7D72920062CD47 /* UIColor+batchColors.h */,
+				E7FB04761A7D72920062CD47 /* UIColor+batchColors.m */,
 				E7FB04481A719BF60062CD47 /* Model */,
 				E7FB044F1A72D1E60062CD47 /* Views */,
 				E7FB04491A719C0F0062CD47 /* View Controllers */,
@@ -415,6 +420,7 @@
 			files = (
 				E7B53F411A703EA900931BEC /* AW_Person.m in Sources */,
 				E7FB04631A7934CD0062CD47 /* AW_Project.m in Sources */,
+				E7FB04771A7D72920062CD47 /* UIColor+batchColors.m in Sources */,
 				E7B53F361A7006B900931BEC /* AW_PeopleViewController.m in Sources */,
 				E7FB04521A72F2620062CD47 /* AW_BatchCollectionTableViewCell.m in Sources */,
 				E7FB04601A78170D0062CD47 /* AW_PersonDetailViewController.m in Sources */,

@@ -9,6 +9,8 @@
 #import "AW_BatchHeaderView.h"
 #import "AW_Batch.h"
 
+#import "UIColor+batchColors.h"
+
 @implementation AW_BatchHeaderView
 #pragma mark - Accessors
 - (void)setBatch:(AW_Batch *)batch
@@ -16,6 +18,7 @@
     _batch = batch;
     _batchNameLabel.text = batch.name;
     _batchYearLabel.text = batch.year;
+    _colorBar.backgroundColor = [UIColor colorForBatch:self.batch];
 }
 
 #pragma mark - Initializers
@@ -38,9 +41,13 @@
         _batchYearLabel.textAlignment = NSTextAlignmentCenter;
         _batchYearLabel.translatesAutoresizingMaskIntoConstraints = NO;
         
+        _colorBar = [[UIView alloc]init];
+        _colorBar.translatesAutoresizingMaskIntoConstraints = NO;
+        
         // Add subviews
         [self addSubview:_batchNameLabel];
         [self addSubview:_batchYearLabel];
+        [self addSubview:_colorBar];
         
         // Add autolayout constraints
         NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[batchNameLabel]-[batchYearLabel]-|"
@@ -53,7 +60,6 @@
                                                                                                options:0
                                                                                                metrics:nil
                                                                                                  views:@{@"batchNameLabel":_batchNameLabel}];
-        
         NSLayoutConstraint *proportionConstraint = [NSLayoutConstraint constraintWithItem:_batchNameLabel
                                                                                 attribute:NSLayoutAttributeHeight
                                                                                 relatedBy:NSLayoutRelationEqual
@@ -61,10 +67,20 @@
                                                                                 attribute:NSLayoutAttributeHeight
                                                                                multiplier:2.0
                                                                                  constant:0];
+        NSArray *colorBarVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[colorBar]|"
+                                                                                       options:0
+                                                                                       metrics:nil
+                                                                                         views:@{@"colorBar":_colorBar}];
+        NSArray *colorBarHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[colorBar(==12)]"
+                                                                                         options:0
+                                                                                         metrics:nil
+                                                                                           views:@{@"colorBar":_colorBar}];
         
         [self addConstraint:proportionConstraint];
         [self addConstraints:batchNameLabelHorizontalConstraints];
         [self addConstraints:verticalConstraints];
+        [self addConstraints:colorBarVerticalConstraints];
+        [self addConstraints:colorBarHorizontalConstraints];
         
         // Add gesture recognizers
         UIGestureRecognizer *singleTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleSingleTap:)];

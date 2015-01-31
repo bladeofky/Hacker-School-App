@@ -16,6 +16,7 @@
 @property (nonatomic) BOOL isOpen;
 @property (nonatomic, strong) UILabel *batchNameLabel;
 @property (nonatomic, strong) UILabel *batchYearLabel;
+@property (nonatomic, strong) UIView *colorBar;
 @property (nonatomic, weak) AW_Batch *batch;
 
 @property (nonatomic, weak) id<AW_BatchHeaderViewDelegate> delegate;

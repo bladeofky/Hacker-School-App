@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Alan Wang. All rights reserved.
 //
 
+#import "UIColor+batchColors.h"
+
 #import "AW_BatchCollectionTableViewCell.h"
 #import "AW_BatchIndexedCollectionView.h"
 #import "AW_PersonCollectionViewCell.h"
@@ -30,7 +32,7 @@
         _collectionView.batch = batch;
         _collectionView.dataSource = self;
         [_collectionView registerClass:[AW_PersonCollectionViewCell class] forCellWithReuseIdentifier:@"AW_PersonCollectionViewCell.h"];
-        _collectionView.backgroundColor = [UIColor lightGrayColor];
+        _collectionView.backgroundColor = [UIColor colorForBatch:batch];
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.scrollEnabled = NO;
         [self.contentView addSubview:self.collectionView];
