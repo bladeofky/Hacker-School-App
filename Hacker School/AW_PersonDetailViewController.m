@@ -359,19 +359,19 @@
     [contactView addSubview:twitterButton];
     
     // Disable inactive buttons
-    if ([self.person.phoneNumber isEqualToString:@""]) {
+    if ([self.person.phoneNumber isKindOfClass:[NSNull class]] || [self.person.phoneNumber isEqualToString:@""]) {
         phoneButton.enabled = NO;
         phoneButton.alpha = 0.5;
     }
-    if ([self.person.email isEqualToString:@""]) {
+    if ([self.person.email isKindOfClass:[NSNull class]] || [self.person.email isEqualToString:@""]) {
         emailButton.enabled = NO;
         emailButton.alpha = 0.5;
     }
-    if ([self.person.githubUserName isEqualToString:@""]) {
+    if ([self.person.githubUserName isKindOfClass:[NSNull class]] || [self.person.githubUserName isEqualToString:@""]) {
         githubButton.enabled = NO;
         githubButton.alpha = 0.5;
     }
-    if ([self.person.twitterUserName isEqualToString:@""]) {
+    if ([self.person.twitterUserName isKindOfClass:[NSNull class]] || [self.person.twitterUserName isEqualToString:@""]) {
         twitterButton.enabled = NO;
         twitterButton.alpha = 0.5;
     }
