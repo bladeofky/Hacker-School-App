@@ -139,4 +139,13 @@
     return self.bioFormmated;
 }
 
+-(void)formatProjects
+{
+    for (AW_Project *project in self.projects) {
+        if (!project.projectDescriptionFormatted) {
+            [project formatProjectDescription];
+        }
+    }
+}
+
 @end

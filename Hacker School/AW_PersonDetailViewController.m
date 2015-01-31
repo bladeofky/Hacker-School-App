@@ -561,9 +561,7 @@
     bodyText.translatesAutoresizingMaskIntoConstraints = NO;
 
     if (!self.person.bioFormmated) {
-        // TODO: Put up a loading screen
         [self.person formatBio];    // Can only be done on the main thread
-        // TODO: Remove the loading screen
     }
     bodyText.attributedText = self.person.bioFormmated;
     
@@ -682,6 +680,7 @@
     if (!project.projectDescriptionFormatted) {
         // TODO: Put up loading screen
         [project formatProjectDescription];
+        // TODO: Remove loading screen
     }
     bodyText.attributedText = project.projectDescriptionFormatted;
     [projectView addSubview:bodyText];

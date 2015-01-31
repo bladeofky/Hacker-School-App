@@ -226,6 +226,30 @@
     
     NSLog(@"Did tap %@ %@", person.firstName, person.lastName);
     
+    // Perform formatting of HTML (this can only be done on the main thread so we do it here and show a loading screen
+    UIView *loadingOverlayView = [self loadingOverlayView];
+    loadingOverlayView.alpha = 0;
+    
+    // Show loading screen
+    [self.view addSubview:loadingOverlayView];
+    [UIView animateWithDuration:.5 animations:^{
+        loadingOverlayView.alpha = 1.0;
+    }];
+    
+    // Perform formatting
+    if (!person.bioFormmated) {
+        [person formatBio];
+    }
+    [person formatProjects];
+    
+    // Remove loading screen
+    [UIView animateWithDuration:.5 animations:^{
+        loadingOverlayView.alpha = 0.0;
+    }];
+    [loadingOverlayView removeFromSuperview];
+    
+    
+    
     // Push detail view controller
     AW_PersonDetailViewController *detailVC = [[AW_PersonDetailViewController alloc]init];
     detailVC.person = person;
@@ -298,6 +322,56 @@
 //            [self.tableView setContentOffset:batchHeaderView.frame.origin animated:YES];
 //        }
     }
+}
+
+#pragma mark - Misc.
+-(UIView *)loadingOverlayView
+{
+    UIView *loadingOverlayView = [[UIView alloc]initWithFrame:self.view.bounds];
+    
+    UIView *loadingOverlayBackground = [[UIView alloc]init];
+    loadingOverlayBackground.translatesAutoresizingMaskIntoConstraints = NO;
+    loadingOverlayBackground.backgroundColor = [UIColor whiteColor];
+    loadingOverlayBackground.alpha = 0.8;
+    [loadingOverlayView addSubview:loadingOverlayBackground];
+    
+    UILabel *loadingLabel = [[UILabel alloc]init];
+    loadingLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    loadingLabel.text = @"Working ... Please Wait";
+    loadingLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:24];
+    loadingLabel.textColor = [UIColor blackColor];
+    [loadingOverlayView addSubview:loadingLabel];
+    
+    NSLayoutConstraint *loadingLabelCenterX = [NSLayoutConstraint constraintWithItem:loadingLabel
+                                                                           attribute:NSLayoutAttributeCenterX
+                                                                           relatedBy:NSLayoutRelationEqual
+                                                                              toItem:loadingLabel.superview
+                                                                           attribute:NSLayoutAttributeCenterX
+                                                                          multiplier:1
+                                                                            constant:0];
+    NSLayoutConstraint *loadingLabelCenterY = [NSLayoutConstraint constraintWithItem:loadingLabel
+                                                                           attribute:NSLayoutAttributeCenterY
+                                                                           relatedBy:NSLayoutRelationEqual
+                                                                              toItem:loadingLabel.superview
+                                                                           attribute:NSLayoutAttributeCenterY
+                                                                          multiplier:1
+                                                                            constant:0];
+    NSArray *loadingBackgroundHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[background]|"
+                                                                                              options:0
+                                                                                              metrics:nil
+                                                                                                views:@{@"background":loadingOverlayBackground}];
+    NSArray *loadingBackgroundVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[background]|"
+                                                                                            options:0
+                                                                                            metrics:nil
+                                                                                              views:@{@"background":loadingOverlayBackground}];
+    
+    
+    [loadingOverlayView addConstraint:loadingLabelCenterX];
+    [loadingOverlayView addConstraint:loadingLabelCenterY];
+    [loadingOverlayView addConstraints:loadingBackgroundHorizontalConstraints];
+    [loadingOverlayView addConstraints:loadingBackgroundVerticalConstraints];
+    
+    return loadingOverlayView;
 }
 
 @end

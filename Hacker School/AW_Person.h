@@ -40,6 +40,7 @@
 - (instancetype)initWithHackerSchoolAPIData:(NSData *)data;
 
 -(NSAttributedString *)formatBio;
+-(void)formatProjects;
 
 @end
 
