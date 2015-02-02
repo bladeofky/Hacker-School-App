@@ -10,7 +10,7 @@
 
 @implementation AW_UserAccount
 
-+ (instancetype)currentUser
++ (instancetype)currentUserAccount
 {
     AW_UserAccount *userAccount;
     

@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Alan Wang. All rights reserved.
 //
 
+#import "AW_MainViewController.h"
 #import "AW_PeopleViewController.h"
 #import "AW_PersonDetailViewController.h"
 #import "AW_LoginViewController.h"
@@ -81,7 +82,10 @@
     
     // --- Set up Nav Bar ---
     self.navigationItem.title = @"People";
-    // TODO: Set up left button to pull out slide menu
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Menu"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self.mainVC
+                                                                           action:@selector(showUserMenu)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Reload" style:UIBarButtonItemStylePlain target:self action:@selector(downloadListOfBatches)];
     
     // --- Set up table view ---

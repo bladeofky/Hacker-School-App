@@ -10,10 +10,12 @@
 #import "AW_BatchHeaderView.h"
 #import "AW_BatchDelegate.h"
 
-@class NXOAuth2Account;
+@class NXOAuth2Account, AW_MainViewController;
 
 @interface AW_PeopleViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, AW_BatchHeaderViewDelegate, AW_BatchDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (nonatomic, weak) AW_MainViewController *mainVC;
 
 @end

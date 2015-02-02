@@ -10,7 +10,7 @@
 
 #import "AW_Person.h"
 
-@interface AW_UserMenuViewController () <AW_PersonDelegate>
+@interface AW_UserMenuViewController ()
 
 
 @end
@@ -23,5 +23,22 @@
     // Do any additional setup after loading the view from its nib.
 }
 
+#pragma mark - UITableViewDataSource
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 0;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 0;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return nil;
+}
+
+#pragma mark - UITableViewDelegate
 
 @end

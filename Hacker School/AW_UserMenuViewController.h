@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AW_UserMenuViewController : UIViewController
+@class AW_Person;
+
+@interface AW_UserMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) AW_Person *currentUser;
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

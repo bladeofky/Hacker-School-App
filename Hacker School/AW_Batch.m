@@ -97,7 +97,7 @@ NSString * const PEOPLE_KEY = @"people";
     [NXOAuth2Request performMethod:@"GET"
                         onResource:resourceURL
                    usingParameters:nil
-                       withAccount:[AW_UserAccount currentUser]
+                       withAccount:[AW_UserAccount currentUserAccount]
                sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
                    // Update progress bar if we have one
                    // Intentionally left empty

@@ -19,4 +19,6 @@
 
 @interface AW_MainViewController : UIViewController
 
+- (void)showUserMenu;
+
 @end

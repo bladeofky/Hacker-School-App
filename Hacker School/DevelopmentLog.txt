@@ -2,6 +2,11 @@
 2-2-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Implemented slide out view controller for user menu ***********
+
+- Added leftBarButton to AW_PeopleViewController to slide out user menu
+- Implemented slide out view controller for user menu.
+
 *********** GIT COMMIT: Implemented naive data refresh for AW_PeopleViewController ***********
 
 - Added button to AW_PeopleViewController to reload data.

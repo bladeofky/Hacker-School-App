@@ -9,8 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "NXOAuth2.h"
 
+@class AW_Person;
+
 @interface AW_UserAccount : NXOAuth2Account
 
-+ (NXOAuth2Account *)currentUser;
++ (NXOAuth2Account *)currentUserAccount;
 
 @end
