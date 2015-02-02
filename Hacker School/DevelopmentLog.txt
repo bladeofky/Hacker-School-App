@@ -1,4 +1,15 @@
 --------------------------------------------------------------------------------------------------------------------------------------------
+2-2-2015
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+*********** GIT COMMIT: Implemented archiving of batches ***********
+
+- Modified AW_PeopleViewController to use archived batch data when available.
+- Implemented archiving for batches in AW_BatchStore when app enters background
+- Added AW_BatchStore singleton and moved batches to AW_BatchStore
+- Added NSCoding protocol to AW_Batch, AW_Person, AW_Project, and AW_Link
+
+--------------------------------------------------------------------------------------------------------------------------------------------
 1-31-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 

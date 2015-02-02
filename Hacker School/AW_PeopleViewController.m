@@ -12,6 +12,7 @@
 
 #import "NXOAuth2.h"
 
+#import "AW_BatchStore.h"
 #import "AW_Batch.h"
 #import "AW_Person.h"
 
@@ -38,7 +39,6 @@
 
 @interface AW_PeopleViewController ()
 
-@property (nonatomic, strong) NSArray *batches;
 @property (nonatomic, strong) NSArray *batchHeaderViews;
 @property (nonatomic, strong) NXOAuth2Account *userAccount;
 
@@ -65,6 +65,16 @@
     return _userAccount;
 }
 
+-(NSArray *)batches
+{
+    return [AW_BatchStore sharedStore].batches;
+}
+
+-(void)setBatches:(NSArray *)batches
+{
+    [AW_BatchStore sharedStore].batches = batches;
+}
+
 #pragma mark - View Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -77,8 +87,18 @@
     // --- Set up table view ---
     [self.tableView registerClass:[AW_BatchCollectionTableViewCell class] forCellReuseIdentifier:@"AW_BatchCollectionTableViewCell"];
    
-    // --- Initial download ---
-    [self downloadListOfBatches];
+    // --- If no archived data, download batches ---
+    if (!self.batches) {
+        [self downloadListOfBatches];
+    }
+    else {
+        // Set delegates
+        for (AW_Batch *batch in self.batches) {
+            batch.delegate = self;
+        }
+        
+        [self generateHeaderViews];
+    }
 }
 
 #pragma mark - Hacker School API
@@ -115,26 +135,20 @@
     }
     
     NSMutableArray *tempBatches = [[NSMutableArray alloc]init];
-    NSMutableArray *tempBatchHeaders = [[NSMutableArray alloc]init];
+    
     
     for (NSDictionary *batchInfo in batchInfos) {
         // Create batch
         AW_Batch *batch = [[AW_Batch alloc]initWithJSONObject:batchInfo];
         batch.delegate = self;
         [tempBatches addObject:batch];
-        
-        // Create batch header view for table
-        AW_BatchHeaderView *batchHeaderView = [[AW_BatchHeaderView alloc]init];
-        batchHeaderView.batch = batch;
-        batchHeaderView.delegate = self;
-        [tempBatchHeaders addObject:batchHeaderView];
     }
-    
+
     self.batches = [tempBatches copy];
-    self.batchHeaderViews = [tempBatchHeaders copy];
     
     NSLog(@"Batches: %@", self.batches);
     
+    [self generateHeaderViews];
     [self.tableView reloadData];
 }
 
@@ -325,6 +339,22 @@
 }
 
 #pragma mark - Misc.
+
+-(void)generateHeaderViews
+{
+    NSMutableArray *tempBatchHeaders = [[NSMutableArray alloc]init];
+    
+    for (AW_Batch *batch in self.batches) {
+        // Create batch header view for table
+        AW_BatchHeaderView *batchHeaderView = [[AW_BatchHeaderView alloc]init];
+        batchHeaderView.batch = batch;
+        batchHeaderView.delegate = self;
+        [tempBatchHeaders addObject:batchHeaderView];
+    }
+    
+    self.batchHeaderViews = [tempBatchHeaders copy];
+}
+
 -(UIView *)loadingOverlayView
 {
     UIView *loadingOverlayView = [[UIView alloc]initWithFrame:self.view.bounds];

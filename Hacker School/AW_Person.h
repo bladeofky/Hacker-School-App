@@ -12,18 +12,20 @@
 
 @class AW_Batch, AW_Person;
 
-@interface AW_Person : NSObject
+@interface AW_Person : NSObject <NSCoding>
 
 // Based on Hacker School API v1
 @property (nonatomic, strong) NSNumber *idNumber;
+
 @property (nonatomic, strong) NSString *firstName;
 @property (nonatomic, strong) NSString *middleName;
 @property (nonatomic, strong) NSString *lastName;
+
+@property (nonatomic, strong) NSString *phoneNumber;
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *twitterUserName;
 @property (nonatomic, strong) NSString *githubUserName;
-@property (nonatomic, strong) NSNumber *batchID;
-@property (nonatomic, strong) NSString *phoneNumber;
+
 @property (nonatomic, strong) NSString *job;
 @property (nonatomic, strong) NSArray *skills;
 @property (nonatomic, strong) UIImage *image;
@@ -31,9 +33,13 @@
 @property (nonatomic, strong) NSAttributedString *bioFormmated;
 @property (nonatomic, strong) NSArray *projects;
 @property (nonatomic, strong) NSArray *links;
+
 @property (nonatomic) BOOL isHackerSchooler;
 @property (nonatomic) BOOL isFaculty;
+
+@property (nonatomic, strong) NSNumber *batchID;
 @property (nonatomic, weak) AW_Batch *batch;
+
 @property (nonatomic, weak) id<AW_PersonDelegate> delegate;
 
 - (instancetype)initWithJSONObject:(NSDictionary *)personInfo; // Designated

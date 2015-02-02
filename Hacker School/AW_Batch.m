@@ -24,6 +24,17 @@
 #import "AW_UserAccount.h"
 #import "NXOAuth2.h"
 
+// --- Constants ---
+NSString * const BATCH_ID_NUMBER_KEY = @"idNumber";
+NSString * const API_NAME_KEY = @"apiName";
+NSString * const NAME_KEY = @"name";
+NSString * const YEAR_KEY = @"year";
+NSString * const SEASON_KEY = @"season";
+NSString * const START_DATE_KEY = @"startDate";
+NSString * const END_DATE_KEY = @"endDate";
+NSString * const PEOPLE_KEY = @"people";
+
+
 @implementation AW_Batch
 
 #pragma mark - Initializers
@@ -121,6 +132,37 @@
 -(void)person:(AW_Person *)person didDownloadImage:(id)image
 {
     [self.delegate batch:self didDownloadImage:image forPerson:person];
+}
+
+#pragma mark - NSCoding
+-(void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.idNumber forKey:BATCH_ID_NUMBER_KEY];
+    [aCoder encodeObject:self.apiName forKey:API_NAME_KEY];
+    [aCoder encodeObject:self.name forKey:NAME_KEY];
+    [aCoder encodeObject:self.year forKey:YEAR_KEY];
+    [aCoder encodeObject:self.season forKey:SEASON_KEY];
+    [aCoder encodeObject:self.startDate forKey:START_DATE_KEY];
+    [aCoder encodeObject:self.endDate forKey:END_DATE_KEY];
+    [aCoder encodeObject:self.people forKey:PEOPLE_KEY];
+}
+
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    
+    if (self) {
+        _idNumber = [aDecoder decodeObjectForKey:BATCH_ID_NUMBER_KEY];
+        _apiName = [aDecoder decodeObjectForKey:API_NAME_KEY];
+        _name = [aDecoder decodeObjectForKey:NAME_KEY];
+        _year = [aDecoder decodeObjectForKey:YEAR_KEY];
+        _season = [aDecoder decodeObjectForKey:SEASON_KEY];
+        _startDate = [aDecoder decodeObjectForKey:START_DATE_KEY];
+        _endDate = [aDecoder decodeObjectForKey:END_DATE_KEY];
+        _people = [aDecoder decodeObjectForKey:PEOPLE_KEY];
+    }
+    
+    return self;
 }
 
 #pragma mark - Comparisons

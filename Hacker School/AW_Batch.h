@@ -10,7 +10,7 @@
 #import "AW_PersonDelegate.h"
 #import "AW_BatchDelegate.h"
 
-@interface AW_Batch : NSObject <AW_PersonDelegate>
+@interface AW_Batch : NSObject <AW_PersonDelegate, NSCoding>
 
 @property (nonatomic, strong) NSNumber *idNumber;
 @property (nonatomic, strong) NSString *apiName;

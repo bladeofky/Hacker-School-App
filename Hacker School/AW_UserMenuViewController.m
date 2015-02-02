@@ -23,10 +23,5 @@
     // Do any additional setup after loading the view from its nib.
 }
 
-#pragma mark - AW_PersonDelegate
--(void)person:(AW_Person *)person didDownloadImage:(UIImage *)image
-{
-    
-}
 
 @end

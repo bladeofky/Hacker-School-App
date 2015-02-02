@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AW_Link : NSObject
+@interface AW_Link : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSURL *url;

@@ -34,6 +34,7 @@
 		E7FB046F1A7997480062CD47 /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7FB046D1A7997330062CD47 /* image.xcassets */; };
 		E7FB04721A7AB4A60062CD47 /* AW_UserAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB04711A7AB4A60062CD47 /* AW_UserAccount.m */; };
 		E7FB04771A7D72920062CD47 /* UIColor+batchColors.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB04761A7D72920062CD47 /* UIColor+batchColors.m */; };
+		E7FB047B1A7EA9D60062CD47 /* AW_BatchStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB047A1A7EA9D60062CD47 /* AW_BatchStore.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +125,8 @@
 		E7FB04731A7AB9870062CD47 /* AW_BatchDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AW_BatchDelegate.h; sourceTree = "<group>"; };
 		E7FB04751A7D72920062CD47 /* UIColor+batchColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+batchColors.h"; sourceTree = "<group>"; };
 		E7FB04761A7D72920062CD47 /* UIColor+batchColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+batchColors.m"; sourceTree = "<group>"; };
+		E7FB04791A7EA9D60062CD47 /* AW_BatchStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_BatchStore.h; sourceTree = "<group>"; };
+		E7FB047A1A7EA9D60062CD47 /* AW_BatchStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_BatchStore.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +228,8 @@
 			children = (
 				E7FB04701A7AB4A60062CD47 /* AW_UserAccount.h */,
 				E7FB04711A7AB4A60062CD47 /* AW_UserAccount.m */,
+				E7FB04791A7EA9D60062CD47 /* AW_BatchStore.h */,
+				E7FB047A1A7EA9D60062CD47 /* AW_BatchStore.m */,
 				E7FB04451A719B870062CD47 /* AW_Batch.h */,
 				E7FB04461A719B870062CD47 /* AW_Batch.m */,
 				E7FB04731A7AB9870062CD47 /* AW_BatchDelegate.h */,
@@ -258,15 +263,7 @@
 		E7FB044F1A72D1E60062CD47 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E7FB045D1A76C62F0062CD47 /* AW_BatchHeaderViewDelegate.h */,
-				E7FB044C1A71C0340062CD47 /* AW_BatchHeaderView.h */,
-				E7FB044D1A71C0340062CD47 /* AW_BatchHeaderView.m */,
-				E7FB04501A72F2620062CD47 /* AW_BatchCollectionTableViewCell.h */,
-				E7FB04511A72F2620062CD47 /* AW_BatchCollectionTableViewCell.m */,
-				E7FB04531A72F4FE0062CD47 /* AW_BatchIndexedCollectionView.h */,
-				E7FB04541A72F4FE0062CD47 /* AW_BatchIndexedCollectionView.m */,
-				E7FB045A1A7341E30062CD47 /* AW_PersonCollectionViewCell.h */,
-				E7FB045B1A7341E30062CD47 /* AW_PersonCollectionViewCell.m */,
+				E7FB04781A7D7B560062CD47 /* People */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -279,6 +276,22 @@
 				E7B53F351A7006B900931BEC /* AW_PeopleViewController.xib */,
 				E7FB045E1A78170D0062CD47 /* AW_PersonDetailViewController.h */,
 				E7FB045F1A78170D0062CD47 /* AW_PersonDetailViewController.m */,
+			);
+			name = People;
+			sourceTree = "<group>";
+		};
+		E7FB04781A7D7B560062CD47 /* People */ = {
+			isa = PBXGroup;
+			children = (
+				E7FB045D1A76C62F0062CD47 /* AW_BatchHeaderViewDelegate.h */,
+				E7FB044C1A71C0340062CD47 /* AW_BatchHeaderView.h */,
+				E7FB044D1A71C0340062CD47 /* AW_BatchHeaderView.m */,
+				E7FB04501A72F2620062CD47 /* AW_BatchCollectionTableViewCell.h */,
+				E7FB04511A72F2620062CD47 /* AW_BatchCollectionTableViewCell.m */,
+				E7FB04531A72F4FE0062CD47 /* AW_BatchIndexedCollectionView.h */,
+				E7FB04541A72F4FE0062CD47 /* AW_BatchIndexedCollectionView.m */,
+				E7FB045A1A7341E30062CD47 /* AW_PersonCollectionViewCell.h */,
+				E7FB045B1A7341E30062CD47 /* AW_PersonCollectionViewCell.m */,
 			);
 			name = People;
 			sourceTree = "<group>";
@@ -430,6 +443,7 @@
 				E7FB044E1A71C0340062CD47 /* AW_BatchHeaderView.m in Sources */,
 				E7FB04671A797D8D0062CD47 /* AW_Link.m in Sources */,
 				E7B53F3B1A70161F00931BEC /* AW_UserMenuViewController.m in Sources */,
+				E7FB047B1A7EA9D60062CD47 /* AW_BatchStore.m in Sources */,
 				E7B53EFA1A6EB94B00931BEC /* main.m in Sources */,
 				E7FB04471A719B870062CD47 /* AW_Batch.m in Sources */,
 				E7FB04421A7185880062CD47 /* AW_MainViewController.m in Sources */,

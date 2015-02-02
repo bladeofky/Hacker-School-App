@@ -37,6 +37,31 @@
 #import "AW_Project.h"
 #import "AW_Link.h"
 
+// --- Constants ---
+NSString * const PERSON_ID_NUMBER_KEY = @"idNumber";
+
+NSString * const FIRST_NAME_KEY = @"firstName";
+NSString * const MIDDLE_NAME_KEY = @"middleName";
+NSString * const LAST_NAME_KEY = @"lastName";
+
+NSString * const PHONE_NUMBER_KEY = @"phoneNumber";
+NSString * const EMAIL_KEY = @"email";
+NSString * const TWITTER_USER_NAME_KEY = @"twitterUserName";
+NSString * const GITHUB_USER_NAME_KEY = @"githubUserName";
+
+NSString * const JOB_KEY = @"job";
+NSString * const SKILLS_KEY = @"skills";
+NSString * const IMAGE_KEY = @"image";
+NSString * const BIO_KEY = @"bio";
+NSString * const BIO_FORMATTED_KEY = @"bioFormatted";
+NSString * const PROJECTS_KEY = @"projects";
+NSString * const LINKS_KEY = @"links";
+
+NSString * const IS_HACKER_SCHOOLER_KEY = @"isHackerSchooler";
+NSString * const IS_FACULTY_KEY = @"isFaculty";
+
+NSString * const BATCH_ID_KEY = @"batchID";
+
 @implementation AW_Person
 
 #pragma mark - Initializers
@@ -46,20 +71,25 @@
     
     if (self) {
         _idNumber = personInfo[@"id"];
+        
         _firstName = personInfo[@"first_name"];
         _middleName = personInfo[@"middle_name"];
         _lastName = personInfo[@"last_name"];
+        
+        _phoneNumber = personInfo[@"phone_number"];
         _email = personInfo[@"email"];
         _twitterUserName = personInfo[@"twitter"];
         _githubUserName = personInfo[@"github"];
-        _batchID = personInfo[@"batch_id"];
-        _phoneNumber = personInfo[@"phone_number"];
+        
         _job = personInfo[@"job"];
         _skills = personInfo[@"skills"];
         _image = [UIImage imageNamed:@"defaultPersonImage"];
         _bio = personInfo[@"bio"];
+        
         _isFaculty = [personInfo[@"is_faculty"]boolValue];
         _isHackerSchooler = [personInfo[@"is_hacker_schooler"]boolValue];
+        
+        _batchID = personInfo[@"batch_id"];
         
         // Process project
         NSMutableArray *tempProjectsArray = [[NSMutableArray alloc]init];
@@ -113,6 +143,68 @@
     [NSException raise:@"Empty AW_Person not allowed" format:@"Use initWithHackerSchoolAPIData instead"];
     
     return nil;
+}
+
+#pragma mark - NSCoding
+
+-(void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.idNumber forKey:PERSON_ID_NUMBER_KEY];
+    
+    [aCoder encodeObject:self.firstName forKey:FIRST_NAME_KEY];
+    [aCoder encodeObject:self.middleName forKey:MIDDLE_NAME_KEY];
+    [aCoder encodeObject:self.lastName forKey:LAST_NAME_KEY];
+    
+    [aCoder encodeObject:self.phoneNumber forKey:PHONE_NUMBER_KEY];
+    [aCoder encodeObject:self.email forKey:EMAIL_KEY];
+    [aCoder encodeObject:self.twitterUserName forKey:TWITTER_USER_NAME_KEY];
+    [aCoder encodeObject:self.githubUserName forKey:GITHUB_USER_NAME_KEY];
+    
+    [aCoder encodeObject:self.job forKey:JOB_KEY];
+    [aCoder encodeObject:self.skills forKey:SKILLS_KEY];
+    [aCoder encodeObject:self.image forKey:IMAGE_KEY];
+    [aCoder encodeObject:self.bio forKey:BIO_KEY];
+    [aCoder encodeObject:self.bioFormmated forKey:BIO_FORMATTED_KEY];
+    [aCoder encodeObject:self.projects forKey:PROJECTS_KEY];
+    [aCoder encodeObject:self.links forKey:LINKS_KEY];
+    
+    [aCoder encodeBool:self.isHackerSchooler forKey:IS_HACKER_SCHOOLER_KEY];
+    [aCoder encodeBool:self.isFaculty forKey:IS_FACULTY_KEY];
+    
+    [aCoder encodeObject:self.batchID forKey:BATCH_ID_KEY];
+}
+
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    
+    if (self) {
+        self.idNumber = [aDecoder decodeObjectForKey:PERSON_ID_NUMBER_KEY];
+        
+        self.firstName = [aDecoder decodeObjectForKey:FIRST_NAME_KEY];
+        self.middleName = [aDecoder decodeObjectForKey:MIDDLE_NAME_KEY];
+        self.lastName = [aDecoder decodeObjectForKey:LAST_NAME_KEY];
+        
+        self.phoneNumber = [aDecoder decodeObjectForKey:PHONE_NUMBER_KEY];
+        self.email = [aDecoder decodeObjectForKey:EMAIL_KEY];
+        self.twitterUserName = [aDecoder decodeObjectForKey:TWITTER_USER_NAME_KEY];
+        self.githubUserName = [aDecoder decodeObjectForKey:GITHUB_USER_NAME_KEY];
+        
+        self.job = [aDecoder decodeObjectForKey:JOB_KEY];
+        self.skills = [aDecoder decodeObjectForKey:SKILLS_KEY];
+        self.image = [aDecoder decodeObjectForKey:IMAGE_KEY];
+        self.bio = [aDecoder decodeObjectForKey:BIO_KEY];
+        self.bioFormmated = [aDecoder decodeObjectForKey:BIO_FORMATTED_KEY];
+        self.projects = [aDecoder decodeObjectForKey:PROJECTS_KEY];
+        self.links = [aDecoder decodeObjectForKey:LINKS_KEY];
+        
+        self.isHackerSchooler = [aDecoder decodeBoolForKey:IS_HACKER_SCHOOLER_KEY];
+        self.isFaculty = [aDecoder decodeBoolForKey:IS_FACULTY_KEY];
+        
+        self.batchID = [aDecoder decodeObjectForKey:BATCH_ID_KEY];
+    }
+    
+    return self;
 }
 
 #pragma mark - 
