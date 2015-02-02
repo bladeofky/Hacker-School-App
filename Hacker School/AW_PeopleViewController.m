@@ -82,7 +82,7 @@
     // --- Set up Nav Bar ---
     self.navigationItem.title = @"People";
     // TODO: Set up left button to pull out slide menu
-    // TODO: Set up right button to refresh
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Reload" style:UIBarButtonItemStylePlain target:self action:@selector(downloadListOfBatches)];
     
     // --- Set up table view ---
     [self.tableView registerClass:[AW_BatchCollectionTableViewCell class] forCellReuseIdentifier:@"AW_BatchCollectionTableViewCell"];

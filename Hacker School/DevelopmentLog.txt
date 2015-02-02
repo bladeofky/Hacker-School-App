@@ -2,6 +2,10 @@
 2-2-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Implemented naive data refresh for AW_PeopleViewController ***********
+
+- Added button to AW_PeopleViewController to reload data.
+
 *********** GIT COMMIT: Implemented archiving of batches ***********
 
 - Modified AW_PeopleViewController to use archived batch data when available.
