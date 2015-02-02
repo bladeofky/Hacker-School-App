@@ -22,23 +22,49 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    // --- Set up table view ---
     self.tableView.tableHeaderView = [self userView];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
 }
 
 #pragma mark - UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 0;
+    return 2;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    NSInteger numRows;
+    
+    switch (section) {
+        case 0:
+            numRows = 1;
+            break;
+        case 1:
+            numRows = 1;
+            break;
+        default:
+            numRows = 0;
+            break;
+    }
+    
+    return numRows;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return nil;
+    NSArray *cellText = @[ @[@"People"],
+                           @[@"Logout"] ];
+    
+    NSInteger section = indexPath.section;
+    NSInteger row = indexPath.row;
+
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
+    
+    cell.textLabel.text = cellText[section][row];
+    
+    return cell;
 }
 
 #pragma mark - UITableViewDelegate

@@ -2,6 +2,11 @@
 2-2-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Fixed image refresh bug for AW_PeopleViewController ***********
+
+- Added logout button to AW_UserMenuController (but not implemented yet)
+- Fixed bug where AW_PersonCollectionViewCell images were not being updated when the image finished downloading.
+
 *********** GIT COMMIT: Added userView to slide out menu ***********
 
 - Corrected AW_PeopleViewController so that collection view cells change their image when a person's image finishes downloading.

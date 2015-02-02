@@ -291,6 +291,7 @@
 
 -(void)batch:(AW_Batch *)batch didDownloadImage:(UIImage *)image forPerson:(AW_Person *)person
 {
+    NSLog(@"controller callback");
     NSUInteger rowForCollectionView = [batch.people indexOfObject:person];
     NSUInteger sectionForTableView = [self.batches indexOfObject:batch];
     NSIndexPath *indexPathForTableViewCell = [NSIndexPath indexPathForRow:0 inSection:sectionForTableView];

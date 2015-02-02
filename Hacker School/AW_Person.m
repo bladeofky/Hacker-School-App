@@ -115,7 +115,11 @@ NSString * const BATCH_ID_KEY = @"batchID";
                                                                           completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                                               NSLog(@"Did finish downloading image data for: %@ %@", _firstName, _lastName);
                                                                               self.image = [UIImage imageWithData:data];
-                                                                              [self.delegate person:self didDownloadImage:self.image];
+                                                                              
+                                                                              // Evidently NSURLSessionTask does not run the completion handler on the main thread
+                                                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                                                  [self.delegate person:self didDownloadImage:self.image];
+                                                                              });
                                                                           }];
         [retrieveImageTask resume];
         
