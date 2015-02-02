@@ -291,13 +291,14 @@
 
 -(void)batch:(AW_Batch *)batch didDownloadImage:(UIImage *)image forPerson:(AW_Person *)person
 {
-//    NSUInteger rowForCollectionView = [batch.people indexOfObject:person];
-//    NSUInteger sectionForTableView = [self.batches indexOfObject:batch];
-//    NSIndexPath *indexPathForTableViewCell = [NSIndexPath indexPathForRow:0 inSection:sectionForTableView];
-//    AW_BatchCollectionTableViewCell *tableViewCell = [self.tableView cellForRowAtIndexPath:indexPathForTableViewCell];
-//    
-//    NSIndexPath *indexPathForPersonCell = [NSIndexPath indexPathForRow:rowForCollectionView inSection:0];
-//    [tableViewCell.collectionView reloadItemsAtIndexPaths:@[indexPathForPersonCell]];
+    NSUInteger rowForCollectionView = [batch.people indexOfObject:person];
+    NSUInteger sectionForTableView = [self.batches indexOfObject:batch];
+    NSIndexPath *indexPathForTableViewCell = [NSIndexPath indexPathForRow:0 inSection:sectionForTableView];
+    AW_BatchCollectionTableViewCell *tableViewCell = [self.tableView cellForRowAtIndexPath:indexPathForTableViewCell];
+
+    NSIndexPath *indexPathForPersonCell = [NSIndexPath indexPathForRow:rowForCollectionView inSection:0];
+    AW_PersonCollectionViewCell *personCell = [tableViewCell.collectionView cellForItemAtIndexPath:indexPathForPersonCell];
+    personCell.personImageView.image = image;
     
 }
 

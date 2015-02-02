@@ -98,15 +98,6 @@ CGFloat const USER_MENU_WIDTH = 280.0;
         self.peopleVC.mainVC = self;
         self.centerVC = [[UINavigationController alloc]initWithRootViewController:self.peopleVC];
         [self displayCenterController:self.centerVC];
-        
-        // --- Set up left view ---
-        self.userMenuVC = [[AW_UserMenuViewController alloc]init];
-        self.userMenuVC.view.frame = CGRectMake(-USER_MENU_WIDTH, 0, USER_MENU_WIDTH, self.view.bounds.size.height);
-        
-        [self.view addSubview:self.userMenuVC.view];
-        
-        [self addChildViewController:self.userMenuVC];
-        [self.userMenuVC didMoveToParentViewController:self];
     }
 }
 
@@ -119,8 +110,30 @@ CGFloat const USER_MENU_WIDTH = 280.0;
     [contentVC didMoveToParentViewController:self];
 }
 
+- (void)setupUserMenu
+{
+    // --- Set up left view ---
+    self.userMenuVC = [[AW_UserMenuViewController alloc]init];
+    self.userMenuVC.currentUser = self.currentUser;
+    self.userMenuVC.view.frame = CGRectMake(-USER_MENU_WIDTH, 0, USER_MENU_WIDTH, self.view.bounds.size.height);
+    
+    [self.view addSubview:self.userMenuVC.view];
+    
+    [self addChildViewController:self.userMenuVC];
+    [self.userMenuVC didMoveToParentViewController:self];
+}
+
+- (void)tearDownUserMenu
+{
+    [self.userMenuVC.view removeFromSuperview];
+    [self.userMenuVC removeFromParentViewController];
+    self.userMenuVC = nil;
+}
+
 - (void)showUserMenu
 {
+    [self setupUserMenu];
+    
     [self.view insertSubview:self.overlay belowSubview:self.userMenuVC.view];
     
     [UIView animateWithDuration:.5
@@ -141,6 +154,7 @@ CGFloat const USER_MENU_WIDTH = 280.0;
                      completion:^(BOOL finished) {
                          [self.overlay removeFromSuperview];
                          self.overlay = nil;
+                         [self tearDownUserMenu];
                      }];
     
     self.isUserMenuShowing = NO;

@@ -2,6 +2,11 @@
 2-2-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Added userView to slide out menu ***********
+
+- Corrected AW_PeopleViewController so that collection view cells change their image when a person's image finishes downloading.
+- Added userView to AW_UserMenuController
+
 *********** GIT COMMIT: Implemented slide out view controller for user menu ***********
 
 - Added leftBarButton to AW_PeopleViewController to slide out user menu

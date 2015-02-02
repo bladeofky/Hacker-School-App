@@ -238,7 +238,7 @@
 #pragma mark - Create sections
 - (UIView *)createBasicInfoView
 {
-    // This view includes an image of the person, first name, last name, and email
+    // This view includes an image of the person, first name, last name, and batch
     
     // Instantiate views
     UIView *basicInfoView = [[UIView alloc]init];
@@ -678,9 +678,7 @@
     bodyText.editable = NO;
 
     if (!project.projectDescriptionFormatted) {
-        // TODO: Put up loading screen
         [project formatProjectDescription];
-        // TODO: Remove loading screen
     }
     bodyText.attributedText = project.projectDescriptionFormatted;
     [projectView addSubview:bodyText];

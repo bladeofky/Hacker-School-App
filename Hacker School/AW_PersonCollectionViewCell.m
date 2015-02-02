@@ -62,12 +62,4 @@ const NSUInteger PERSON_IMAGE_DIMENSION = 130; // The image is square
     return self;
 }
 
-#pragma mark - AW_PersonDelegate
--(void)person:(AW_Person *)person didDownloadImage:(UIImage *)image
-{
-    self.personImageView.image = _person.image;
-    [self.personImageView setNeedsDisplay];
-    
-}
-
 @end

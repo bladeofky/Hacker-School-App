@@ -14,7 +14,7 @@ extern const NSUInteger PERSON_CELL_HEIGHT;
 
 @class AW_Person, AW_BatchIndexedCollectionView;
 
-@interface AW_PersonCollectionViewCell : UICollectionViewCell <AW_PersonDelegate>
+@interface AW_PersonCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, weak) UIImageView *personImageView;
 @property (nonatomic, weak) UILabel *nameLabel;
