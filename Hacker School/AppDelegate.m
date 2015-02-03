@@ -11,6 +11,7 @@
 #import "NXOAuth2.h"
 
 #import "AW_BatchStore.h"
+#import "AW_UserAccount.h"
 
 @interface AppDelegate ()
 
@@ -91,6 +92,15 @@
     }
     else {
         NSLog(@"Batch save failed");
+    }
+    
+    success = [[AW_UserAccount currentUser]saveCurrentUserInfo];
+    
+    if (success) {
+        NSLog(@"Current user's info saved");
+    }
+    else {
+        NSLog(@"Current user's info save failed");
     }
 }
 

@@ -11,8 +11,14 @@
 
 @class AW_Person;
 
-@interface AW_UserAccount : NXOAuth2Account
+@interface AW_UserAccount : NSObject
 
-+ (NXOAuth2Account *)currentUserAccount;
++ (instancetype)currentUser;
+
+- (NXOAuth2Account *)account;
+- (void)downloadPersonInfo;
+- (BOOL)saveCurrentUserInfo;
+
+@property (nonatomic, strong) AW_Person *person;
 
 @end

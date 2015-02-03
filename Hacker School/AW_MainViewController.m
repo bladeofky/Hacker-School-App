@@ -20,8 +20,6 @@ CGFloat const USER_MENU_WIDTH = 280.0;
 
 @interface AW_MainViewController ()
 
-@property (nonatomic, strong) __block AW_Person *currentUser;
-
 @property (nonatomic, strong) AW_PeopleViewController *peopleVC;
 @property (nonatomic, strong) AW_UserMenuViewController *userMenuVC;
 @property (nonatomic, strong) UIViewController *centerVC;
@@ -34,12 +32,6 @@ CGFloat const USER_MENU_WIDTH = 280.0;
 
 @implementation AW_MainViewController
 #pragma mark - Accessors
--(void)setCurrentUser:(AW_Person *)currentUser
-{
-    _currentUser = currentUser;
-    NSLog(@"Current User: %@", _currentUser);
-}
-
 -(UIView *)overlay
 {
     if (!_overlay) {
@@ -68,30 +60,13 @@ CGFloat const USER_MENU_WIDTH = 280.0;
 {
     // --- Present Login Screen If No Current User ---
     // TODO: Possibly move this into the - (void)applicationDidBecomeActive:(UIApplication *)application method of the App Delegate
-    if (![AW_UserAccount currentUserAccount]) {
-        AW_LoginViewController *loginVC = [[AW_LoginViewController alloc]init];
-        [self presentViewController:loginVC animated:YES completion:nil];
+    if (![[AW_UserAccount currentUser]account]) {
+        [self showLoginVC];
     }
     else {
         // *** ANYTHING THAT HAPPENS INSIDE THIS ELSE IS GUARANTEED TO HAVE A USER ACCOUNT ***
         
-        // --- Get current user data from API and set to self.currentUser ---
-        [NXOAuth2Request performMethod:@"GET"
-                            onResource:[NSURL URLWithString:@"https://www.hackerschool.com//api/v1/people/me"]
-                       usingParameters:nil
-                           withAccount:[AW_UserAccount currentUserAccount]
-                   sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
-                       // i.e. update progress indicator
-                   }
-                       responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error) {
-                           if (responseData) {
-                               self.currentUser = [[AW_Person alloc]initWithHackerSchoolAPIData:responseData];
-                           }
-                           
-                           if (error) {
-                               NSLog(@"Error: %@", [error localizedDescription]);
-                           }
-                       }];
+        [[AW_UserAccount currentUser]downloadPersonInfo];
         
         // --- Set up center view ---
         self.peopleVC = [[AW_PeopleViewController alloc]init];
@@ -100,6 +75,8 @@ CGFloat const USER_MENU_WIDTH = 280.0;
         [self displayCenterController:self.centerVC];
     }
 }
+
+
 
 #pragma mark - View Controller management
 - (void)displayCenterController: (UIViewController *)contentVC
@@ -116,7 +93,7 @@ CGFloat const USER_MENU_WIDTH = 280.0;
 {
     // --- Set up left view ---
     self.userMenuVC = [[AW_UserMenuViewController alloc]init];
-    self.userMenuVC.currentUser = self.currentUser;
+    self.userMenuVC.currentUser = [AW_UserAccount currentUser].person;
 //    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(dismissUserMenu)];
 //    [self.userMenuVC.view addGestureRecognizer:panGestureRecognizer];
     self.userMenuVC.view.frame = CGRectMake(-USER_MENU_WIDTH, 0, USER_MENU_WIDTH, self.view.bounds.size.height);
@@ -164,11 +141,21 @@ CGFloat const USER_MENU_WIDTH = 280.0;
     self.isUserMenuShowing = NO;
 }
 
+#pragma mark - Login
+-(void)showLoginVC
+{
+    AW_LoginViewController *loginVC = [[AW_LoginViewController alloc]init];
+    [self presentViewController:loginVC animated:YES completion:nil];
+}
+
 #pragma mark - Logout
 
 -(void)logout
 {
     NSLog(@"Logging out");
+    [[NXOAuth2AccountStore sharedStore] removeAccount: [[AW_UserAccount currentUser]account] ];
+    [AW_UserAccount currentUser].person = nil;
+    [self showLoginVC];
 }
 
 @end

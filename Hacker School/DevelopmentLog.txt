@@ -10,6 +10,12 @@ Known bug: Save file becomes corrupted and becomes unable to load if the followi
 5) Reload the person.
 6) Save the data.
 
+*********** GIT COMMIT: Cached current user info for offline usage ***********
+
+- Cached user info for offline use.
+- Changed AW_UserAccount to a singleton in order to manage saving and reloading AW_Person data for current user.
+- Implmented logout functionality
+
 *********** GIT COMMIT: Added loading screen downloading people in batch in AW_PeopleViewController ***********
 
 Known bug: Application cannot encode an NSAttributedString that shows an image (i.e. in project description)
