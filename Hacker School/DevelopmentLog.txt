@@ -1,4 +1,15 @@
 --------------------------------------------------------------------------------------------------------------------------------------------
+2-3-2015
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+*********** GIT COMMIT: Added loading screen downloading people in batch in AW_PeopleViewController ***********
+
+Known bug: Application cannot encode an NSAttributedString that shows an image (i.e. in project description)
+- Added guards against NSNull for empty bios or project descriptions in AW_Person and AW_Project
+- Refactored some code in AW_PeopleViewController
+- Added loading screen while batch downloads people on AW_PeopleViewController
+
+--------------------------------------------------------------------------------------------------------------------------------------------
 2-2-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 

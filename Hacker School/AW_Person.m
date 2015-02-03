@@ -217,6 +217,11 @@ NSString * const BATCH_ID_KEY = @"batchID";
 // if bioFormatted is nil while converting.
 -(NSAttributedString *)formatBio
 {
+    // Early exit if no bio
+    if ([self.bio isKindOfClass:[NSNull class]] || [self.bio isEqualToString:@""]) {
+        return nil;
+    }
+    
     // Convert raw projectDescription string (with HTML tags) to attributed string
     NSString *htmlBio = self.bio;
     htmlBio = [htmlBio stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];

@@ -110,11 +110,15 @@ CGFloat const USER_MENU_WIDTH = 280.0;
     [contentVC didMoveToParentViewController:self];
 }
 
+#pragma mark - User Menu
+
 - (void)setupUserMenu
 {
     // --- Set up left view ---
     self.userMenuVC = [[AW_UserMenuViewController alloc]init];
     self.userMenuVC.currentUser = self.currentUser;
+//    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(dismissUserMenu)];
+//    [self.userMenuVC.view addGestureRecognizer:panGestureRecognizer];
     self.userMenuVC.view.frame = CGRectMake(-USER_MENU_WIDTH, 0, USER_MENU_WIDTH, self.view.bounds.size.height);
     
     [self.view addSubview:self.userMenuVC.view];
@@ -158,6 +162,13 @@ CGFloat const USER_MENU_WIDTH = 280.0;
                      }];
     
     self.isUserMenuShowing = NO;
+}
+
+#pragma mark - Logout
+
+-(void)logout
+{
+    NSLog(@"Logging out");
 }
 
 @end

@@ -73,6 +73,11 @@ NSString * const PROJECT_DESCRIPTION_FORMATTED_KEY = @"projectDescriptionFormatt
 // if projectDescriptionFormatted is nil while converting.
 -(NSAttributedString *)formatProjectDescription
 {
+    // Early exit if no description
+    if ([self.projectDescription isKindOfClass:[NSNull class]]) {
+        return nil;
+    }
+    
     // Convert raw projectDescription string (with HTML tags) to attributed string
     NSString *htmlProjectDescription = self.projectDescription;
     htmlProjectDescription = [htmlProjectDescription stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];

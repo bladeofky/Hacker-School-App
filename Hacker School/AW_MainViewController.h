@@ -20,5 +20,6 @@
 @interface AW_MainViewController : UIViewController
 
 - (void)showUserMenu;
+- (void)logout;
 
 @end

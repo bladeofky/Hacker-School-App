@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Alan Wang. All rights reserved.
 //
 
+#import "AW_MainViewController.h"
 #import "AW_UserMenuViewController.h"
 
 #import "AW_Person.h"
@@ -25,6 +26,9 @@
     // --- Set up table view ---
     self.tableView.tableHeaderView = [self userView];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
+    
+    // --- Set up logout butotn ---
+    [self.logoutButton addTarget:self.mainVC action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - UITableViewDataSource
@@ -74,7 +78,7 @@
 - (UIView *)userView
 {
     // Instantiate views
-    UIView *userView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 220)];
+    UIView *userView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 240)];
     
     UIImageView *imageView = [[UIImageView alloc]initWithImage:self.currentUser.image];
     imageView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -112,7 +116,7 @@
                                                                                       options:0
                                                                                       metrics:nil
                                                                                         views:@{@"nameLabel":nameLabel}];
-    NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[imageView(==150)]-[nameLabel]-20-|"
+    NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[imageView(==150)]-20-[nameLabel]-20-|"
                                                                            options:0
                                                                            metrics:nil
                                                                              views:@{@"imageView":imageView,

@@ -43,6 +43,8 @@
 @property (nonatomic, strong) NSArray *batchHeaderViews;
 @property (nonatomic, strong) NXOAuth2Account *userAccount;
 
+@property (nonatomic, weak) UIView *overlay;
+
 @end
 
 
@@ -245,14 +247,9 @@
     NSLog(@"Did tap %@ %@", person.firstName, person.lastName);
     
     // Perform formatting of HTML (this can only be done on the main thread so we do it here and show a loading screen
-    UIView *loadingOverlayView = [self loadingOverlayView];
-    loadingOverlayView.alpha = 0;
     
     // Show loading screen
-    [self.view addSubview:loadingOverlayView];
-    [UIView animateWithDuration:.5 animations:^{
-        loadingOverlayView.alpha = 1.0;
-    }];
+    [self showLoadingOverlay];
     
     // Perform formatting
     if (!person.bioFormmated) {
@@ -261,12 +258,7 @@
     [person formatProjects];
     
     // Remove loading screen
-    [UIView animateWithDuration:.5 animations:^{
-        loadingOverlayView.alpha = 0.0;
-    }];
-    [loadingOverlayView removeFromSuperview];
-    
-    
+    [self removeLoadingOverlay];
     
     // Push detail view controller
     AW_PersonDetailViewController *detailVC = [[AW_PersonDetailViewController alloc]init];
@@ -283,6 +275,8 @@
     
     // Existing row before loading people has height of zero. Reloading tableView will make the collectionView appear suddenly.
     // Remove and re-add the row to create the drawer effect.
+    [self removeLoadingOverlay];
+    
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
@@ -323,8 +317,10 @@
         
         
         // Begin fetching the people in this batch from the API if it has not already been loaded
+        
         AW_Batch *batch = self.batches[sectionOfTappedHeader];
         if (!batch.people) {
+            [self showLoadingOverlay];
             [batch downloadPeople];
         }
     }
@@ -359,6 +355,34 @@
     }
     
     self.batchHeaderViews = [tempBatchHeaders copy];
+}
+
+-(void)showLoadingOverlay
+{
+    UIView *loadingOverlayView = [self loadingOverlayView];
+    loadingOverlayView.alpha = 0;
+    
+    // Show loading screen
+    [self.view addSubview:loadingOverlayView];
+    [UIView animateWithDuration:.5 animations:^{
+        loadingOverlayView.alpha = 1.0;
+    }];
+    
+    self.overlay = loadingOverlayView;
+}
+
+-(void)removeLoadingOverlay
+{
+    // Remove loading screen
+    UIView *loadingOverlayView = self.overlay;
+    
+    [UIView animateWithDuration:.5 animations:^{
+        loadingOverlayView.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        [loadingOverlayView removeFromSuperview];
+    }];
+    
+    
 }
 
 -(UIView *)loadingOverlayView

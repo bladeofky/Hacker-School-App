@@ -170,7 +170,7 @@
     }
     
     // --- Add bioview if not empty ---
-    if (![self.person.bio isEqualToString:@""]) {
+    if (self.person.bioFormmated) {
         UIView *bioView = [self createBioView];
         [contentView addSubview:bioView];
         
@@ -560,9 +560,6 @@
     bodyText.editable = NO;
     bodyText.translatesAutoresizingMaskIntoConstraints = NO;
 
-    if (!self.person.bioFormmated) {
-        [self.person formatBio];    // Can only be done on the main thread
-    }
     bodyText.attributedText = self.person.bioFormmated;
     
     [bioView addSubview:bodyText];
@@ -677,9 +674,6 @@
     bodyText.scrollEnabled = NO;
     bodyText.editable = NO;
 
-    if (!project.projectDescriptionFormatted) {
-        [project formatProjectDescription];
-    }
     bodyText.attributedText = project.projectDescriptionFormatted;
     [projectView addSubview:bodyText];
     
