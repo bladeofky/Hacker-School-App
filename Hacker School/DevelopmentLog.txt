@@ -2,6 +2,14 @@
 2-3-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+Known bug: Save file becomes corrupted and becomes unable to load if the following steps are taken:
+1) Load a person who uses HTML tags to include an image in their project description
+2) Save the data (close the app)
+3) Kill the app
+4) Open the app and reload data
+5) Reload the person.
+6) Save the data.
+
 *********** GIT COMMIT: Added loading screen downloading people in batch in AW_PeopleViewController ***********
 
 Known bug: Application cannot encode an NSAttributedString that shows an image (i.e. in project description)
