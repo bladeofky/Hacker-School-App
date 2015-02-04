@@ -2,6 +2,11 @@
 2-4-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Added download failure alerts and color bars for loaded batches ***********
+
+- Repurposed color bars on AW_BatchHeaderView to be invisible if the batch is not loaded. This will indicate which batches are available in offline mode.
+- Added user alerts if calls to the API fail.
+
 *********** GIT COMMIT: Implemented bug workaround for project description ***********
 
 - Created temporary workaround for bug where NSAttributeString encoding sometimes fails if there is an NSTextAttachment (see known bug from 2-3-2015)

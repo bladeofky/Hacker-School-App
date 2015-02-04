@@ -121,6 +121,12 @@
                        
                        if (error) {
                            NSLog(@"Error: %@", [error localizedDescription]);
+                           UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Failed to Download Batches"
+                                                                              message:[error localizedDescription]
+                                                                             delegate:nil
+                                                                    cancelButtonTitle:@"Ok"
+                                                                    otherButtonTitles:nil];
+                           [alertView show];
                        }
                        else {
                            [self processListOfBatches:responseData];
@@ -273,13 +279,41 @@
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
     
-    // Existing row before loading people has height of zero. Reloading tableView will make the collectionView appear suddenly.
-    // Remove and re-add the row to create the drawer effect.
+    
+    // --- Cosmetic stuff ---
     [self removeLoadingOverlay];
     
+    // Existing row before loading people has height of zero. Reloading tableView will make the collectionView appear suddenly.
+    // Remove and re-add the row to create the drawer effect.
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+    [self.tableView endUpdates];
+    
+    // Show color bar for batches with loaded people
+    AW_BatchHeaderView *batchHeaderView = self.batchHeaderViews[section];
+    batchHeaderView.colorBar.alpha = 1;
+}
+
+- (void)batch:(AW_Batch *)batch failedToDownloadPeopleWithError:(NSError *)error
+{
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Failed to Download People"
+                                                       message:[error localizedDescription]
+                                                      delegate:nil
+                                             cancelButtonTitle:@"Ok"
+                                             otherButtonTitles:nil];
+    [alertView show];
+    
+    // Remove overlay and row that was added when section header was tapped
+    [self removeLoadingOverlay];
+    
+    NSUInteger section = [self.batches indexOfObject:batch];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
+    AW_BatchHeaderView *batchHeaderView = self.batchHeaderViews[section];
+    
+    [self.tableView beginUpdates];
+    batchHeaderView.isOpen = NO;
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
     [self.tableView endUpdates];
 }
 
@@ -351,6 +385,11 @@
         AW_BatchHeaderView *batchHeaderView = [[AW_BatchHeaderView alloc]init];
         batchHeaderView.batch = batch;
         batchHeaderView.delegate = self;
+        
+        if (!batch.people) {
+            batchHeaderView.colorBar.alpha = 0;
+        }
+        
         [tempBatchHeaders addObject:batchHeaderView];
     }
     

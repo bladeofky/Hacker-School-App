@@ -105,26 +105,27 @@ NSString * const PEOPLE_KEY = @"people";
                    
                    if (error) {
                        NSLog(@"Error: %@", [error localizedDescription]);
-                       return;
+                       [self.delegate batch:self failedToDownloadPeopleWithError:error];
                    }
-                   
-                   // Translate data into JSON Object
-                   NSArray *personInfos = [NSJSONSerialization JSONObjectWithData:responseData
-                                                                          options:0
-                                                                            error:&error];
-                   // Generate array of AW_Person objects
-                   NSMutableArray *tempPeopleArray = [[NSMutableArray alloc]init];
-                   
-                   for (NSDictionary *personInfo in personInfos) {
-                       AW_Person *person = [[AW_Person alloc]initWithJSONObject:personInfo];
-                       person.delegate = self;
-                       person.batch = self;
-                       [tempPeopleArray addObject:person];
+                   else {
+                       // Translate data into JSON Object
+                       NSArray *personInfos = [NSJSONSerialization JSONObjectWithData:responseData
+                                                                              options:0
+                                                                                error:&error];
+                       // Generate array of AW_Person objects
+                       NSMutableArray *tempPeopleArray = [[NSMutableArray alloc]init];
+                       
+                       for (NSDictionary *personInfo in personInfos) {
+                           AW_Person *person = [[AW_Person alloc]initWithJSONObject:personInfo];
+                           person.delegate = self;
+                           person.batch = self;
+                           [tempPeopleArray addObject:person];
+                       }
+                       
+                       self.people = [tempPeopleArray copy];
+                       
+                       [self.delegate batch:self didDownloadPeople:self.people];
                    }
-
-                   self.people = [tempPeopleArray copy];
-                   
-                   [self.delegate batch:self didDownloadPeople:self.people];
                }];
 }
 

@@ -13,6 +13,7 @@
 @required
 
 - (void)batch:(AW_Batch *)batch didDownloadPeople:(NSArray *)people;
+- (void)batch:(AW_Batch *)batch failedToDownloadPeopleWithError:(NSError *)error;
 - (void)batch:(AW_Batch *)batch didDownloadImage:(UIImage *)image forPerson:(AW_Person *)person;
 
 @end
