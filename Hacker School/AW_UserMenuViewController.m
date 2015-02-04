@@ -93,7 +93,6 @@
     NSInteger row = indexPath.row;
     
     [self.mainVC displayCenterControllerForOption:self.tableViewData[section][row]];
-    [self.mainVC dismissUserMenu];
 }
 
 #pragma mark - View generators

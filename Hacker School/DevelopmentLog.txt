@@ -2,6 +2,15 @@
 2-4-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Fixed bug view layout during screen rotation ***********
+
+Known bugs:
+1) The web view does not mantain the credentials to log in to Hacker School unless Safari remembers it. Find a way to pass the
+current authentication token into the web view.
+2) Selecting an option from the menu causes the menu to jump to the middle of the screen. Something to do with autolayout. Fix tomorrow.
+
+- Fixed bug where views are messed up for user menu when screen is rotated
+
 *********** GIT COMMIT: Implemented more options in user menu ***********
 
 Known bug: The web view does not mantain the credentials to log in to Hacker School unless Safari remembers it. Find a way to pass the

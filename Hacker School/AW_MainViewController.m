@@ -134,6 +134,8 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     else if ([option isEqualToString:SETTINGS_VC_TAG]) {
         [self displayCenterController:[self settingsViewController]];
     }
+    
+    [self dismissUserMenu];
 }
 
 - (void)displayCenterController: (UIViewController *)contentVC
@@ -155,7 +157,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     self.centerVC = contentVC;
 }
 
-#pragma mark - People VC
+#pragma mark - Browse Options
 - (UIViewController *)peopleViewController
 {
     AW_PeopleViewController *peopleVC = [[AW_PeopleViewController alloc]init];
@@ -165,7 +167,6 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     return centerVC;
 }
 
-#pragma mark - Projects VC
 - (UIViewController *)projectsViewController
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
@@ -177,7 +178,6 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     return navVC;
 }
 
-#pragma mark - Companies VC
 - (UIViewController *)companiesViewController
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
@@ -189,7 +189,6 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     return navVC;
 }
 
-#pragma mark - Residents VC
 - (UIViewController *)residentsViewController
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
@@ -201,7 +200,6 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     return navVC;
 }
 
-#pragma mark - Blog VC
 - (UIViewController *)blogViewController
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
@@ -213,7 +211,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     return navVC;
 }
 
-#pragma mark - Community VC
+#pragma mark - Connect Options
 - (UIViewController *)communityViewController
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
@@ -225,7 +223,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     return navVC;
 }
 
-#pragma mark - Booker VC
+#pragma mark - Tools Options
 - (UIViewController *)bookerViewController
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
@@ -237,7 +235,6 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     return navVC;
 }
 
-#pragma mark - Groups VC
 - (UIViewController *)groupsViewController
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
@@ -249,7 +246,6 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     return navVC;
 }
 
-#pragma mark - Recommend VC
 - (UIViewController *)recommendViewController
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
@@ -261,7 +257,6 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     return navVC;
 }
 
-#pragma mark - User Manual VC
 - (UIViewController *)userManualViewController
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
@@ -273,7 +268,6 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     return navVC;
 }
 
-#pragma mark - Booker VC
 - (UIViewController *)settingsViewController
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
@@ -314,13 +308,42 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 {
     [self setupUserMenu];
     
+    // Add overlay
     [self.view insertSubview:self.overlay belowSubview:self.userMenuVC.view];
-    
+
+    // Animate user menu appearance
     [UIView animateWithDuration:.5
                      animations:^{
                          self.overlay.alpha = 0.5;
                          self.userMenuVC.view.frame = CGRectOffset(self.userMenuVC.view.frame, USER_MENU_WIDTH, 0);
                      }];
+    
+    // Add constraints in case of screen rotation
+    self.userMenuVC.view.translatesAutoresizingMaskIntoConstraints = NO;
+    self.overlay.translatesAutoresizingMaskIntoConstraints = NO;
+    NSString *visualFormatStringHorizontal = [NSString stringWithFormat:@"H:|[userMenu(==%f)]", USER_MENU_WIDTH];
+    NSArray *userMenuHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:visualFormatStringHorizontal
+                                                                                     options:0
+                                                                                     metrics:nil
+                                                                                       views:@{@"userMenu":self.userMenuVC.view}];
+    NSArray *userMenuVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[userMenu]|"
+                                                                                   options:0
+                                                                                   metrics:nil
+                                                                                     views:@{@"userMenu":self.userMenuVC.view}];
+    NSArray *overlayHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[overlay]|"
+                                                                                    options:0
+                                                                                    metrics:nil
+                                                                                      views:@{@"overlay":self.overlay}];
+    NSArray *overlayVeritcalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[overlay]|"
+                                                                                  options:0
+                                                                                  metrics:nil
+                                                                                    views:@{@"overlay":self.overlay}];
+    
+    [self.view addConstraints:userMenuHorizontalConstraints];
+    [self.view addConstraints:userMenuVerticalConstraints];
+    [self.view addConstraints:overlayHorizontalConstraints];
+    [self.view addConstraints:overlayVeritcalConstraints];
+    
     self.isUserMenuShowing = YES;
 }
 
