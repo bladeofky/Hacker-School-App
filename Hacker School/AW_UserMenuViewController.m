@@ -13,6 +13,7 @@
 
 @interface AW_UserMenuViewController ()
 
+@property (nonatomic, strong) NSArray *tableViewData;
 
 @end
 
@@ -26,6 +27,14 @@
     // --- Set up table view ---
     self.tableView.tableHeaderView = [self userView];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
+    self.tableViewData = @[ // Browse
+                            @[PEOPLE_VC_TAG],
+                            // Connect
+                            @[COMMUNITY_VC_TAG],
+                            // Tools
+                            @[BOOKER_VC_TAG,
+                              RECOMMEND_VC_TAG]
+                            ];
     
     // --- Set up logout butotn ---
     [self.logoutButton addTarget:self.mainVC action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
@@ -34,39 +43,29 @@
 #pragma mark - UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return [self.tableViewData count];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger numRows;
-    
-    switch (section) {
-        case 0:
-            numRows = 1;
-            break;
-        case 1:
-            numRows = 1;
-            break;
-        default:
-            numRows = 0;
-            break;
-    }
-    
-    return numRows;
+    return [self.tableViewData[section] count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *cellText = @[ @[@"People"],
-                           @[@"Community"] ];
-    
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
 
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
     
-    cell.textLabel.text = cellText[section][row];
+    cell.textLabel.text = self.tableViewData[section][row];
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-thin" size:18];
+    
+    // Change selection color
+    UIView *selectedBackgroundView = [[UIView alloc]init];
+    selectedBackgroundView.backgroundColor = [UIColor colorWithRed:0.5 green:0.9 blue:0.5 alpha:0.5];
+    cell.selectedBackgroundView = selectedBackgroundView;
     
     return cell;
 }
@@ -74,26 +73,20 @@
 #pragma mark - UITableViewDelegate
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSString *title;
+    NSArray *sectionTitles = @[ @"Browse",
+                                @"Connect",
+                                @"Tools"];
     
-    if (section == 0) {
-        title = @"Browse";
-    }
-    else if (section == 1){
-        title = @"Connect";
-    }
-    
-    return title;
+    return sectionTitles[section];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *options = @[ @[PEOPLE_VC_TAG],
-                          @[COMMUNITY_VC_TAG]];
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     
-    [self.mainVC displayCenterControllerForOption:options[section][row]];
+    [self.mainVC displayCenterControllerForOption:self.tableViewData[section][row]];
+    [self.mainVC dismissUserMenu];
 }
 
 #pragma mark - View generators

@@ -13,5 +13,7 @@
 @interface AW_WebViewController : UIViewController
 
 @property (nonatomic, weak) AW_MainViewController *mainVC;
+@property (nonatomic, strong) NSString *navBarTitle;
+@property (nonatomic, strong) NSURL *url;
 
 @end

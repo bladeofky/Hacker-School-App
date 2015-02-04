@@ -19,10 +19,13 @@
 
 extern NSString * const PEOPLE_VC_TAG;
 extern NSString * const COMMUNITY_VC_TAG;
+extern NSString * const BOOKER_VC_TAG;
+extern NSString * const RECOMMEND_VC_TAG;
 
 @interface AW_MainViewController : UIViewController
 
 - (void)showUserMenu;
+- (void)dismissUserMenu;
 - (void)logout;
 - (void)displayCenterControllerForOption:(NSString *)option;
 

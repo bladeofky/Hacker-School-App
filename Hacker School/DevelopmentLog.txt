@@ -2,6 +2,12 @@
 2-4-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Implemented Booker and Recommend ***********
+
+- Implemented Booker and Recommend options with simple web views
+- Added Booker and Recommend options to user menu
+- Fixed bug where invalid project URL throws an exception
+
 *********** GIT COMMIT: Implemented Web View ***********
 
 - Refactored AW_MainViewController to simplify changing out the center view controller

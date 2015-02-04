@@ -662,7 +662,12 @@
     [titleLabel setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
     [titleLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     NSMutableAttributedString *titleAttributedString = [[NSMutableAttributedString alloc]initWithString:project.title];
-    [titleAttributedString addAttribute:NSLinkAttributeName value:[NSURL URLWithString:project.urlString] range:NSMakeRange(0, titleAttributedString.length)];
+    
+    NSURL *urlOfProject = [NSURL URLWithString:project.urlString]; // returns nil if not a valid URL
+    if (urlOfProject) {
+        [titleAttributedString addAttribute:NSLinkAttributeName value:urlOfProject range:NSMakeRange(0, titleAttributedString.length)];
+    }
+    
     titleLabel.attributedText = titleAttributedString;
     titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:17];
     [projectView addSubview:titleLabel];

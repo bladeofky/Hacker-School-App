@@ -22,14 +22,25 @@
 -(void)viewDidLoad
 {
     // Set up web view
-    //    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc]init];
-    
-    WKWebView *webView = [[WKWebView alloc]initWithFrame:self.view.bounds];
+    WKWebView *webView = [[WKWebView alloc]init];
+    webView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:webView];
     self.webView = webView;
     
-    NSURL *url = [NSURL URLWithString:@"https://community.hackerschool.com/"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSDictionary *views = @{@"webView":webView};
+    NSArray *webViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[webView]|"
+                                                                                    options:0
+                                                                                    metrics:nil
+                                                                                      views:views];
+    NSArray *webViewVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[webView]|"
+                                                                                  options:0
+                                                                                  metrics:nil
+                                                                                    views:views];
+    [self.view addConstraints:webViewHorizontalConstraints];
+    [self.view addConstraints:webViewVerticalConstraints];
+    
+    // Load URL
+    NSURLRequest *request = [NSURLRequest requestWithURL:self.url];
     [webView loadRequest:request];
     
     // Set up navigation
@@ -41,6 +52,7 @@
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self.webView
                                                                             action:@selector(goBack)];
+    self.navigationItem.title = self.navBarTitle;
     
 }
 

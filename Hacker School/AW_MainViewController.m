@@ -20,6 +20,8 @@
 CGFloat const USER_MENU_WIDTH = 280.0;
 NSString * const PEOPLE_VC_TAG = @"People";
 NSString * const COMMUNITY_VC_TAG = @"Community";
+NSString * const BOOKER_VC_TAG = @"Booker";
+NSString * const RECOMMEND_VC_TAG = @"Recommend";
 
 @interface AW_MainViewController ()
 
@@ -92,6 +94,12 @@ NSString * const COMMUNITY_VC_TAG = @"Community";
     else if ([option isEqualToString:COMMUNITY_VC_TAG]) {
         [self displayCenterController:[self communityViewController]];
     }
+    else if ([option isEqualToString:BOOKER_VC_TAG]) {
+        [self displayCenterController:[self bookerViewController]];
+    }
+    else if ([option isEqualToString:RECOMMEND_VC_TAG]) {
+        [self displayCenterController:[self recommendViewController]];
+    }
 }
 
 - (void)displayCenterController: (UIViewController *)contentVC
@@ -109,6 +117,8 @@ NSString * const COMMUNITY_VC_TAG = @"Community";
     
     [self addChildViewController:contentVC];
     [contentVC didMoveToParentViewController:self];
+    
+    self.centerVC = contentVC;
 }
 
 #pragma mark - People VC
@@ -124,9 +134,35 @@ NSString * const COMMUNITY_VC_TAG = @"Community";
 #pragma mark - Community VC
 - (UIViewController *)communityViewController
 {
-    AW_WebViewController *webView = [[AW_WebViewController alloc]init];
-    webView.mainVC = self;
-    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webView];
+    AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
+    webVC.mainVC = self;
+    webVC.url = [NSURL URLWithString:@"https://community.hackerschool.com/"];
+    webVC.navBarTitle = @"Community";
+    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
+    
+    return navVC;
+}
+
+#pragma mark - Booker VC
+- (UIViewController *)bookerViewController
+{
+    AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
+    webVC.mainVC = self;
+    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/booker"];
+    webVC.navBarTitle = @"Booker";
+    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
+    
+    return navVC;
+}
+
+#pragma mark - Recommend VC
+- (UIViewController *)recommendViewController
+{
+    AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
+    webVC.mainVC = self;
+    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/private/recommend"];
+    webVC.navBarTitle = @"Recommend";
+    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
     
     return navVC;
 }
