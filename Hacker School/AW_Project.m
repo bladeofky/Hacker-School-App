@@ -49,7 +49,21 @@ NSString * const PROJECT_DESCRIPTION_FORMATTED_KEY = @"projectDescriptionFormatt
     [aCoder encodeObject:self.title forKey:TITLE_KEY];
     [aCoder encodeObject:self.urlString forKey:URL_STRING_KEY];
     [aCoder encodeObject:self.projectDescription forKey:PROJECT_DECRIPTION_KEY];
-    [aCoder encodeObject:self.projectDescriptionFormatted forKey:PROJECT_DESCRIPTION_FORMATTED_KEY];
+    
+    // Currently there is a bug where saving an NSAttachmentAttribute can lead to a crash. We will refrain from saving projectDescriptionFormatter
+    // if it has an NSAttachmentAttribute.
+    // TODO: Fix this bug.
+    __block BOOL attachmentAttributeFound = NO;
+    [self.projectDescriptionFormatted enumerateAttribute:NSAttachmentAttributeName
+                                                 inRange:NSMakeRange(0, self.projectDescriptionFormatted.length)
+                                                 options:0
+                                              usingBlock:^(id value, NSRange range, BOOL *stop) {
+                                                  attachmentAttributeFound = YES;
+                                              }];
+    
+    if (!attachmentAttributeFound) {
+        [aCoder encodeObject:self.projectDescriptionFormatted forKey:PROJECT_DESCRIPTION_FORMATTED_KEY];
+    }
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
