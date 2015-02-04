@@ -10,6 +10,7 @@
 #import "AW_LoginViewController.h"
 #import "AW_PeopleViewController.h"
 #import "AW_UserMenuViewController.h"
+#import "AW_WebViewController.h"
 
 #import "NXOAuth2.h"
 
@@ -17,10 +18,11 @@
 #import "AW_Person.h"
 
 CGFloat const USER_MENU_WIDTH = 280.0;
+NSString * const PEOPLE_VC_TAG = @"People";
+NSString * const COMMUNITY_VC_TAG = @"Community";
 
 @interface AW_MainViewController ()
 
-@property (nonatomic, strong) AW_PeopleViewController *peopleVC;
 @property (nonatomic, strong) AW_UserMenuViewController *userMenuVC;
 @property (nonatomic, strong) UIViewController *centerVC;
 
@@ -69,9 +71,7 @@ CGFloat const USER_MENU_WIDTH = 280.0;
         [[AW_UserAccount currentUser]downloadPersonInfo];
         
         // --- Set up center view ---
-        self.peopleVC = [[AW_PeopleViewController alloc]init];
-        self.peopleVC.mainVC = self;
-        self.centerVC = [[UINavigationController alloc]initWithRootViewController:self.peopleVC];
+        self.centerVC = [self peopleViewController];
         [self displayCenterController:self.centerVC];
     }
 }
@@ -79,12 +79,56 @@ CGFloat const USER_MENU_WIDTH = 280.0;
 
 
 #pragma mark - View Controller management
+- (void)displayCenterControllerForOption:(NSString *)option
+{
+    // Remove previous center controller
+    [self.centerVC.view removeFromSuperview];
+    [self.centerVC removeFromParentViewController];
+    
+    // Present new center controller
+    if ([option isEqualToString:PEOPLE_VC_TAG]) {
+        [self displayCenterController:[self peopleViewController]];
+    }
+    else if ([option isEqualToString:COMMUNITY_VC_TAG]) {
+        [self displayCenterController:[self communityViewController]];
+    }
+}
+
 - (void)displayCenterController: (UIViewController *)contentVC
 {
     contentVC.view.frame = self.view.frame;
-    [self.view addSubview:contentVC.view];
+    
+    if (self.overlay) {
+        // If user menu is open, add it underneath the menu
+        [self.view insertSubview:contentVC.view belowSubview:self.overlay];
+    }
+    else {
+        // Otherwise add the view on top
+        [self.view addSubview:contentVC.view];
+    }
+    
     [self addChildViewController:contentVC];
     [contentVC didMoveToParentViewController:self];
+}
+
+#pragma mark - People VC
+- (UIViewController *)peopleViewController
+{
+    AW_PeopleViewController *peopleVC = [[AW_PeopleViewController alloc]init];
+    peopleVC.mainVC = self;
+    UINavigationController *centerVC = [[UINavigationController alloc]initWithRootViewController:peopleVC];
+    
+    return centerVC;
+}
+
+#pragma mark - Community VC
+- (UIViewController *)communityViewController
+{
+    AW_WebViewController *webView = [[AW_WebViewController alloc]init];
+    webView.mainVC = self;
+    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webView];
+    
+    return navVC;
 }
 
 #pragma mark - User Menu
@@ -94,6 +138,7 @@ CGFloat const USER_MENU_WIDTH = 280.0;
     // --- Set up left view ---
     self.userMenuVC = [[AW_UserMenuViewController alloc]init];
     self.userMenuVC.currentUser = [AW_UserAccount currentUser].person;
+    self.userMenuVC.mainVC = self;
 //    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(dismissUserMenu)];
 //    [self.userMenuVC.view addGestureRecognizer:panGestureRecognizer];
     self.userMenuVC.view.frame = CGRectMake(-USER_MENU_WIDTH, 0, USER_MENU_WIDTH, self.view.bounds.size.height);

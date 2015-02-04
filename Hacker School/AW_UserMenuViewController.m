@@ -59,7 +59,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *cellText = @[ @[@"People"],
-                           @[@"Logout"] ];
+                           @[@"Community"] ];
     
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
@@ -72,6 +72,29 @@
 }
 
 #pragma mark - UITableViewDelegate
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *title;
+    
+    if (section == 0) {
+        title = @"Browse";
+    }
+    else if (section == 1){
+        title = @"Connect";
+    }
+    
+    return title;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *options = @[ @[PEOPLE_VC_TAG],
+                          @[COMMUNITY_VC_TAG]];
+    NSInteger section = indexPath.section;
+    NSInteger row = indexPath.row;
+    
+    [self.mainVC displayCenterControllerForOption:options[section][row]];
+}
 
 #pragma mark - View generators
 

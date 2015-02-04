@@ -35,6 +35,7 @@
 		E7FB04721A7AB4A60062CD47 /* AW_UserAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB04711A7AB4A60062CD47 /* AW_UserAccount.m */; };
 		E7FB04771A7D72920062CD47 /* UIColor+batchColors.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB04761A7D72920062CD47 /* UIColor+batchColors.m */; };
 		E7FB047B1A7EA9D60062CD47 /* AW_BatchStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB047A1A7EA9D60062CD47 /* AW_BatchStore.m */; };
+		E7FB04841A82B2210062CD47 /* AW_WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB04831A82B2210062CD47 /* AW_WebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +128,8 @@
 		E7FB04761A7D72920062CD47 /* UIColor+batchColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+batchColors.m"; sourceTree = "<group>"; };
 		E7FB04791A7EA9D60062CD47 /* AW_BatchStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_BatchStore.h; sourceTree = "<group>"; };
 		E7FB047A1A7EA9D60062CD47 /* AW_BatchStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_BatchStore.m; sourceTree = "<group>"; };
+		E7FB04821A82B2210062CD47 /* AW_WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_WebViewController.h; sourceTree = "<group>"; };
+		E7FB04831A82B2210062CD47 /* AW_WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_WebViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +252,8 @@
 			children = (
 				E7FB04401A7185880062CD47 /* AW_MainViewController.h */,
 				E7FB04411A7185880062CD47 /* AW_MainViewController.m */,
+				E7FB04821A82B2210062CD47 /* AW_WebViewController.h */,
+				E7FB04831A82B2210062CD47 /* AW_WebViewController.m */,
 				E7B53F381A70161F00931BEC /* AW_UserMenuViewController.h */,
 				E7B53F391A70161F00931BEC /* AW_UserMenuViewController.m */,
 				E7B53F3A1A70161F00931BEC /* AW_UserMenuViewController.xib */,
@@ -447,6 +452,7 @@
 				E7B53EFA1A6EB94B00931BEC /* main.m in Sources */,
 				E7FB04471A719B870062CD47 /* AW_Batch.m in Sources */,
 				E7FB04421A7185880062CD47 /* AW_MainViewController.m in Sources */,
+				E7FB04841A82B2210062CD47 /* AW_WebViewController.m in Sources */,
 				E7FB04721A7AB4A60062CD47 /* AW_UserAccount.m in Sources */,
 				E7FB04551A72F4FE0062CD47 /* AW_BatchIndexedCollectionView.m in Sources */,
 			);

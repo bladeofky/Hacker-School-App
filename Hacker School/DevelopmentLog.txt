@@ -2,6 +2,11 @@
 2-4-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Implemented Web View ***********
+
+- Refactored AW_MainViewController to simplify changing out the center view controller
+- Added AW_WebViewController with WKWebView for general use for Community, Booker, etc.
+
 *********** GIT COMMIT: Added download failure alerts and color bars for loaded batches ***********
 
 - Repurposed color bars on AW_BatchHeaderView to be invisible if the batch is not loaded. This will indicate which batches are available in offline mode.
