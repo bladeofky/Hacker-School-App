@@ -9,6 +9,7 @@
 #import "AW_MainViewController.h"
 #import "AW_LoginViewController.h"
 #import "AW_PeopleViewController.h"
+#import "AW_PersonDetailViewController.h"
 #import "AW_UserMenuViewController.h"
 #import "AW_WebViewController.h"
 
@@ -18,10 +19,20 @@
 #import "AW_Person.h"
 
 CGFloat const USER_MENU_WIDTH = 280.0;
+
 NSString * const PEOPLE_VC_TAG = @"People";
+NSString * const PROJECTS_VC_TAG = @"Projects";
+NSString * const COMPANIES_VC_TAG = @"Companies";
+NSString * const RESIDENTS_VC_TAG = @"Residents";
+NSString * const BLOG_VC_TAG = @"Blog";
+
 NSString * const COMMUNITY_VC_TAG = @"Community";
+
 NSString * const BOOKER_VC_TAG = @"Booker";
+NSString * const GROUPS_VC_TAG = @"Groups";
 NSString * const RECOMMEND_VC_TAG = @"Recommend";
+NSString * const USER_MANUAL_VC_TAG = @"User Manual";
+NSString * const SETTINGS_VC_TAG = @"Settings";
 
 @interface AW_MainViewController ()
 
@@ -91,14 +102,37 @@ NSString * const RECOMMEND_VC_TAG = @"Recommend";
     if ([option isEqualToString:PEOPLE_VC_TAG]) {
         [self displayCenterController:[self peopleViewController]];
     }
+    else if ([option isEqualToString:PROJECTS_VC_TAG]) {
+        [self displayCenterController:[self projectsViewController]];
+    }
+    else if ([option isEqualToString:COMPANIES_VC_TAG]) {
+        [self displayCenterController:[self companiesViewController]];
+    }
+    else if ([option isEqualToString:RESIDENTS_VC_TAG]) {
+        [self displayCenterController:[self residentsViewController]];
+    }
+    else if ([option isEqualToString:BLOG_VC_TAG]) {
+        [self displayCenterController:[self blogViewController]];
+    }
+    
     else if ([option isEqualToString:COMMUNITY_VC_TAG]) {
         [self displayCenterController:[self communityViewController]];
     }
+    
     else if ([option isEqualToString:BOOKER_VC_TAG]) {
         [self displayCenterController:[self bookerViewController]];
     }
+    else if ([option isEqualToString:GROUPS_VC_TAG]) {
+        [self displayCenterController:[self groupsViewController]];
+    }
     else if ([option isEqualToString:RECOMMEND_VC_TAG]) {
         [self displayCenterController:[self recommendViewController]];
+    }
+    else if ([option isEqualToString:USER_MANUAL_VC_TAG]) {
+        [self displayCenterController:[self userManualViewController]];
+    }
+    else if ([option isEqualToString:SETTINGS_VC_TAG]) {
+        [self displayCenterController:[self settingsViewController]];
     }
 }
 
@@ -131,6 +165,54 @@ NSString * const RECOMMEND_VC_TAG = @"Recommend";
     return centerVC;
 }
 
+#pragma mark - Projects VC
+- (UIViewController *)projectsViewController
+{
+    AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
+    webVC.mainVC = self;
+    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/projects"];
+    webVC.navBarTitle = @"Projects";
+    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
+    
+    return navVC;
+}
+
+#pragma mark - Companies VC
+- (UIViewController *)companiesViewController
+{
+    AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
+    webVC.mainVC = self;
+    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/companies"];
+    webVC.navBarTitle = @"Companies";
+    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
+    
+    return navVC;
+}
+
+#pragma mark - Residents VC
+- (UIViewController *)residentsViewController
+{
+    AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
+    webVC.mainVC = self;
+    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/residents"];
+    webVC.navBarTitle = @"Residents";
+    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
+    
+    return navVC;
+}
+
+#pragma mark - Blog VC
+- (UIViewController *)blogViewController
+{
+    AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
+    webVC.mainVC = self;
+    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/blog"];
+    webVC.navBarTitle = @"Blog";
+    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
+    
+    return navVC;
+}
+
 #pragma mark - Community VC
 - (UIViewController *)communityViewController
 {
@@ -155,6 +237,18 @@ NSString * const RECOMMEND_VC_TAG = @"Recommend";
     return navVC;
 }
 
+#pragma mark - Groups VC
+- (UIViewController *)groupsViewController
+{
+    AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
+    webVC.mainVC = self;
+    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/groups"];
+    webVC.navBarTitle = @"Groups";
+    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
+    
+    return navVC;
+}
+
 #pragma mark - Recommend VC
 - (UIViewController *)recommendViewController
 {
@@ -162,6 +256,30 @@ NSString * const RECOMMEND_VC_TAG = @"Recommend";
     webVC.mainVC = self;
     webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/private/recommend"];
     webVC.navBarTitle = @"Recommend";
+    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
+    
+    return navVC;
+}
+
+#pragma mark - User Manual VC
+- (UIViewController *)userManualViewController
+{
+    AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
+    webVC.mainVC = self;
+    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/manual"];
+    webVC.navBarTitle = @"User Manual";
+    UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
+    
+    return navVC;
+}
+
+#pragma mark - Booker VC
+- (UIViewController *)settingsViewController
+{
+    AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
+    webVC.mainVC = self;
+    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/settings"];
+    webVC.navBarTitle = @"Settings";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
     
     return navVC;

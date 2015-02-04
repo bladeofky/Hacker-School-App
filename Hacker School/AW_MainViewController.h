@@ -18,9 +18,18 @@
 #import <UIKit/UIKit.h>
 
 extern NSString * const PEOPLE_VC_TAG;
+extern NSString * const PROJECTS_VC_TAG;
+extern NSString * const COMPANIES_VC_TAG;
+extern NSString * const RESIDENTS_VC_TAG;
+extern NSString * const BLOG_VC_TAG;
+
 extern NSString * const COMMUNITY_VC_TAG;
+
 extern NSString * const BOOKER_VC_TAG;
+extern NSString * const GROUPS_VC_TAG;
 extern NSString * const RECOMMEND_VC_TAG;
+extern NSString * const USER_MANUAL_VC_TAG;
+extern NSString * const SETTINGS_VC_TAG;
 
 @interface AW_MainViewController : UIViewController
 

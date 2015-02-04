@@ -2,6 +2,13 @@
 2-4-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Implemented more options in user menu ***********
+
+Known bug: The web view does not mantain the credentials to log in to Hacker School unless Safari remembers it. Find a way to pass the
+current authentication token into the web view.
+
+- Implemented more options in user menu using simple web view.
+
 *********** GIT COMMIT: Implemented Booker and Recommend ***********
 
 - Implemented Booker and Recommend options with simple web views

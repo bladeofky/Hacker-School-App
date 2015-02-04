@@ -28,12 +28,19 @@
     self.tableView.tableHeaderView = [self userView];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
     self.tableViewData = @[ // Browse
-                            @[PEOPLE_VC_TAG],
+                            @[PEOPLE_VC_TAG,
+                              PROJECTS_VC_TAG,
+                              COMPANIES_VC_TAG,
+                              RESIDENTS_VC_TAG,
+                              BLOG_VC_TAG],
                             // Connect
                             @[COMMUNITY_VC_TAG],
                             // Tools
                             @[BOOKER_VC_TAG,
-                              RECOMMEND_VC_TAG]
+                              GROUPS_VC_TAG,
+                              RECOMMEND_VC_TAG,
+                              USER_MANUAL_VC_TAG,
+                              SETTINGS_VC_TAG]
                             ];
     
     // --- Set up logout butotn ---
@@ -60,7 +67,7 @@
     
     cell.textLabel.text = self.tableViewData[section][row];
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
-    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-thin" size:18];
+    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18];
     
     // Change selection color
     UIView *selectedBackgroundView = [[UIView alloc]init];
