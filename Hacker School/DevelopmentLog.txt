@@ -2,6 +2,11 @@
 2-5-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Minor improvements to web view ***********
+
+- Added swipe gestures to web view
+- Added progress bar to AW_WebViewController
+
 *********** GIT COMMIT: Added swipe to dismiss user menu ***********
 
 - Added swipe to dismiss user menu. Altered speed of user menu animation.

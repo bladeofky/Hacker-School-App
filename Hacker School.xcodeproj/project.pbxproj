@@ -252,15 +252,10 @@
 			children = (
 				E7FB04401A7185880062CD47 /* AW_MainViewController.h */,
 				E7FB04411A7185880062CD47 /* AW_MainViewController.m */,
-				E7FB04821A82B2210062CD47 /* AW_WebViewController.h */,
-				E7FB04831A82B2210062CD47 /* AW_WebViewController.m */,
-				E7B53F381A70161F00931BEC /* AW_UserMenuViewController.h */,
-				E7B53F391A70161F00931BEC /* AW_UserMenuViewController.m */,
-				E7B53F3A1A70161F00931BEC /* AW_UserMenuViewController.xib */,
+				E7FB04851A84126D0062CD47 /* Web View Controller */,
+				E7FB04861A84127A0062CD47 /* User Menu */,
 				E7FB04641A79373E0062CD47 /* People */,
-				E7B53F2E1A70046100931BEC /* AW_LoginViewController.h */,
-				E7B53F2F1A70046100931BEC /* AW_LoginViewController.m */,
-				E7B53F301A70046100931BEC /* AW_LoginViewController.xib */,
+				E7FB04871A8412870062CD47 /* Login */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -299,6 +294,35 @@
 				E7FB045B1A7341E30062CD47 /* AW_PersonCollectionViewCell.m */,
 			);
 			name = People;
+			sourceTree = "<group>";
+		};
+		E7FB04851A84126D0062CD47 /* Web View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E7FB04821A82B2210062CD47 /* AW_WebViewController.h */,
+				E7FB04831A82B2210062CD47 /* AW_WebViewController.m */,
+			);
+			name = "Web View Controller";
+			sourceTree = "<group>";
+		};
+		E7FB04861A84127A0062CD47 /* User Menu */ = {
+			isa = PBXGroup;
+			children = (
+				E7B53F381A70161F00931BEC /* AW_UserMenuViewController.h */,
+				E7B53F391A70161F00931BEC /* AW_UserMenuViewController.m */,
+				E7B53F3A1A70161F00931BEC /* AW_UserMenuViewController.xib */,
+			);
+			name = "User Menu";
+			sourceTree = "<group>";
+		};
+		E7FB04871A8412870062CD47 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				E7B53F2E1A70046100931BEC /* AW_LoginViewController.h */,
+				E7B53F2F1A70046100931BEC /* AW_LoginViewController.m */,
+				E7B53F301A70046100931BEC /* AW_LoginViewController.xib */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
