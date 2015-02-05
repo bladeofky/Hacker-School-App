@@ -42,6 +42,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 @property (nonatomic, strong) UIView *overlay;
 
 @property (nonatomic) BOOL isUserMenuShowing;
+@property (nonatomic, weak) NSLayoutConstraint *menuPositionConstraint;
 
 @end
 
@@ -150,6 +151,8 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
         // Otherwise add the view on top
         [self.view addSubview:contentVC.view];
     }
+    
+    [contentVC.view layoutIfNeeded];
     
     [self addChildViewController:contentVC];
     [contentVC didMoveToParentViewController:self];
@@ -287,11 +290,37 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     self.userMenuVC = [[AW_UserMenuViewController alloc]init];
     self.userMenuVC.currentUser = [AW_UserAccount currentUser].person;
     self.userMenuVC.mainVC = self;
+    self.userMenuVC.view.translatesAutoresizingMaskIntoConstraints = NO;
 //    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(dismissUserMenu)];
 //    [self.userMenuVC.view addGestureRecognizer:panGestureRecognizer];
-    self.userMenuVC.view.frame = CGRectMake(-USER_MENU_WIDTH, 0, USER_MENU_WIDTH, self.view.bounds.size.height);
+//    self.userMenuVC.view.frame = CGRectMake(-USER_MENU_WIDTH, 0, USER_MENU_WIDTH, self.view.bounds.size.height);
     
     [self.view addSubview:self.userMenuVC.view];
+    
+    NSLayoutConstraint *menuBarWidthConstraint = [NSLayoutConstraint constraintWithItem:self.userMenuVC.view
+                                                                              attribute:NSLayoutAttributeWidth
+                                                                              relatedBy:NSLayoutRelationEqual
+                                                                                 toItem:nil
+                                                                              attribute:NSLayoutAttributeNotAnAttribute
+                                                                             multiplier:1
+                                                                               constant:USER_MENU_WIDTH];
+    NSLayoutConstraint *menuBarPositionConstraint = [NSLayoutConstraint constraintWithItem:self.userMenuVC.view
+                                                                                 attribute:NSLayoutAttributeLeft
+                                                                                 relatedBy:NSLayoutRelationEqual
+                                                                                    toItem:self.view
+                                                                                 attribute:NSLayoutAttributeLeft
+                                                                                multiplier:1
+                                                                                  constant:-USER_MENU_WIDTH];
+    NSArray *menuBarVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[userMenu]|"
+                                                                                  options:0
+                                                                                  metrics:nil
+                                                                                    views:@{@"userMenu":self.userMenuVC.view}];
+    [self.view addConstraint:menuBarWidthConstraint];
+    [self.view addConstraint:menuBarPositionConstraint];
+    [self.view addConstraints:menuBarVerticalConstraints];
+    self.menuPositionConstraint = menuBarPositionConstraint;
+    
+    [self.view layoutIfNeeded]; // Layout menu bar off screen initially
     
     [self addChildViewController:self.userMenuVC];
     [self.userMenuVC didMoveToParentViewController:self];
@@ -310,26 +339,20 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     
     // Add overlay
     [self.view insertSubview:self.overlay belowSubview:self.userMenuVC.view];
+    
+    // Change menu position constraint
+    self.menuPositionConstraint.constant = 0;
 
     // Animate user menu appearance
     [UIView animateWithDuration:.5
                      animations:^{
                          self.overlay.alpha = 0.5;
-                         self.userMenuVC.view.frame = CGRectOffset(self.userMenuVC.view.frame, USER_MENU_WIDTH, 0);
+                         [self.view layoutIfNeeded];
                      }];
     
-    // Add constraints in case of screen rotation
+    // Add constraints to overview in case of screen rotation
     self.userMenuVC.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.overlay.translatesAutoresizingMaskIntoConstraints = NO;
-    NSString *visualFormatStringHorizontal = [NSString stringWithFormat:@"H:|[userMenu(==%f)]", USER_MENU_WIDTH];
-    NSArray *userMenuHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:visualFormatStringHorizontal
-                                                                                     options:0
-                                                                                     metrics:nil
-                                                                                       views:@{@"userMenu":self.userMenuVC.view}];
-    NSArray *userMenuVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[userMenu]|"
-                                                                                   options:0
-                                                                                   metrics:nil
-                                                                                     views:@{@"userMenu":self.userMenuVC.view}];
     NSArray *overlayHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[overlay]|"
                                                                                     options:0
                                                                                     metrics:nil
@@ -338,9 +361,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
                                                                                   options:0
                                                                                   metrics:nil
                                                                                     views:@{@"overlay":self.overlay}];
-    
-    [self.view addConstraints:userMenuHorizontalConstraints];
-    [self.view addConstraints:userMenuVerticalConstraints];
+
     [self.view addConstraints:overlayHorizontalConstraints];
     [self.view addConstraints:overlayVeritcalConstraints];
     
@@ -349,10 +370,13 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 
 - (void)dismissUserMenu
 {
+    // Update position constraint
+    self.menuPositionConstraint.constant = -USER_MENU_WIDTH;
+    
     [UIView animateWithDuration:.5
                      animations:^{
                          self.overlay.alpha = 0;
-                         self.userMenuVC.view.frame = CGRectOffset(self.userMenuVC.view.frame, -USER_MENU_WIDTH, 0);
+                         [self.view layoutIfNeeded];
                      }
                      completion:^(BOOL finished) {
                          [self.overlay removeFromSuperview];
