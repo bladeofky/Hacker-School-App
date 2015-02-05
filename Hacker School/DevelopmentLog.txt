@@ -2,6 +2,10 @@
 2-5-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Added swipe to dismiss user menu ***********
+
+- Added swipe to dismiss user menu. Altered speed of user menu animation.
+
 *********** GIT COMMIT: Fixed bug by adding layout constraints to user menu ***********
 
 - Fixed bug that causes menu to jump to middle of the screen upon selecting an option.

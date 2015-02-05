@@ -291,9 +291,9 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     self.userMenuVC.currentUser = [AW_UserAccount currentUser].person;
     self.userMenuVC.mainVC = self;
     self.userMenuVC.view.translatesAutoresizingMaskIntoConstraints = NO;
-//    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(dismissUserMenu)];
-//    [self.userMenuVC.view addGestureRecognizer:panGestureRecognizer];
-//    self.userMenuVC.view.frame = CGRectMake(-USER_MENU_WIDTH, 0, USER_MENU_WIDTH, self.view.bounds.size.height);
+    UISwipeGestureRecognizer *swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(dismissUserMenu)];
+    swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.userMenuVC.view addGestureRecognizer:swipeGestureRecognizer];
     
     [self.view addSubview:self.userMenuVC.view];
     
@@ -344,7 +344,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     self.menuPositionConstraint.constant = 0;
 
     // Animate user menu appearance
-    [UIView animateWithDuration:.5
+    [UIView animateWithDuration:.4
                      animations:^{
                          self.overlay.alpha = 0.5;
                          [self.view layoutIfNeeded];
@@ -373,7 +373,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     // Update position constraint
     self.menuPositionConstraint.constant = -USER_MENU_WIDTH;
     
-    [UIView animateWithDuration:.5
+    [UIView animateWithDuration:.4
                      animations:^{
                          self.overlay.alpha = 0;
                          [self.view layoutIfNeeded];
