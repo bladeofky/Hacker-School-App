@@ -32,12 +32,12 @@
         
         // Instantiate subviews
         _batchNameLabel = [[UILabel alloc]init];
-        _batchNameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:20.0];
+        _batchNameLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:20.0];
         _batchNameLabel.textAlignment = NSTextAlignmentCenter;
         _batchNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
         
         _batchYearLabel = [[UILabel alloc]init];
-        _batchYearLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:13.0];
+        _batchYearLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13.0];
         _batchYearLabel.textAlignment = NSTextAlignmentCenter;
         _batchYearLabel.translatesAutoresizingMaskIntoConstraints = NO;
         
@@ -71,7 +71,7 @@
                                                                                        options:0
                                                                                        metrics:nil
                                                                                          views:@{@"colorBar":_colorBar}];
-        NSArray *colorBarHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[colorBar(==12)]"
+        NSArray *colorBarHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[colorBar(==12)]|"
                                                                                          options:0
                                                                                          metrics:nil
                                                                                            views:@{@"colorBar":_colorBar}];

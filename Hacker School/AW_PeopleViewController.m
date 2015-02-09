@@ -83,6 +83,7 @@
     [super viewDidLoad];
     
     // --- Set up Nav Bar ---
+    self.navigationController.navigationBar.translucent = NO;
     self.navigationItem.title = @"People";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Menu"
                                                                             style:UIBarButtonItemStylePlain

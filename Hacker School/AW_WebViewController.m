@@ -13,7 +13,7 @@
 
 CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
 
-@interface AW_WebViewController ()
+@interface AW_WebViewController () <WKNavigationDelegate>
 
 @property (nonatomic, weak) WKWebView *webView;
 @property (nonatomic, weak) UIProgressView *progressView;
@@ -44,6 +44,7 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
     WKWebView *webView = [[WKWebView alloc]initWithFrame:CGRectZero configuration:configuration];
     webView.translatesAutoresizingMaskIntoConstraints = NO;
     webView.allowsBackForwardNavigationGestures = YES;
+    webView.navigationDelegate = self;
     [self.view addSubview:webView];
     self.webView = webView;
     [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:0 context:nil];
@@ -98,7 +99,7 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
                                                                             target:self.webView
                                                                             action:@selector(goBack)];
     self.navigationItem.title = self.navBarTitle;
-    
+    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Thin" size:20]};
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -133,6 +134,24 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
         }
         
     }
+}
+
+#pragma mark - WKNavigationDelegate
+
+-(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+{
+    NSURL *url = navigationAction.request.URL;
+    
+    if (![url.host.lowercaseString hasSuffix:@".hackerschool.com"]) {
+        // This site is not part of hackerschool.com
+        // Pass this off to mobile safari
+        [[UIApplication sharedApplication] openURL:url];
+        
+        decisionHandler(WKNavigationActionPolicyCancel);
+        return;
+    }
+    
+    decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 @end

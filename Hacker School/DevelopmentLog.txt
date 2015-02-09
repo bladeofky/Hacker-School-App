@@ -6,6 +6,11 @@ Known bugs:
 1) The web view does not mantain the credentials to log in to Hacker School unless Safari remembers it. Find a way to pass the
 current authentication token into the web view.
 
+*********** GIT COMMIT: Minor changes to webview and added logo ***********
+
+- Added HS logo and default profile picture
+- Intercepts URL requests outside of hackerschool.com and sends them to mobile safari
+
 *********** GIT COMMIT: Injected javascript to webview ***********
 
 - Injected user script into webview to hide some elements of the hacker school website

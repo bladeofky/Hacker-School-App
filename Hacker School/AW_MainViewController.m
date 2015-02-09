@@ -166,6 +166,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     AW_PeopleViewController *peopleVC = [[AW_PeopleViewController alloc]init];
     peopleVC.mainVC = self;
     UINavigationController *centerVC = [[UINavigationController alloc]initWithRootViewController:peopleVC];
+    centerVC.navigationBar.titleTextAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Thin" size:20]};
     
     return centerVC;
 }
