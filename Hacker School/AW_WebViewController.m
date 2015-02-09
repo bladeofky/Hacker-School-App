@@ -27,8 +27,21 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
 {
     self.navigationController.navigationBar.translucent = NO;   // This prevents views from being placed beneath the navigation bar
     
+    // Set up configuration to accept user script
+    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc]init];
+    
+    NSString *hideStuffScriptString = [NSString stringWithContentsOfURL:[[NSBundle mainBundle]URLForResource:@"hideStuff" withExtension:@"js"]
+                                                               encoding:NSUTF8StringEncoding
+                                                                  error:NULL];
+    
+    WKUserScript *hideStuffScript = [[WKUserScript alloc]initWithSource:hideStuffScriptString
+                                                          injectionTime:WKUserScriptInjectionTimeAtDocumentStart
+                                                       forMainFrameOnly:YES];
+    
+    [configuration.userContentController addUserScript:hideStuffScript];
+    
     // Set up web view
-    WKWebView *webView = [[WKWebView alloc]init];
+    WKWebView *webView = [[WKWebView alloc]initWithFrame:CGRectZero configuration:configuration];
     webView.translatesAutoresizingMaskIntoConstraints = NO;
     webView.allowsBackForwardNavigationGestures = YES;
     [self.view addSubview:webView];
