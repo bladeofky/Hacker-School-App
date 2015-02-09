@@ -71,7 +71,7 @@
                                                                                        options:0
                                                                                        metrics:nil
                                                                                          views:@{@"colorBar":_colorBar}];
-        NSArray *colorBarHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[colorBar(==12)]|"
+        NSArray *colorBarHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[colorBar(==12)]"
                                                                                          options:0
                                                                                          metrics:nil
                                                                                            views:@{@"colorBar":_colorBar}];
