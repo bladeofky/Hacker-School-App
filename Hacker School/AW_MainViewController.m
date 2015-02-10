@@ -74,6 +74,8 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     // --- Present Login Screen If No Current User ---
     // TODO: Possibly move this into the - (void)applicationDidBecomeActive:(UIApplication *)application method of the App Delegate
     if (![[AW_UserAccount currentUser]account]) {

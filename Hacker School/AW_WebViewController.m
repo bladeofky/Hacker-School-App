@@ -25,6 +25,8 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
 
 -(void)viewDidLoad
 {
+    [super viewDidLoad];
+    
     self.navigationController.navigationBar.translucent = NO;   // This prevents views from being placed beneath the navigation bar
     
     // Set up configuration to accept user script
