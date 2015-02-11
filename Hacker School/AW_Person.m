@@ -121,7 +121,7 @@ NSString * const BATCH_ID_KEY = @"batchID";
                                                                                   [self.delegate person:self didDownloadImage:self.image];
                                                                               });
                                                                           }];
-        [retrieveImageTask resume];
+        [retrieveImageTask resume]; // Start the NSURLSessionTask
         
         
     } //end if self

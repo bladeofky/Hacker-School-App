@@ -11,6 +11,10 @@
 @protocol AW_PersonDelegate <NSObject>
 
 @required
+
+/** 
+    @brief Called when the asynchronous download of the person's image is complete. The image is set to the @b image property for the AW_Person. 
+ */
 - (void)person:(AW_Person *)person didDownloadImage:(UIImage *)image;
 
 @end
