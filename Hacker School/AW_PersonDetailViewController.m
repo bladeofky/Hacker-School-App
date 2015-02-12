@@ -189,7 +189,7 @@
         previousView = bioView;
     }
     
-    // --- Add links view ---
+    // --- Add links view if not empty ---
     if (![self.person.links isEqual:@[]]) {
         UIView *linksView = [self createLinksView];
         [contentView addSubview:linksView];
@@ -236,10 +236,11 @@
 }
 
 #pragma mark - Create sections
+/**
+    @return A view containing an image of the person, their first name, last name, and batch name.
+ */
 - (UIView *)createBasicInfoView
 {
-    // This view includes an image of the person, first name, last name, and batch
-    
     // Instantiate views
     UIView *basicInfoView = [[UIView alloc]init];
     basicInfoView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -318,6 +319,13 @@
     return basicInfoView;
 }
 
+
+/**
+    Returns a view containing buttons for contacting a person. There are four buttons: phone number, email, github, and twitter.
+    If contact information is not available, the button is grayed out and unusable.
+ 
+    @return A view containing buttons for contacting the person.
+ */
 - (UIView *)createContactView
 {
     UIView *contactView = [[UIView alloc]init];
@@ -411,6 +419,9 @@
     return contactView;
 }
 
+/**
+    @return Returns a view containing the person's skills in a bulleted list.
+ */
 - (UIView *)createSkillsView
 {
     UIView *skillsView = [[UIView alloc]init];
@@ -459,6 +470,9 @@
     return skillsView;
 }
 
+/**
+    @return A view showing all of the person's projects. Each project has a title, url, and description.
+ */
 - (UIView *)createProjectsView
 {
     UIView *projectsView = [[UIView alloc]init];
@@ -545,6 +559,9 @@
     return projectsView;
 }
 
+/**
+    @return A view displaying the person's bio.
+ */
 - (UIView *)createBioView
 {
     UIView *bioView = [[UIView alloc]init];
@@ -587,6 +604,9 @@
     return bioView;
 }
 
+/**
+    @return A view containing additional links.
+ */
 - (UIView *)createLinksView
 {
     UIView *linksView = [[UIView alloc]init];
@@ -649,6 +669,10 @@
 }
 
 #pragma mark - Helper methods
+
+/**
+    @return A view displaying a single project. The project has a title (linked to a URL), and a description.
+ */
 - (UIView *)createProjectViewWithProject:(AW_Project *)project
 {
     UIView *projectView = [[UIView alloc]init];
@@ -703,6 +727,9 @@
     return projectView;
 }
 
+/**
+    @return A header view for a given section of the person's profile.
+ */
 - (UIView *)createSectionHeaderWithString:(NSString *)title
 {
     UIView *headerView = [[UIView alloc]init];
@@ -745,6 +772,10 @@
 }
 
 #pragma mark - Event handling
+
+/**
+    Determines which contact button was pressed and responds appropriately.
+ */
 - (void)didPressContactButton:(UIButton *)sender
 {
     // Determine which URL to use

@@ -12,6 +12,7 @@
 #import "AW_LoginViewController.h"
 
 #import "NXOAuth2.h"
+#import "AW_UserAccount.h"
 
 #import "AW_BatchStore.h"
 #import "AW_Batch.h"
@@ -25,49 +26,30 @@
  The People tableView performs as follows:
  
  - All batches are listed initially. This will look like a typical table view.
- - Tapping a batch will cause it to scroll to the top of the view and "expand" downwards. A collection view will drop down below the selected batch.
+ - Tapping a batch will cause a "drawer" to slide downw. This drawer will contain a collection view of the selected batch's people.
     The other rows will move down as appropriate.
  - When scrolling through the collection view of people, the current open batch will remain at the top.
  - Tapping the batch again will close it.
  
  This is implemented as follows:
- - A plain UITableView already has the above described functionality built in to its section headers.
+ - A plain UITableView already has the above described functionality built into its section headers.
  - Use views that look like table view cells and set them as the section headers. Initially, all sections will have 0 rows.
- - When a section is tapped, add a row to that section. This row will be a collection view containing the faces of the people.
+ - When a section is tapped, add a row to that section. This row will be a cell with a collection view containing the faces of the people.
  - If the section header is tapped again, remove the collection view row.
- 
  */
 
 @interface AW_PeopleViewController ()
 
-@property (nonatomic, strong) NSArray *batchHeaderViews;
-@property (nonatomic, strong) NXOAuth2Account *userAccount;
+@property (nonatomic, strong) NSArray *batchHeaderViews;    ///< A collection of all the section header views (one for each batch).
 
-@property (nonatomic, weak) UIView *overlay;
+@property (nonatomic, weak) UIView *overlay;                ///< The loading screen overlay to display while the main thread is busy.
 
 @end
-
 
 
 @implementation AW_PeopleViewController
 
 #pragma mark - Accessors
--(NXOAuth2Account *)userAccount
-{
-    if (!_userAccount) {
-        NSArray *accounts = [[NXOAuth2AccountStore sharedStore] accounts];
-        
-        if ([accounts count] > 0) {
-            _userAccount = accounts[0];
-        }
-        else {
-            _userAccount = nil;
-        }
-    }
-    
-    return _userAccount;
-}
-
 -(NSArray *)batches
 {
     return [AW_BatchStore sharedStore].batches;
@@ -109,12 +91,18 @@
 }
 
 #pragma mark - Hacker School API
+/**
+    This method requests/retrieves the list of current batches from the Hacker School API. If the request was successful, it calls
+    a method to process the batches. If the request failed, it will display an alert to the user.
+ 
+    @brief Asynchonously downloads the list of batches from Hacker School API. Calls [self processListOfBatches] when done.
+ */
 - (void)downloadListOfBatches
 {
     [NXOAuth2Request performMethod:@"GET"
                         onResource:[NSURL URLWithString:@"https://www.hackerschool.com//api/v1/batches"]
                    usingParameters:nil
-                       withAccount:self.userAccount
+                       withAccount:[[AW_UserAccount currentUser]account]
                sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
                    // No code right now
                }
@@ -136,7 +124,13 @@
                    }];
 }
 
-// Processes the raw data returned from the Hacker School API to create AW_Batch objects
+
+/**
+    Serializes the API data into a JSON object. Iterates through the collection and instantiates an AW_Batch from JSON data.
+    Sets the batches to the AW_BatchStore singleton, and then generates headers for the batches.
+ 
+    @brief Creates AW_Batch and AW_BatchHeaderView collections from the data received from the API.
+ */
 - (void)processListOfBatches:(NSData *)responseData
 {
     NSError *error;
@@ -229,7 +223,7 @@
     NSUInteger numberOfRows;
     
     if ((numberOfPeople % numberOfPeoplePerRow)) {
-        // If is a remainder, add another row
+        // If there is a remainder, add another row
         numberOfRows = numberOfPeople/numberOfPeoplePerRow + 1;
     }
     else {
@@ -253,7 +247,7 @@
     
     NSLog(@"Did tap %@ %@", person.firstName, person.lastName);
     
-    // Perform formatting of HTML (this can only be done on the main thread so we do it here and show a loading screen
+    // --- Perform formatting of HTML (this can only be done on the main thread so we do it here and show a loading screen) ---
     
     // Show loading screen
     [self showLoadingOverlay];
@@ -267,7 +261,7 @@
     // Remove loading screen
     [self removeLoadingOverlay];
     
-    // Push detail view controller
+    // --- Push detail view controller ---
     AW_PersonDetailViewController *detailVC = [[AW_PersonDetailViewController alloc]init];
     detailVC.person = person;
     [self.navigationController pushViewController:detailVC animated:YES];
@@ -298,6 +292,7 @@
 
 - (void)batch:(AW_Batch *)batch failedToDownloadPeopleWithError:(NSError *)error
 {
+    // --- Display alert ---
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Failed to Download People"
                                                        message:[error localizedDescription]
                                                       delegate:nil
@@ -305,7 +300,7 @@
                                              otherButtonTitles:nil];
     [alertView show];
     
-    // Remove overlay and row that was added when section header was tapped
+    // --- Remove overlay and row that was added when section header was tapped ---
     [self removeLoadingOverlay];
     
     NSUInteger section = [self.batches indexOfObject:batch];
@@ -320,12 +315,13 @@
 
 -(void)batch:(AW_Batch *)batch didDownloadImage:(UIImage *)image forPerson:(AW_Person *)person
 {
-    NSLog(@"controller callback");
+    // --- Determine which collection view cell this person belongs to ---
     NSUInteger rowForCollectionView = [batch.people indexOfObject:person];
     NSUInteger sectionForTableView = [self.batches indexOfObject:batch];
     NSIndexPath *indexPathForTableViewCell = [NSIndexPath indexPathForRow:0 inSection:sectionForTableView];
     AW_BatchCollectionTableViewCell *tableViewCell = [self.tableView cellForRowAtIndexPath:indexPathForTableViewCell];
 
+    // --- Update the image view ---
     NSIndexPath *indexPathForPersonCell = [NSIndexPath indexPathForRow:rowForCollectionView inSection:0];
     AW_PersonCollectionViewCell *personCell = [tableViewCell.collectionView cellForItemAtIndexPath:indexPathForPersonCell];
     personCell.personImageView.image = image;
@@ -335,6 +331,11 @@
 #pragma mark - AW_BatchHeaderDelegate
 -(void)didTapBatchHeader:(AW_BatchHeaderView *)batchHeaderView
 {
+    /*  NOTE: The code that is commented out is meant to control the scroll position of the table view when a drawer opens/closes.
+        It is commented out for now, because it sometimes results in weird behavior. Also I haven't decided if it's better or worse
+        from a usability standpoint.
+     */
+    
     // Find the section that the batchHeaderView belongs to
     NSUInteger sectionOfTappedHeader = [self.batchHeaderViews indexOfObject:batchHeaderView];
     
@@ -377,6 +378,9 @@
 
 #pragma mark - Misc.
 
+/**
+    @brief Generates an AW_BatchHeaderView for every batch. A strong reference is kept to all header views.
+ */
 -(void)generateHeaderViews
 {
     NSMutableArray *tempBatchHeaders = [[NSMutableArray alloc]init];
@@ -397,6 +401,9 @@
     self.batchHeaderViews = [tempBatchHeaders copy];
 }
 
+/**
+    @brief Displays an overlay to indicate the the app is working. This is used when the main thread is stuck with a time consuming operation.
+ */
 -(void)showLoadingOverlay
 {
     UIView *loadingOverlayView = [self loadingOverlayView];
@@ -411,6 +418,9 @@
     self.overlay = loadingOverlayView;
 }
 
+/**
+    @brief Removes the loading overlay.
+ */
 -(void)removeLoadingOverlay
 {
     // Remove loading screen
@@ -425,6 +435,11 @@
     
 }
 
+
+/**
+    @brief Returns the loading overlay view to display.
+    @return A view to put on the screen while the main thread is busy.
+ */
 -(UIView *)loadingOverlayView
 {
     UIView *loadingOverlayView = [[UIView alloc]initWithFrame:self.view.bounds];

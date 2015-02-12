@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+    A simple view controller whose only purpose is to redirect the user to mobile safari to authenticate.
+ */
 @interface AW_LoginViewController : UIViewController
 
 - (IBAction)didTapSignInButton:(id)sender;

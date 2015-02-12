@@ -10,6 +10,10 @@
 @protocol AW_BatchHeaderViewDelegate <NSObject>
 
 @optional
+
+/**
+    @brief Informs the delegate that the batch header view detected a tap.
+ */
 - (void)didTapBatchHeader:(AW_BatchHeaderView *)batchHeaderView;
 
 @end

@@ -128,6 +128,7 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
             [self.view layoutIfNeeded];
         }
         
+        // Do not animate progress when progress goes backwards (i.e. from 1 to 0).
         if (self.progressView.progress > self.webView.estimatedProgress) {
             [self.progressView setProgress:self.webView.estimatedProgress animated:NO];
         }

@@ -137,8 +137,6 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     else if ([option isEqualToString:SETTINGS_VC_TAG]) {
         [self displayCenterController:[self settingsViewController]];
     }
-    
-    [self dismissUserMenu];
 }
 
 - (void)displayCenterController: (UIViewController *)contentVC
