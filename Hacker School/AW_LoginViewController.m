@@ -28,6 +28,29 @@
                                                object:nil];
 }
 
+#pragma mark - Configuration
+-(WKWebViewConfiguration *)webViewConfiguration
+{
+    // Set up configuration to accept user script
+    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc]init];
+    
+    NSAssert(self.processPool, @"The process pool must be set from AW_MainViewController.");
+    
+    configuration.processPool = self.processPool;
+    
+    
+    NSString *hideStuffScriptString = [NSString stringWithContentsOfURL:[[NSBundle mainBundle]URLForResource:@"loginVC" withExtension:@"js"]
+                                                               encoding:NSUTF8StringEncoding
+                                                                  error:NULL];
+    WKUserScript *hideStuffScript = [[WKUserScript alloc]initWithSource:hideStuffScriptString
+                                                          injectionTime:WKUserScriptInjectionTimeAtDocumentStart
+                                                       forMainFrameOnly:YES];
+    
+    [configuration.userContentController addUserScript:hideStuffScript];
+    
+    return configuration;
+}
+
 
 #pragma mark - Notification Responders
 - (void)didAddNXOAuth2Account

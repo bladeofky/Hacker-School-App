@@ -27,20 +27,24 @@
     // --- Set up table view ---
     self.tableView.tableHeaderView = [self userView];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
+    
+    /* Note: I have commented out some of the options, since they present web pages that are not optimized for mobile. I'm afraid
+     Apple will reject the app because of them. */
     self.tableViewData = @[ // Browse
                             @[PEOPLE_VC_TAG,
-                              PROJECTS_VC_TAG,
+                              // PROJECTS_VC_TAG,
                               COMPANIES_VC_TAG,
                               RESIDENTS_VC_TAG,
                               BLOG_VC_TAG],
                             // Connect
                             @[COMMUNITY_VC_TAG],
                             // Tools
-                            @[BOOKER_VC_TAG,
-                              GROUPS_VC_TAG,
+                            @[// BOOKER_VC_TAG,
+                              // GROUPS_VC_TAG,
                               RECOMMEND_VC_TAG,
                               USER_MANUAL_VC_TAG,
-                              SETTINGS_VC_TAG]
+                              // SETTINGS_VC_TAG
+                              ]
                             ];
     
     // --- Set up logout butotn ---

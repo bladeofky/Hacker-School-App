@@ -288,6 +288,7 @@
     // Show color bar for batches with loaded people
     AW_BatchHeaderView *batchHeaderView = self.batchHeaderViews[section];
     batchHeaderView.colorBar.alpha = 1;
+    
 }
 
 - (void)batch:(AW_Batch *)batch failedToDownloadPeopleWithError:(NSError *)error

@@ -86,24 +86,12 @@
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
     // --- Save downloaded batches ---
-    BOOL success = [[AW_BatchStore sharedStore]saveChanges];
-    
-    if (success) {
-        NSLog(@"Batches saved");
-    }
-    else {
-        NSLog(@"Batch save failed");
-    }
+    [[AW_BatchStore sharedStore]saveChanges];
     
     // --- Save information about current user ---
-    success = [[AW_UserAccount currentUser]saveCurrentUserInfo];
+    [[AW_UserAccount currentUser]saveCurrentUserInfo];
     
-    if (success) {
-        NSLog(@"Current user's info saved");
-    }
-    else {
-        NSLog(@"Current user's info save failed");
-    }
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

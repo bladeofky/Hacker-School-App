@@ -61,7 +61,16 @@
 {
     NSString *path = [self batchesArchivePath];
     
-    return [NSKeyedArchiver archiveRootObject:self.batches toFile:path];
+    BOOL isSuccessful = [NSKeyedArchiver archiveRootObject:self.batches toFile:path];
+    
+    if (isSuccessful) {
+        NSLog(@"Saved batches.");
+    }
+    else {
+        NSLog(@"Failed to save batches.");
+    }
+    
+    return isSuccessful;
 }
 
 @end

@@ -2,6 +2,16 @@
 2-24-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
+*********** GIT COMMIT: Minor improvements to web views ***********
+
+Known bugs:
+1) At some point, the log in webview will start using it's cookies to log the user in, making it impossible to switch users.
+2) If you log in and out while the People vc is up, the batch header views are not being properly released somewhere. The number of
+stored batch header views can grow without limit. This is because the view controller is not being properly deallocated.
+
+- Added some AW_WebViewController subclasses for injecting custom javascript
+- Removed some options from the menu bar not optimized for mobile
+
 *********** GIT COMMIT: Changed log in view controller to web view ***********
 
 Known bugs:

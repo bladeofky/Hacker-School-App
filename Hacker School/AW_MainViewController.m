@@ -14,6 +14,7 @@
 #import "AW_PersonDetailViewController.h"
 #import "AW_UserMenuViewController.h"
 #import "AW_WebViewController.h"
+#import "AW_CompaniesViewController.h"
 
 #import "NXOAuth2.h"
 
@@ -102,19 +103,23 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
         [[AW_UserAccount currentUser]downloadPersonInfo];
         
         // --- Set up center view ---
-        self.centerVC = [self peopleViewController];
-        [self displayCenterController:self.centerVC];
+        [self displayCenterControllerForOption:PEOPLE_VC_TAG];
     }
 }
 
-
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    // Remove center controller
+    [self.centerVC.view removeFromSuperview];
+    [self.centerVC removeFromParentViewController];
+    self.centerVC = nil;
+}
 
 #pragma mark - View Controller management
 - (void)displayCenterControllerForOption:(NSString *)option
 {
-    // Remove previous center controller
-    [self.centerVC.view removeFromSuperview];
-    [self.centerVC removeFromParentViewController];
     
     // Present new center controller
     if ([option isEqualToString:PEOPLE_VC_TAG]) {
@@ -156,6 +161,12 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 
 - (void)displayCenterController: (UIViewController *)contentVC
 {
+    
+    // Remove previous center controller
+    [self.centerVC.view removeFromSuperview];
+    [self.centerVC removeFromParentViewController];
+    
+    // Display new center controller
     contentVC.view.frame = self.view.frame;
     
     if (self.overlay) {
@@ -200,7 +211,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 
 - (UIViewController *)companiesViewController
 {
-    AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
+    AW_CompaniesViewController *webVC = [[AW_CompaniesViewController alloc]init];
     webVC.mainVC = self;
     webVC.processPool = self.sharedProcessPool;
     webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/companies"];

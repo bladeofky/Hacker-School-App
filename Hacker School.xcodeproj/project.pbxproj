@@ -21,6 +21,9 @@
 		E7B53F3C1A70161F00931BEC /* AW_UserMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7B53F3A1A70161F00931BEC /* AW_UserMenuViewController.xib */; };
 		E7B53F3E1A70192700931BEC /* DevelopmentLog.txt in Resources */ = {isa = PBXBuildFile; fileRef = E7B53F3D1A70192700931BEC /* DevelopmentLog.txt */; };
 		E7B53F411A703EA900931BEC /* AW_Person.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B53F401A703EA900931BEC /* AW_Person.m */; };
+		E7E1E0921A9D069A000DD3F1 /* loginVC.js in Resources */ = {isa = PBXBuildFile; fileRef = E7E1E0911A9D069A000DD3F1 /* loginVC.js */; };
+		E7E1E0961A9D10F1000DD3F1 /* companies.js in Resources */ = {isa = PBXBuildFile; fileRef = E7E1E0951A9D10F1000DD3F1 /* companies.js */; };
+		E7E1E0991A9D1132000DD3F1 /* AW_CompaniesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7E1E0981A9D1132000DD3F1 /* AW_CompaniesViewController.m */; };
 		E7FB04421A7185880062CD47 /* AW_MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB04411A7185880062CD47 /* AW_MainViewController.m */; };
 		E7FB04471A719B870062CD47 /* AW_Batch.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB04461A719B870062CD47 /* AW_Batch.m */; };
 		E7FB044E1A71C0340062CD47 /* AW_BatchHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FB044D1A71C0340062CD47 /* AW_BatchHeaderView.m */; };
@@ -100,6 +103,10 @@
 		E7B53F3D1A70192700931BEC /* DevelopmentLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DevelopmentLog.txt; sourceTree = "<group>"; };
 		E7B53F3F1A703EA900931BEC /* AW_Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_Person.h; sourceTree = "<group>"; };
 		E7B53F401A703EA900931BEC /* AW_Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_Person.m; sourceTree = "<group>"; };
+		E7E1E0911A9D069A000DD3F1 /* loginVC.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = loginVC.js; sourceTree = "<group>"; };
+		E7E1E0951A9D10F1000DD3F1 /* companies.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = companies.js; sourceTree = "<group>"; };
+		E7E1E0971A9D1132000DD3F1 /* AW_CompaniesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_CompaniesViewController.h; sourceTree = "<group>"; };
+		E7E1E0981A9D1132000DD3F1 /* AW_CompaniesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_CompaniesViewController.m; sourceTree = "<group>"; };
 		E7FB04401A7185880062CD47 /* AW_MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_MainViewController.h; sourceTree = "<group>"; };
 		E7FB04411A7185880062CD47 /* AW_MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_MainViewController.m; sourceTree = "<group>"; };
 		E7FB04451A719B870062CD47 /* AW_Batch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_Batch.h; sourceTree = "<group>"; };
@@ -193,6 +200,8 @@
 			isa = PBXGroup;
 			children = (
 				E73BB18A1A891E9500F05658 /* hideStuff.js */,
+				E7E1E0911A9D069A000DD3F1 /* loginVC.js */,
+				E7E1E0951A9D10F1000DD3F1 /* companies.js */,
 				E7B53EF81A6EB94B00931BEC /* Info.plist */,
 				E7B53EF91A6EB94B00931BEC /* main.m */,
 			);
@@ -302,6 +311,8 @@
 			children = (
 				E7FB04821A82B2210062CD47 /* AW_WebViewController.h */,
 				E7FB04831A82B2210062CD47 /* AW_WebViewController.m */,
+				E7E1E0971A9D1132000DD3F1 /* AW_CompaniesViewController.h */,
+				E7E1E0981A9D1132000DD3F1 /* AW_CompaniesViewController.m */,
 			);
 			name = "Web View Controller";
 			sourceTree = "<group>";
@@ -442,6 +453,8 @@
 				E7B53F081A6EB94C00931BEC /* LaunchScreen.xib in Resources */,
 				E7B53F3C1A70161F00931BEC /* AW_UserMenuViewController.xib in Resources */,
 				E7B53F371A7006B900931BEC /* AW_PeopleViewController.xib in Resources */,
+				E7E1E0961A9D10F1000DD3F1 /* companies.js in Resources */,
+				E7E1E0921A9D069A000DD3F1 /* loginVC.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,6 +477,7 @@
 				E7FB04631A7934CD0062CD47 /* AW_Project.m in Sources */,
 				E7FB04771A7D72920062CD47 /* UIColor+batchColors.m in Sources */,
 				E7B53F361A7006B900931BEC /* AW_PeopleViewController.m in Sources */,
+				E7E1E0991A9D1132000DD3F1 /* AW_CompaniesViewController.m in Sources */,
 				E7FB04521A72F2620062CD47 /* AW_BatchCollectionTableViewCell.m in Sources */,
 				E7FB04601A78170D0062CD47 /* AW_PersonDetailViewController.m in Sources */,
 				E7B53EFD1A6EB94B00931BEC /* AppDelegate.m in Sources */,

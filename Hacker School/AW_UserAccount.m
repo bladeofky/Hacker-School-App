@@ -93,7 +93,16 @@
 {
     NSString *path = [self personArchivePath];
     
-    return [NSKeyedArchiver archiveRootObject:self.person toFile:path];
+    BOOL isSuccessful = [NSKeyedArchiver archiveRootObject:self.person toFile:path];
+    
+    if (isSuccessful) {
+        NSLog(@"Current user's info saved");
+    }
+    else {
+        NSLog(@"Current user's info save failed");
+    }
+    
+    return isSuccessful;
 }
 
 @end

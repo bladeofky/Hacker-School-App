@@ -80,10 +80,13 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self.mainVC
                                                                            action:@selector(showUserMenu)];
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back"
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self.webView
                                                                             action:@selector(goBack)];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    
     self.navigationItem.title = self.navBarTitle;
     self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Thin" size:20]};
 }
@@ -153,6 +156,16 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
 }
 
 #pragma mark - WKNavigationDelegate
+
+-(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
+{
+    if (self.webView.canGoBack) {
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }
+    else {
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+    }
+}
 
 -(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
