@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Alan Wang. All rights reserved.
 //
 
-#import <WebKit/WebKit.h>
-
 #import "AW_MainViewController.h"
 #import "AW_WebViewController.h"
 
@@ -29,27 +27,13 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
     
     self.navigationController.navigationBar.translucent = NO;   // This prevents views from being placed beneath the navigation bar
     
-    // Set up configuration to accept user script
-    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc]init];
-    
-    NSString *hideStuffScriptString = [NSString stringWithContentsOfURL:[[NSBundle mainBundle]URLForResource:@"hideStuff" withExtension:@"js"]
-                                                               encoding:NSUTF8StringEncoding
-                                                                  error:NULL];
-    
-    WKUserScript *hideStuffScript = [[WKUserScript alloc]initWithSource:hideStuffScriptString
-                                                          injectionTime:WKUserScriptInjectionTimeAtDocumentStart
-                                                       forMainFrameOnly:YES];
-    
-    [configuration.userContentController addUserScript:hideStuffScript];
-    
     // Set up web view
-    WKWebView *webView = [[WKWebView alloc]initWithFrame:CGRectZero configuration:configuration];
+    WKWebView *webView = [[WKWebView alloc]initWithFrame:CGRectZero configuration:[self webViewConfiguration]];
     webView.translatesAutoresizingMaskIntoConstraints = NO;
     webView.allowsBackForwardNavigationGestures = YES;
     webView.navigationDelegate = self;
     [self.view addSubview:webView];
     self.webView = webView;
-    [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:0 context:nil];
     
     // Set up progress bar
     UIProgressView *progressView = [[UIProgressView alloc]initWithProgressViewStyle:UIProgressViewStyleBar];
@@ -104,6 +88,11 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
     self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Thin" size:20]};
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:0 context:nil];
+}
+
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -137,6 +126,30 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
         }
         
     }
+}
+
+#pragma mark - Configuration
+-(WKWebViewConfiguration *)webViewConfiguration
+{
+    // Set up configuration to accept user script
+    WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc]init];
+    
+    NSAssert(self.processPool, @"The process pool must be set from AW_MainViewController.");
+    
+    configuration.processPool = self.processPool;
+    
+    
+    NSString *hideStuffScriptString = [NSString stringWithContentsOfURL:[[NSBundle mainBundle]URLForResource:@"hideStuff" withExtension:@"js"]
+                                                               encoding:NSUTF8StringEncoding
+                                                                  error:NULL];
+    
+    WKUserScript *hideStuffScript = [[WKUserScript alloc]initWithSource:hideStuffScriptString
+                                                          injectionTime:WKUserScriptInjectionTimeAtDocumentStart
+                                                       forMainFrameOnly:YES];
+    
+    [configuration.userContentController addUserScript:hideStuffScript];
+    
+    return configuration;
 }
 
 #pragma mark - WKNavigationDelegate

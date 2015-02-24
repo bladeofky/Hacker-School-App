@@ -24,6 +24,7 @@ extern NSString * const RECOMMEND_VC_TAG;
 extern NSString * const USER_MANUAL_VC_TAG;
 extern NSString * const SETTINGS_VC_TAG;
 
+
 /**
  This is the parent view controller that will manage the center view controller (which may change depending on what task
  the user is currently executing (i.e. People, Community, Booker, etc.) and the slide out menu view controller. For more

@@ -6,10 +6,11 @@
 //  Copyright (c) 2015 Alan Wang. All rights reserved.
 //
 
+#import "AW_MainViewController.h"
 #import "AW_LoginViewController.h"
 #import "NXOAuth2.h"
 
-@interface AW_LoginViewController ()
+@interface AW_LoginViewController () <UITextFieldDelegate>
 
 @end
 
@@ -17,7 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    self.navigationItem.leftBarButtonItem = nil;
     
     // Register self with notification center to dismiss self when returning from login through external browser
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -26,9 +28,6 @@
                                                object:nil];
 }
 
-- (IBAction)didTapSignInButton:(id)sender {
-    [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:@"Hacker School"];
-}
 
 #pragma mark - Notification Responders
 - (void)didAddNXOAuth2Account

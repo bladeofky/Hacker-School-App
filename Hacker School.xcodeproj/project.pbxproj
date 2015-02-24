@@ -15,7 +15,6 @@
 		E7B53F2B1A6EBA6900931BEC /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B53F261A6EBA5A00931BEC /* libOAuth2Client.a */; };
 		E7B53F2D1A6EBA6E00931BEC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7B53F2C1A6EBA6E00931BEC /* Security.framework */; };
 		E7B53F311A70046100931BEC /* AW_LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B53F2F1A70046100931BEC /* AW_LoginViewController.m */; };
-		E7B53F321A70046100931BEC /* AW_LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7B53F301A70046100931BEC /* AW_LoginViewController.xib */; };
 		E7B53F361A7006B900931BEC /* AW_PeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B53F341A7006B900931BEC /* AW_PeopleViewController.m */; };
 		E7B53F371A7006B900931BEC /* AW_PeopleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7B53F351A7006B900931BEC /* AW_PeopleViewController.xib */; };
 		E7B53F3B1A70161F00931BEC /* AW_UserMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B53F391A70161F00931BEC /* AW_UserMenuViewController.m */; };
@@ -92,7 +91,6 @@
 		E7B53F2C1A6EBA6E00931BEC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		E7B53F2E1A70046100931BEC /* AW_LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_LoginViewController.h; sourceTree = "<group>"; };
 		E7B53F2F1A70046100931BEC /* AW_LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_LoginViewController.m; sourceTree = "<group>"; };
-		E7B53F301A70046100931BEC /* AW_LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AW_LoginViewController.xib; sourceTree = "<group>"; };
 		E7B53F331A7006B900931BEC /* AW_PeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AW_PeopleViewController.h; sourceTree = "<group>"; };
 		E7B53F341A7006B900931BEC /* AW_PeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AW_PeopleViewController.m; sourceTree = "<group>"; };
 		E7B53F351A7006B900931BEC /* AW_PeopleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AW_PeopleViewController.xib; sourceTree = "<group>"; };
@@ -323,7 +321,6 @@
 			children = (
 				E7B53F2E1A70046100931BEC /* AW_LoginViewController.h */,
 				E7B53F2F1A70046100931BEC /* AW_LoginViewController.m */,
-				E7B53F301A70046100931BEC /* AW_LoginViewController.xib */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -440,7 +437,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7FB046F1A7997480062CD47 /* image.xcassets in Resources */,
-				E7B53F321A70046100931BEC /* AW_LoginViewController.xib in Resources */,
 				E7B53F3E1A70192700931BEC /* DevelopmentLog.txt in Resources */,
 				E73BB18B1A891E9500F05658 /* hideStuff.js in Resources */,
 				E7B53F081A6EB94C00931BEC /* LaunchScreen.xib in Resources */,

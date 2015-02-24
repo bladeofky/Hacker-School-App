@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
 @class AW_MainViewController;
 
@@ -24,5 +25,11 @@
 @property (nonatomic, weak) AW_MainViewController *mainVC;  ///< A weak reference to the AW_MainViewController in order to call its public methods.
 @property (nonatomic, strong) NSString *navBarTitle;        ///< The string to display in the navigation bar.
 @property (nonatomic, strong) NSURL *url;                   ///< The initial URL to load the web view to.
+@property (nonatomic, strong) WKProcessPool *processPool;   ///< Process pool to use for webview. Set this before the view is loaded.
+
+/**
+    Override this method in subclasses to provide different configurations to the webview
+ */
+- (WKWebViewConfiguration *)webViewConfiguration;
 
 @end

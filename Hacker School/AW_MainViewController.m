@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Alan Wang. All rights reserved.
 //
 
+#import <WebKit/WebKit.h>
+
 #import "AW_MainViewController.h"
 #import "AW_LoginViewController.h"
 #import "AW_PeopleViewController.h"
@@ -41,13 +43,26 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 
 @property (nonatomic, strong) UIView *overlay;
 
-@property (nonatomic) BOOL isUserMenuShowing;
+@property (nonatomic, getter=isUserMenuVisible) BOOL userMenuVisible;
 @property (nonatomic, weak) NSLayoutConstraint *menuPositionConstraint;
+
+@property (nonatomic, strong) WKProcessPool *sharedProcessPool;     ///< WKProcessPool shared between all webviews in order to share cookies
 
 @end
 
 @implementation AW_MainViewController
+
 #pragma mark - Accessors
+
+-(WKProcessPool *)sharedProcessPool
+{
+    if (!_sharedProcessPool) {
+        _sharedProcessPool = [[WKProcessPool alloc]init];
+    }
+    
+    return _sharedProcessPool;
+}
+
 -(UIView *)overlay
 {
     if (!_overlay) {
@@ -175,6 +190,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
+    webVC.processPool = self.sharedProcessPool;
     webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/projects"];
     webVC.navBarTitle = @"Projects";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
@@ -186,6 +202,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
+    webVC.processPool = self.sharedProcessPool;
     webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/companies"];
     webVC.navBarTitle = @"Companies";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
@@ -197,6 +214,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
+    webVC.processPool = self.sharedProcessPool;
     webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/residents"];
     webVC.navBarTitle = @"Residents";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
@@ -208,6 +226,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
+    webVC.processPool = self.sharedProcessPool;
     webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/blog"];
     webVC.navBarTitle = @"Blog";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
@@ -220,6 +239,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
+    webVC.processPool = self.sharedProcessPool;
     webVC.url = [NSURL URLWithString:@"https://community.hackerschool.com/"];
     webVC.navBarTitle = @"Community";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
@@ -232,6 +252,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
+    webVC.processPool = self.sharedProcessPool;
     webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/booker"];
     webVC.navBarTitle = @"Booker";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
@@ -243,6 +264,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
+    webVC.processPool = self.sharedProcessPool;
     webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/groups"];
     webVC.navBarTitle = @"Groups";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
@@ -254,6 +276,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
+    webVC.processPool = self.sharedProcessPool;
     webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/private/recommend"];
     webVC.navBarTitle = @"Recommend";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
@@ -265,6 +288,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
+    webVC.processPool = self.sharedProcessPool;
     webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/manual"];
     webVC.navBarTitle = @"User Manual";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
@@ -276,6 +300,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 {
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
+    webVC.processPool = self.sharedProcessPool;
     webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/settings"];
     webVC.navBarTitle = @"Settings";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
@@ -366,7 +391,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     [self.view addConstraints:overlayHorizontalConstraints];
     [self.view addConstraints:overlayVeritcalConstraints];
     
-    self.isUserMenuShowing = YES;
+    self.userMenuVisible = YES;
 }
 
 - (void)dismissUserMenu
@@ -385,14 +410,25 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
                          [self tearDownUserMenu];
                      }];
     
-    self.isUserMenuShowing = NO;
+    self.userMenuVisible = NO;
 }
 
 #pragma mark - Login
 -(void)showLoginVC
 {
-    AW_LoginViewController *loginVC = [[AW_LoginViewController alloc]init];
-    [self presentViewController:loginVC animated:YES completion:nil];
+    [[NXOAuth2AccountStore sharedStore]requestAccessToAccountWithType:@"Hacker School"
+                                  withPreparedAuthorizationURLHandler:^(NSURL *preparedURL) {
+                                      
+                                      //Present web view controller
+                                      AW_LoginViewController *loginVC = [[AW_LoginViewController alloc]init];
+                                      loginVC.processPool = self.sharedProcessPool;
+                                      loginVC.url = preparedURL;
+                                      
+                                      UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:loginVC];
+                                      navVC.view.tintColor = [UIColor colorWithRed:0 green:0.9 blue:0 alpha:1.0];
+                                      [self presentViewController:navVC animated:YES completion:nil];
+                                  }];
+    
 }
 
 #pragma mark - Logout
@@ -402,6 +438,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     NSLog(@"Logging out");
     [[NXOAuth2AccountStore sharedStore] removeAccount: [[AW_UserAccount currentUser]account] ];
     [AW_UserAccount currentUser].person = nil;
+    self.sharedProcessPool = nil;
     [self showLoginVC];
 }
 

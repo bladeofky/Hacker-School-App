@@ -383,6 +383,8 @@
  */
 -(void)generateHeaderViews
 {
+    self.batchHeaderViews = nil;    // Clear previous views
+    
     NSMutableArray *tempBatchHeaders = [[NSMutableArray alloc]init];
     
     for (AW_Batch *batch in self.batches) {

@@ -68,6 +68,9 @@
                    responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error) {
                        if (responseData) {
                            self.person = [[AW_Person alloc]initWithHackerSchoolAPIData:responseData];
+                           if ([self saveCurrentUserInfo]) {
+                               NSLog(@"Current user info saved");
+                           }
                        }
                        
                        if (error) {

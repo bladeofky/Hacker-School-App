@@ -1,4 +1,20 @@
 --------------------------------------------------------------------------------------------------------------------------------------------
+2-24-2015
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+*********** GIT COMMIT: Changed log in view controller to web view ***********
+
+Known bugs:
+1) At some point, the log in webview will start using it's cookies to log the user in, making it impossible to switch users.
+2) If you log in and out while the People vc is up, the batch header views are not being properly released somewhere. The number of
+stored batch header views can grow without limit.
+
+- Changed login method to WKWebView instead of transferring user to mobile safari. This method is less secure (because webview could
+potentially steal the user's info and defeat's the purpose of OAuth), but Apple is stupid and refuses to approve the app if the user
+is sent to safari.
+- Added a shared process pool so that user does not need to log in again to see other web views (i.e. Community, Booker, etc.)
+
+--------------------------------------------------------------------------------------------------------------------------------------------
 2-12-2015
 --------------------------------------------------------------------------------------------------------------------------------------------
 
