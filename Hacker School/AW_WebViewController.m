@@ -24,9 +24,9 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     self.navigationController.navigationBar.translucent = NO;   // This prevents views from being placed beneath the navigation bar
-    
+
     // Set up web view
     WKWebView *webView = [[WKWebView alloc]initWithFrame:CGRectZero configuration:[self webViewConfiguration]];
     webView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -34,13 +34,13 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
     webView.navigationDelegate = self;
     [self.view addSubview:webView];
     self.webView = webView;
-    
+
     // Set up progress bar
     UIProgressView *progressView = [[UIProgressView alloc]initWithProgressViewStyle:UIProgressViewStyleBar];
     progressView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:progressView];
     self.progressView = progressView;
-    
+
     NSDictionary *views = @{@"webView":webView,
                             @"progressView":progressView};
     NSArray *webViewHorizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[webView]|"
@@ -68,25 +68,25 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
     [self.view addConstraints:webViewVerticalConstraints];
     [self.view addConstraint:progressBarTopConstraint];
     self.progressViewTopConstraint = progressBarTopConstraint;
-    
+
     [self.view layoutIfNeeded];
-    
+
     // Load URL
     NSURLRequest *request = [NSURLRequest requestWithURL:self.url];
     [webView loadRequest:request];
-    
+
     // Set up navigation
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Menu"
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self.mainVC
                                                                            action:@selector(showUserMenu)];
-    
+
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back"
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self.webView
                                                                             action:@selector(goBack)];
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    
+
     self.navigationItem.title = self.navBarTitle;
     self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Thin" size:20]};
 }
@@ -99,7 +99,7 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
+
     // Remove self from KVO
     [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
 }
@@ -107,19 +107,19 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"estimatedProgress"]) {
-        
+
         // Hide progress bar when not useful
         if (self.webView.estimatedProgress > 0 && self.webView.estimatedProgress < 1) {
             self.progressViewTopConstraint.constant = 0;
-            
+
             [self.view layoutIfNeeded];
         }
         else {
             self.progressViewTopConstraint.constant = -PROGRESS_BAR_HEIGHT;
-            
+
             [self.view layoutIfNeeded];
         }
-        
+
         // Do not animate progress when progress goes backwards (i.e. from 1 to 0).
         if (self.progressView.progress > self.webView.estimatedProgress) {
             [self.progressView setProgress:self.webView.estimatedProgress animated:NO];
@@ -127,7 +127,7 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
         else {
             [self.progressView setProgress:self.webView.estimatedProgress animated:YES];
         }
-        
+
     }
 }
 
@@ -136,22 +136,22 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
 {
     // Set up configuration to accept user script
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc]init];
-    
+
     NSAssert(self.processPool, @"The process pool must be set from AW_MainViewController.");
-    
+
     configuration.processPool = self.processPool;
-    
-    
+
+
     NSString *hideStuffScriptString = [NSString stringWithContentsOfURL:[[NSBundle mainBundle]URLForResource:@"hideStuff" withExtension:@"js"]
                                                                encoding:NSUTF8StringEncoding
                                                                   error:NULL];
-    
+
     WKUserScript *hideStuffScript = [[WKUserScript alloc]initWithSource:hideStuffScriptString
                                                           injectionTime:WKUserScriptInjectionTimeAtDocumentStart
                                                        forMainFrameOnly:YES];
-    
+
     [configuration.userContentController addUserScript:hideStuffScript];
-    
+
     return configuration;
 }
 
@@ -170,16 +170,16 @@ CGFloat const PROGRESS_BAR_HEIGHT = 2.0;
 -(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
     NSURL *url = navigationAction.request.URL;
-    
-    if (![url.host.lowercaseString hasSuffix:@".hackerschool.com"]) {
-        // This site is not part of hackerschool.com
+
+    if (![url.host.lowercaseString hasSuffix:@".recurse.com"]) {
+        // This site is not part of recurse.com
         // Pass this off to mobile safari
         [[UIApplication sharedApplication] openURL:url];
-        
+
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
-    
+
     decisionHandler(WKNavigationActionPolicyAllow);
 }
 
