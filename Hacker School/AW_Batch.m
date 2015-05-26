@@ -12,7 +12,7 @@
  ----------------------------
  Using [NSJSONSerialization JSONObjectWithData:data options:0 error:&error]; where data is the
  response from the Hacker School API results in the following keys and value types:
- 
+
  "id"           :   NSNumber (long)
  "name"         :   NSString
  "start_date"   :   NSString
@@ -44,56 +44,56 @@ NSString * const PEOPLE_KEY = @"people";
     NSDictionary *batchInfo = [NSJSONSerialization JSONObjectWithData:APIData
                                                               options:0
                                                                 error:&error];
-    
+
     if (error) {
         NSLog(@"Error: %@", [error localizedDescription]);
         return nil;
     }
-    
+
     return [self initWithJSONObject:batchInfo];
 }
 
 - (instancetype)initWithJSONObject:(NSDictionary *)batchInfo
 {
     self = [super init];
-    
+
     if (self) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
         dateFormatter.dateFormat = @"yyyy-MM-dd";    // This is the format returned from Hacker School API
-        
+
         _idNumber = batchInfo[@"id"];
         _startDate = [dateFormatter dateFromString:batchInfo[@"start_date"]];
         _endDate = [dateFormatter dateFromString:batchInfo[@"end_date"]];
-        
+
         dateFormatter.dateFormat = @"yyyy";
         _year = [dateFormatter stringFromDate:_startDate];
-        
+
         // Parse name
         _apiName = batchInfo[@"name"];
         _name = [_apiName stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@" %@", _year] withString:@""];
         _name = [_name stringByReplacingOccurrencesOfString:@"," withString:@""];
         _name = [_name stringByReplacingOccurrencesOfString:@"[" withString:@" "];
         _name = [_name stringByReplacingOccurrencesOfString:@"]" withString:@""];
-        
+
         NSArray *tokens = [_name componentsSeparatedByString:@" "];
         _season = tokens[0];
     }
-    
+
     return self;
 }
 
 -(instancetype)init
 {
     [NSException raise:@"Cannot create empty batch" format:@"Use initWithAPIData:"];
-    
+
     return nil;
 }
 
 #pragma mark - Hacker School API Access
 -(void)downloadPeople
 {
-    NSURL *resourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.hackerschool.com//api/v1/batches/%@/people", self.idNumber]];
-    
+    NSURL *resourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.recurse.com//api/v1/batches/%@/people", self.idNumber]];
+
     [NXOAuth2Request performMethod:@"GET"
                         onResource:resourceURL
                    usingParameters:nil
@@ -102,7 +102,7 @@ NSString * const PEOPLE_KEY = @"people";
                    // Update progress bar if we have one
                    // Intentionally left empty
                } responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error) {
-                   
+
                    if (error) {
                        NSLog(@"Error: %@", [error localizedDescription]);
                        [self.delegate batch:self failedToDownloadPeopleWithError:error];
@@ -114,16 +114,16 @@ NSString * const PEOPLE_KEY = @"people";
                                                                                 error:&error];
                        // Generate array of AW_Person objects
                        NSMutableArray *tempPeopleArray = [[NSMutableArray alloc]init];
-                       
+
                        for (NSDictionary *personInfo in personInfos) {
                            AW_Person *person = [[AW_Person alloc]initWithJSONObject:personInfo];
                            person.delegate = self;
                            person.batch = self;
                            [tempPeopleArray addObject:person];
                        }
-                       
+
                        self.people = [tempPeopleArray copy];
-                       
+
                        [self.delegate batch:self didDownloadPeople:self.people];
                    }
                }];
@@ -151,7 +151,7 @@ NSString * const PEOPLE_KEY = @"people";
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super init];
-    
+
     if (self) {
         _idNumber = [aDecoder decodeObjectForKey:BATCH_ID_NUMBER_KEY];
         _apiName = [aDecoder decodeObjectForKey:API_NAME_KEY];
@@ -162,7 +162,7 @@ NSString * const PEOPLE_KEY = @"people";
         _endDate = [aDecoder decodeObjectForKey:END_DATE_KEY];
         _people = [aDecoder decodeObjectForKey:PEOPLE_KEY];
     }
-    
+
     return self;
 }
 
@@ -171,14 +171,14 @@ NSString * const PEOPLE_KEY = @"people";
 -(BOOL)isEqual:(id)object
 {
     BOOL output = NO;
-    
+
     if ([object isKindOfClass:[self class]]) {
         NSNumber *batchID = [(AW_Batch *)object idNumber];
         if ([batchID isEqualToNumber:self.idNumber]) {
             output = YES;
         }
     }
-    
+
     return output;
 }
 

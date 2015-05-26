@@ -14,12 +14,12 @@
 + (instancetype)currentUser
 {
     static AW_UserAccount *currentUser;
-    
+
     if (!currentUser) {
-        
+
         currentUser = [[self alloc ]initPrivate];
     }
-    
+
     return currentUser;
 }
 
@@ -27,19 +27,19 @@
 -(instancetype)initPrivate
 {
     self = [super init];
-    
+
     if (self) {
         NSString *path = [self personArchivePath];
         _person = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     }
-    
+
     return self;
 }
 
 -(instancetype)init
 {
     [NSException raise:@"Singleton" format:@"Use +[currentUser] instead"];
-    
+
     return nil;
 }
 
@@ -59,7 +59,7 @@
 {
     // --- Get current user data from API and set to self.currentUser ---
     [NXOAuth2Request performMethod:@"GET"
-                        onResource:[NSURL URLWithString:@"https://www.hackerschool.com//api/v1/people/me"]
+                        onResource:[NSURL URLWithString:@"https://www.recurse.com/api/v1/people/me"]
                    usingParameters:nil
                        withAccount:[self account]
                sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
@@ -72,7 +72,7 @@
                                NSLog(@"Current user info saved");
                            }
                        }
-                       
+
                        if (error) {
                            NSLog(@"Error: %@", [error localizedDescription]);
                        }
@@ -85,23 +85,23 @@
 {
     NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [documentDirectories firstObject];
-    
+
     return [documentDirectory stringByAppendingPathComponent:@"user.archive"];
 }
 
 -(BOOL)saveCurrentUserInfo
 {
     NSString *path = [self personArchivePath];
-    
+
     BOOL isSuccessful = [NSKeyedArchiver archiveRootObject:self.person toFile:path];
-    
+
     if (isSuccessful) {
         NSLog(@"Current user's info saved");
     }
     else {
         NSLog(@"Current user's info save failed");
     }
-    
+
     return isSuccessful;
 }
 

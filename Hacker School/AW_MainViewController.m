@@ -60,7 +60,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     if (!_sharedProcessPool) {
         _sharedProcessPool = [[WKProcessPool alloc]init];
     }
-    
+
     return _sharedProcessPool;
 }
 
@@ -73,7 +73,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
         _overlay.backgroundColor = [UIColor blackColor];
         _overlay.alpha = 0;
     }
-    
+
     return _overlay;
 }
 
@@ -82,16 +82,16 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+
     // Change default tintColor (for buttons and stuff) to green for Hacker School
     self.view.tintColor = [UIColor colorWithRed:0 green:0.9 blue:0 alpha:1.0];
-    
+
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+
     // --- Present Login Screen If No Current User ---
     // TODO: Possibly move this into the - (void)applicationDidBecomeActive:(UIApplication *)application method of the App Delegate
     if (![[AW_UserAccount currentUser]account]) {
@@ -99,9 +99,9 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     }
     else {
         // *** ANYTHING THAT HAPPENS INSIDE THIS ELSE IS GUARANTEED TO HAVE A USER ACCOUNT ***
-        
+
         [[AW_UserAccount currentUser]downloadPersonInfo];
-        
+
         // --- Set up center view ---
         [self displayCenterControllerForOption:PEOPLE_VC_TAG];
     }
@@ -110,7 +110,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
+
     // Remove center controller
     [self.centerVC.view removeFromSuperview];
     [self.centerVC removeFromParentViewController];
@@ -120,7 +120,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 #pragma mark - View Controller management
 - (void)displayCenterControllerForOption:(NSString *)option
 {
-    
+
     // Present new center controller
     if ([option isEqualToString:PEOPLE_VC_TAG]) {
         [self displayCenterController:[self peopleViewController]];
@@ -137,11 +137,11 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     else if ([option isEqualToString:BLOG_VC_TAG]) {
         [self displayCenterController:[self blogViewController]];
     }
-    
+
     else if ([option isEqualToString:COMMUNITY_VC_TAG]) {
         [self displayCenterController:[self communityViewController]];
     }
-    
+
     else if ([option isEqualToString:BOOKER_VC_TAG]) {
         [self displayCenterController:[self bookerViewController]];
     }
@@ -161,14 +161,14 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 
 - (void)displayCenterController: (UIViewController *)contentVC
 {
-    
+
     // Remove previous center controller
     [self.centerVC.view removeFromSuperview];
     [self.centerVC removeFromParentViewController];
-    
+
     // Display new center controller
     contentVC.view.frame = self.view.frame;
-    
+
     if (self.overlay) {
         // If user menu is open, add it underneath the menu
         [self.view insertSubview:contentVC.view belowSubview:self.overlay];
@@ -177,12 +177,12 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
         // Otherwise add the view on top
         [self.view addSubview:contentVC.view];
     }
-    
+
     [contentVC.view layoutIfNeeded];
-    
+
     [self addChildViewController:contentVC];
     [contentVC didMoveToParentViewController:self];
-    
+
     self.centerVC = contentVC;
 }
 
@@ -193,7 +193,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     peopleVC.mainVC = self;
     UINavigationController *centerVC = [[UINavigationController alloc]initWithRootViewController:peopleVC];
     centerVC.navigationBar.titleTextAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Thin" size:20]};
-    
+
     return centerVC;
 }
 
@@ -202,10 +202,10 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
     webVC.processPool = self.sharedProcessPool;
-    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/projects"];
+    webVC.url = [NSURL URLWithString:@"https://www.recurse.com/projects"];
     webVC.navBarTitle = @"Projects";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
-    
+
     return navVC;
 }
 
@@ -214,10 +214,10 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     AW_CompaniesViewController *webVC = [[AW_CompaniesViewController alloc]init];
     webVC.mainVC = self;
     webVC.processPool = self.sharedProcessPool;
-    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/companies"];
+    webVC.url = [NSURL URLWithString:@"https://www.recurse.com/companies"];
     webVC.navBarTitle = @"Companies";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
-    
+
     return navVC;
 }
 
@@ -226,10 +226,10 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
     webVC.processPool = self.sharedProcessPool;
-    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/residents"];
+    webVC.url = [NSURL URLWithString:@"https://www.recurse.com/residents"];
     webVC.navBarTitle = @"Residents";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
-    
+
     return navVC;
 }
 
@@ -238,10 +238,10 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
     webVC.processPool = self.sharedProcessPool;
-    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/blog"];
+    webVC.url = [NSURL URLWithString:@"https://www.recurse.com/blog"];
     webVC.navBarTitle = @"Blog";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
-    
+
     return navVC;
 }
 
@@ -251,10 +251,10 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
     webVC.processPool = self.sharedProcessPool;
-    webVC.url = [NSURL URLWithString:@"https://community.hackerschool.com/"];
+    webVC.url = [NSURL URLWithString:@"https://community.recurse.com/"];
     webVC.navBarTitle = @"Community";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
-    
+
     return navVC;
 }
 
@@ -264,10 +264,10 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
     webVC.processPool = self.sharedProcessPool;
-    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/booker"];
+    webVC.url = [NSURL URLWithString:@"https://www.recurse.com/booker"];
     webVC.navBarTitle = @"Booker";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
-    
+
     return navVC;
 }
 
@@ -276,10 +276,10 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
     webVC.processPool = self.sharedProcessPool;
-    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/groups"];
+    webVC.url = [NSURL URLWithString:@"https://www.recurse.com/groups"];
     webVC.navBarTitle = @"Groups";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
-    
+
     return navVC;
 }
 
@@ -288,10 +288,10 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
     webVC.processPool = self.sharedProcessPool;
-    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/private/recommend"];
+    webVC.url = [NSURL URLWithString:@"https://www.recurse.com/private/recommend"];
     webVC.navBarTitle = @"Recommend";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
-    
+
     return navVC;
 }
 
@@ -300,10 +300,10 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
     webVC.processPool = self.sharedProcessPool;
-    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/manual"];
+    webVC.url = [NSURL URLWithString:@"https://www.recurse.com/manual"];
     webVC.navBarTitle = @"User Manual";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
-    
+
     return navVC;
 }
 
@@ -312,10 +312,10 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     AW_WebViewController *webVC = [[AW_WebViewController alloc]init];
     webVC.mainVC = self;
     webVC.processPool = self.sharedProcessPool;
-    webVC.url = [NSURL URLWithString:@"https://www.hackerschool.com/settings"];
+    webVC.url = [NSURL URLWithString:@"https://www.recurse.com/settings"];
     webVC.navBarTitle = @"Settings";
     UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:webVC];
-    
+
     return navVC;
 }
 
@@ -331,9 +331,9 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     UISwipeGestureRecognizer *swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(dismissUserMenu)];
     swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.userMenuVC.view addGestureRecognizer:swipeGestureRecognizer];
-    
+
     [self.view addSubview:self.userMenuVC.view];
-    
+
     NSLayoutConstraint *menuBarWidthConstraint = [NSLayoutConstraint constraintWithItem:self.userMenuVC.view
                                                                               attribute:NSLayoutAttributeWidth
                                                                               relatedBy:NSLayoutRelationEqual
@@ -356,9 +356,9 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
     [self.view addConstraint:menuBarPositionConstraint];
     [self.view addConstraints:menuBarVerticalConstraints];
     self.menuPositionConstraint = menuBarPositionConstraint;
-    
+
     [self.view layoutIfNeeded]; // Layout menu bar off screen initially
-    
+
     [self addChildViewController:self.userMenuVC];
     [self.userMenuVC didMoveToParentViewController:self];
 }
@@ -373,10 +373,10 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 - (void)showUserMenu
 {
     [self setupUserMenu];
-    
+
     // Add overlay
     [self.view insertSubview:self.overlay belowSubview:self.userMenuVC.view];
-    
+
     // Change menu position constraint
     self.menuPositionConstraint.constant = 0;
 
@@ -386,7 +386,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
                          self.overlay.alpha = 0.5;
                          [self.view layoutIfNeeded];
                      }];
-    
+
     // Add constraints to overview in case of screen rotation
     self.userMenuVC.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.overlay.translatesAutoresizingMaskIntoConstraints = NO;
@@ -401,7 +401,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 
     [self.view addConstraints:overlayHorizontalConstraints];
     [self.view addConstraints:overlayVeritcalConstraints];
-    
+
     self.userMenuVisible = YES;
 }
 
@@ -409,7 +409,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 {
     // Update position constraint
     self.menuPositionConstraint.constant = -USER_MENU_WIDTH;
-    
+
     [UIView animateWithDuration:.4
                      animations:^{
                          self.overlay.alpha = 0;
@@ -420,7 +420,7 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
                          self.overlay = nil;
                          [self tearDownUserMenu];
                      }];
-    
+
     self.userMenuVisible = NO;
 }
 
@@ -429,17 +429,17 @@ NSString * const SETTINGS_VC_TAG = @"Settings";
 {
     [[NXOAuth2AccountStore sharedStore]requestAccessToAccountWithType:@"Hacker School"
                                   withPreparedAuthorizationURLHandler:^(NSURL *preparedURL) {
-                                      
+
                                       //Present web view controller
                                       AW_LoginViewController *loginVC = [[AW_LoginViewController alloc]init];
                                       loginVC.processPool = self.sharedProcessPool;
                                       loginVC.url = preparedURL;
-                                      
+
                                       UINavigationController *navVC = [[UINavigationController alloc]initWithRootViewController:loginVC];
                                       navVC.view.tintColor = [UIColor colorWithRed:0 green:0.9 blue:0 alpha:1.0];
                                       [self presentViewController:navVC animated:YES completion:nil];
                                   }];
-    
+
 }
 
 #pragma mark - Logout
